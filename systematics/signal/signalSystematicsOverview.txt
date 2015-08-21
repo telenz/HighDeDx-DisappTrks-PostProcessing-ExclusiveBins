@@ -1,0 +1,20 @@
+Summary table of all systematic uncertainties\\
+
+\begin{table}[H] 
+\begin{tabular}{|l|c|c|}  \hline 
+Uncertainty                             &Min [\%]           &Max [\%]           \\ \hline 
+Luminosity                              &2.6                &2.6                \\ 
+ISR                                     &-100.0             &12.5               \\ 
+Trigger efficiency                      &2.6                &4.6                \\ 
+JES                                     &0.5                &1.0                \\ 
+JER                                     &-100.0             &0.7                \\ 
+PDF                                     &-100.0             &4.8                \\ 
+Simulation of calorimeter isolation     &0.8                &6.6                \\ 
+Simulation of missing middle hits       &1.8                &2.3                \\ 
+Simulation of missing inner hits        &3.2                &3.4                \\ 
+PU                                      &0.0                &35.9               \\ 
+Track reconstruction efficiency         &4.1                &5.1                \\ 
+Simulation of Ias                       &4.8                &4.8                \\ 
+Theoretical x-section                   &3.4                &8.1                \\ 
+\hline\end{tabular}  
+\end{table} 

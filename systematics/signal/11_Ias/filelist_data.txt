@@ -1,0 +1,1 @@
+/afs/desy.de/user/t/tlenz/xxl-af-cms/NTUPLES/HighDeDx-DisappTrks-Ntuples/workdir/data_ALCARECO/results/MinimumBias-SiStripCalMinBias_Run2012D_v1_692.root

@@ -1,0 +1,6 @@
+analyzer
+*.root
+*.txt
+**/*.o
+**.*.so
+*~

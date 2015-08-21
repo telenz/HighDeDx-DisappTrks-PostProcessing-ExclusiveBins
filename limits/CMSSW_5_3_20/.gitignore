@@ -1,0 +1,13 @@
+bin
+cfipython
+doc
+external
+include
+lib
+logs
+objs
+test
+tmp
+python
+config
+.SCRAM

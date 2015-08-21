@@ -1,0 +1,10 @@
+*.root
+**/*.so
+**/*.d
+ANALYSES
+*.so
+*.d
+**/*.o
+analyzer
+
+

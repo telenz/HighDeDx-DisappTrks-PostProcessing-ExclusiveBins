@@ -1,0 +1,8 @@
+For expected limits use:
+
+combine -M Asymptotic --run expected -C 0.95 -t -1 --minimizerStrategy 2 datacard.txt
+
+
+
+web page for combine:
+https://twiki.cern.ch/twiki/bin/viewauth/CMS/SWGuideHiggsAnalysisCombinedLimit

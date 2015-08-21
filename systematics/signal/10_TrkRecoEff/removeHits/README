@@ -1,0 +1,31 @@
+Created: Mon Jul 27 15:16:23 2015
+
+	o To build all programs do
+
+	  make
+
+	  This will first build lib/libanalyzer.so from the codes in src, then
+	  build all the programs in the current directory, linked against the
+	  shared library.
+
+
+	o To run the program, first create a text file (default name=filelist.txt)
+	containing a list of the ntuples to be analyzed, one filename per line.
+	Then do
+
+	  ./analyzer
+
+	If you wish to specify a different file list, say datafile.list, do
+
+	  ./analyzer datafile.list
+
+	If you wish to change the name of the root output file, say
+	datahist.root, do
+
+	   ./analyzer datafile.list datahist.root
+
+
+For details, please refer to the documentation at:
+
+	https://twiki.cern.ch/twiki/bin/viewauth/CMS/TheNtupleMaker
+

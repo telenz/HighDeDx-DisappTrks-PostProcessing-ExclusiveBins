@@ -1,0 +1,178 @@
+
+Processing getSignalResult.C+(100,110,50,50000,5,0.30,0.99,"SR")...
+filename = results/Signal_Madgraph_signal_mass_100_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 163
+Yield Madgraph_signal_mass_100_ctau_1cm = 0.542995 +/- 0.320539
+Precision                               = 59.0317%
+NEvents                                 = 3
+Average event weight                    = 0.180998
+
+filename = results/Signal_Madgraph_signal_mass_100_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 4196
+Yield Madgraph_signal_mass_100_ctau_5cm = 17.8076 +/- 1.77106
+Precision                               = 9.94553%
+NEvents                                 = 117
+Average event weight                    = 0.152202
+
+filename = results/Signal_Madgraph_signal_mass_100_ctau_10cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 1770
+Yield Madgraph_signal_mass_100_ctau_10cm = 64.6158 +/- 7.52391
+Precision                               = 11.6441%
+NEvents                                 = 82
+Average event weight                    = 0.787997
+
+filename = results/Signal_Madgraph_signal_mass_100_ctau_50cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 3076
+Yield Madgraph_signal_mass_100_ctau_50cm = 245.416 +/- 14.5866
+Precision                               = 5.94362%
+NEvents                                 = 316
+Average event weight                    = 0.776631
+
+filename = results/Signal_Madgraph_signal_mass_100_ctau_100cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2953
+Yield Madgraph_signal_mass_100_ctau_100cm = 269.131 +/- 15.3233
+Precision                               = 5.69361%
+NEvents                                 = 342
+Average event weight                    = 0.786932
+
+filename = results/Signal_Madgraph_signal_mass_200_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 37
+Yield Madgraph_signal_mass_200_ctau_1cm = 0 +/- 0
+Precision                               = -nan%
+NEvents                                 = 0
+Average event weight                    = -nan
+
+filename = results/Signal_Madgraph_signal_mass_200_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 857
+Yield Madgraph_signal_mass_200_ctau_5cm = 2.48683 +/- 0.403059
+Precision                               = 16.2077%
+NEvents                                 = 40
+Average event weight                    = 0.0621707
+
+filename = results/Signal_Madgraph_signal_mass_200_ctau_10cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2163
+Yield Madgraph_signal_mass_200_ctau_10cm = 11.5337 +/- 0.864765
+Precision                               = 7.49775%
+NEvents                                 = 194
+Average event weight                    = 0.0594518
+
+filename = results/Signal_Madgraph_signal_mass_200_ctau_50cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2511
+Yield Madgraph_signal_mass_200_ctau_50cm = 58.1713 +/- 2.74533
+Precision                               = 4.71939%
+NEvents                                 = 498
+Average event weight                    = 0.11681
+
+filename = results/Signal_Madgraph_signal_mass_200_ctau_100cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2660
+Yield Madgraph_signal_mass_200_ctau_100cm = 69.8673 +/- 3.0228
+Precision                               = 4.32649%
+NEvents                                 = 604
+Average event weight                    = 0.115674
+
+filename = results/Signal_Madgraph_signal_mass_300_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2
+Yield Madgraph_signal_mass_300_ctau_1cm = 0 +/- 0
+Precision                               = -nan%
+NEvents                                 = 0
+Average event weight                    = -nan
+
+filename = results/Signal_Madgraph_signal_mass_300_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 473
+Yield Madgraph_signal_mass_300_ctau_5cm = 1.05216 +/- 0.166613
+Precision                               = 15.8354%
+NEvents                                 = 46
+Average event weight                    = 0.022873
+
+filename = results/Signal_Madgraph_signal_mass_300_ctau_10cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 1192
+Yield Madgraph_signal_mass_300_ctau_10cm = 3.24896 +/- 0.293116
+Precision                               = 9.02184%
+NEvents                                 = 136
+Average event weight                    = 0.0238894
+
+filename = results/Signal_Madgraph_signal_mass_300_ctau_50cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2969
+Yield Madgraph_signal_mass_300_ctau_50cm = 17.1671 +/- 0.667989
+Precision                               = 3.89111%
+NEvents                                 = 742
+Average event weight                    = 0.0231362
+
+filename = results/Signal_Madgraph_signal_mass_300_ctau_100cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 3216
+Yield Madgraph_signal_mass_300_ctau_100cm = 22.9332 +/- 0.767294
+Precision                               = 3.34577%
+NEvents                                 = 998
+Average event weight                    = 0.0229792
+
+filename = results/Signal_Madgraph_signal_mass_400_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 5
+Yield Madgraph_signal_mass_400_ctau_1cm = 0 +/- 0
+Precision                               = -nan%
+NEvents                                 = 0
+Average event weight                    = -nan
+
+filename = results/Signal_Madgraph_signal_mass_400_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 360
+Yield Madgraph_signal_mass_400_ctau_5cm = 0.284065 +/- 0.0446916
+Precision                               = 15.7329%
+NEvents                                 = 45
+Average event weight                    = 0.00631255
+
+filename = results/Signal_Madgraph_signal_mass_400_ctau_10cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 1051
+Yield Madgraph_signal_mass_400_ctau_10cm = 1.33386 +/- 0.0989792
+Precision                               = 7.42048%
+NEvents                                 = 207
+Average event weight                    = 0.00644379
+
+filename = results/Signal_Madgraph_signal_mass_400_ctau_50cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 3140
+Yield Madgraph_signal_mass_400_ctau_50cm = 6.98698 +/- 0.226475
+Precision                               = 3.24139%
+NEvents                                 = 1090
+Average event weight                    = 0.00641007
+
+filename = results/Signal_Madgraph_signal_mass_400_ctau_100cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 3620
+Yield Madgraph_signal_mass_400_ctau_100cm = 9.38039 +/- 0.261326
+Precision                               = 2.78588%
+NEvents                                 = 1454
+Average event weight                    = 0.00645144
+
+filename = results/Signal_Madgraph_signal_mass_500_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2
+Yield Madgraph_signal_mass_500_ctau_1cm = 0 +/- 0
+Precision                               = -nan%
+NEvents                                 = 0
+Average event weight                    = -nan
+
+filename = results/Signal_Madgraph_signal_mass_500_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 376
+Yield Madgraph_signal_mass_500_ctau_5cm = 0.0914794 +/- 0.0138456
+Precision                               = 15.1352%
+NEvents                                 = 49
+Average event weight                    = 0.00186693
+
+filename = results/Signal_Madgraph_signal_mass_500_ctau_10cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 1133
+Yield Madgraph_signal_mass_500_ctau_10cm = 0.456922 +/- 0.0324314
+Precision                               = 7.09781%
+NEvents                                 = 228
+Average event weight                    = 0.00200404
+
+filename = results/Signal_Madgraph_signal_mass_500_ctau_50cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 3338
+Yield Madgraph_signal_mass_500_ctau_50cm = 2.56157 +/- 0.0760696
+Precision                               = 2.96965%
+NEvents                                 = 1287
+Average event weight                    = 0.00199034
+
+filename = results/Signal_Madgraph_signal_mass_500_ctau_100cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 3924
+Yield Madgraph_signal_mass_500_ctau_100cm = 3.3163 +/- 0.0863251
+Precision                               = 2.60306%
+NEvents                                 = 1678
+Average event weight                    = 0.00197634
+
+(int)0

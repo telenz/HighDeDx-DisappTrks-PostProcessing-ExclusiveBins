@@ -1,0 +1,11 @@
+At r = 2.006369:	q_mu = nan	q_A  = nan	CLsb =     nan	CLb  =     nan	CLs  =     nan
+
+ -- Asymptotic -- 
+Observed Limit: r < 2.0064
+Expected  2.5%: r < 0.0199
+Expected 16.0%: r < 0.0270
+Expected 50.0%: r < 0.0386
+Expected 84.0%: r < 0.0557
+Expected 97.5%: r < 0.0764
+
+Done in 0.01 min (cpu), 0.04 min (real)
