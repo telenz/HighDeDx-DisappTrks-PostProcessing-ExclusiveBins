@@ -8,7 +8,7 @@ decaywidthTable=("5" "10" "50" "100")   #please specifiy in cm
 #decaywidthTable=("10")   #please specifiy in cm
 
 
-filenameIn="datacardsCombinedNoxsec"
+filenameIn="datacardsCombined"
 mkdir logFiles/${filenameIn}
 mkdir limits/${filenameIn}
 mkdir limits/${filenameIn}_xsec
