@@ -5,7 +5,7 @@ kmax * number of nuisance parameters
 
 ----------------------------------------
 bin                                    1
-#observation                           x
+observation                            8
 ----------------------------------------
 
 
@@ -21,7 +21,7 @@ signal_stat                             gmN  1894         0.0020                
 fake_stat                               lnN            -                                       1.2212                        -                             -                             -                             
 pion_stat                               gmN  0         -                                       -                             0.0366                        -                             -                             
 elec_stat                               gmN  1         -                                       -                             -                             0.0935                        -                             
-muon_stat                               gmN  0         -                                       -                             -                             -                             0.2869                        
+muon_stat                               gmN  0         -                                       -                             -                             -                             0.5738                        
 
 
 
@@ -34,7 +34,7 @@ pion_syst_ias                           lnN            -                        
 elec_syst_ias                           lnN            -                                       -                             -                             1.41637                       -                             
 muon_syst_ias                           lnN            -                                       -                             -                             -                             1.77512                       
 fake_syst_rate                          lnN            -                                       1.19057                       -                             -                             -                             
-fake_syst_ias                           lnN            -                                       1.13062                       -                             -                             -                             
+fake_syst_ias                           lnN            -                                       1.17429                       -                             -                             -                             
 
 lumi                                    lnN            1.0260                                  -                             -                             -                             -                             
 ISR                                     lnN            1.1250                                  -                             -                             -                             -                             
@@ -48,4 +48,3 @@ HitsLostInner                           lnN            1.0322                   
 PU                                      lnN            1.0120                                  -                             -                             -                             -                             
 TrkRecoEff                              lnN            1.0430                                  -                             -                             -                             -                             
 Ias                                     lnN            1.0488                                  -                             -                             -                             -                             
-xsec                                    lnN            1.0815                                  -                             -                             -                             -                             
