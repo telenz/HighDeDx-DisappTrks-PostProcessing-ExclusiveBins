@@ -131,7 +131,7 @@ for ptCut in ['30','50']:
     # Now loop over different xsec and find xsection with which 5sigma discovery is possible
     for k in range(0,10000):
       sOverB = k/math.sqrt(pow(bkgUnc,2) + pow(signalUnc/nSignal*k,2))
-      if(sOverB>3):
+      if(sOverB>5):
         minExcludedXsec = k/nSignal*xsec
         if minExcludedXsec<bestValueXsec:
           bestValueXsec=minExcludedXsec
