@@ -13,12 +13,14 @@ iasMaxArray=(0.30 0.99)
 
 find . -type f -name "*.log" -not -path "./limits/*" -not -path  "./systematics/signal/12_xsec/*" -not -path  "./systematics/signal/1_Luminosity/*" -not -path  "./systematics/signal/10_TrkRecoEff/*" -exec rm -f {} \;
 rm systematics/signal/datacards/*
-
-for ((i=0; i < ${#ptMinArray}; i++))
+echo ""
+echo ${#ptMinArray}
+echo ""
+for ((i=0; i < ${#ptMinArray[@]}; i++))
 do
     ptCutMin=${ptMinArray[$i]}
     ptCutMax=${ptMaxArray[$i]}
-    for ((j=0; j < ${#ptMinArray}; j++))
+    for ((j=0; j < ${#iasMinArray[@]}; j++))
     do
 	iasCutMin=${iasMinArray[$j]}
 	iasCutMax=${iasMaxArray[$j]}
