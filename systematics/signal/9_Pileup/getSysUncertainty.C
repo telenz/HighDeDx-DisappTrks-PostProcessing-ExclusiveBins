@@ -256,30 +256,18 @@ int getSysUncertainty(double ptCutMin, double ptCutMax, double ecaloCut, double 
   double nCentralError     =  central.histo->GetBinError(1);
 
   double upUnc           = abs(nUp/nCentral - 1);
-  double upUncError      = upUnc * sqrt( pow(nUpError/nUp , 2)  +  pow(nCentralError/nCentral , 2) );
   double downUnc         = abs(nDown/nCentral - 1);
-  double downUncError    = downUnc * sqrt( pow(nDownError/nDown , 2)  +  pow(nCentralError/nCentral , 2) );
 
 
   cout<<"###########################################################################"<<endl;
   cout.precision(1);
 
-
-  cout<<fixed<<"upward uncertainty     = "<<upUnc*100<<" +/- "<<upUncError*100<<" %\\\\"<<endl;
-  cout<<fixed<<"downward uncertainty   = "<<downUnc*100<<" +/- "<<downUncError*100<<" %\\\\"<<endl;
+  cout<<fixed<<"upward uncertainty     = "<<upUnc*100<<" %\\\\"<<endl;
+  cout<<fixed<<"downward uncertainty   = "<<downUnc*100<<" %\\\\"<<endl;
 
   cout.precision(3);
-  cout<<"upUnc = "<<upUnc<<endl;
-  cout<<"upUncError = "<<upUncError<<endl;
-  double Upuncertainty = (max(abs(upUnc-upUncError),abs(upUnc+upUncError)));
-  cout<<fixed<<"Uncertainty upward     = "<<Upuncertainty*100<<"\\%"<<"  \\\\"<<endl<<endl;
- 
-  cout<<"downUnc = "<<downUnc<<endl;
-  cout<<"downUncError = "<<downUncError<<endl;
-  double Downuncertainty = (max(abs(downUnc-downUncError),abs(downUnc+downUncError)));
-  cout<<fixed<<"Uncertainty downward     = "<<Downuncertainty*100<<"\\%"<<"  \\\\"<<endl<<endl;
 
-  double uncertainty = (Downuncertainty+Upuncertainty)/2.;
+  double uncertainty = (downUnc+upUnc)/2.;
   cout<<"Final Uncertainty = "<<fixed<<uncertainty<<endl;
   cout<<"###########################################################################"<<endl;
 
