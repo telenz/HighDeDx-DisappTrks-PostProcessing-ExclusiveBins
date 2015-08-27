@@ -14,6 +14,7 @@
 #include "TH1F.h"
 #include "TMarker.h"
 #include "TFrame.h"
+#include "TMath.h"
 
 string dTs(double d){
  std::stringstream tmp;
@@ -26,9 +27,9 @@ string dTs(double d){
 double ctauMin=1;
 double massMin=100;
 
-void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau);
+void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau);
 
-double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> exp, TString title);
+double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> exp, TString title);
 
 void plot_limit_2d(TString filename){
   //this macro should read in limit results and make a nice plot out of it!
@@ -39,6 +40,7 @@ void plot_limit_2d(TString filename){
   lifetimes.push_back(10);
   lifetimes.push_back(50);
   lifetimes.push_back(100);
+  lifetimes.push_back(1000);
 
   int size = lifetimes.size()+2;
 
@@ -66,21 +68,23 @@ void plot_limit_2d(TString filename){
 
     vector<double> xsecTheo;
     vector<double> xsecTheoErr;
+    vector<double> massAll;
+    vector<double> xsecTheoAll;
+    vector<double> xsecTheoErrAll;
     // Read in theoretical cross-sections
-    ifstream inputFile("xsectionsUpdated.txt");
-    int lines;
+    ifstream inputFile("xsectionsUpdatedAllMasses.txt");
     int it=1;
-    TString dataset;
-    double xsec,xsecErr;
+    double dataset,xsec,xsecErr;
     while(inputFile>>dataset>>xsec>>xsecErr){
-      if(!dataset.Contains(ctauToString)) continue;
-      //cout<<"name = "<<dataset<<endl;
-      //cout<<"xsec = "<<xsec<<endl;
-      xsecTheo.push_back(xsec);
-      xsecTheoErr.push_back(xsecErr);
+      massAll.push_back(dataset);
+      xsecTheoAll.push_back(xsec/1000.);
+      xsecTheoErrAll.push_back(xsecErr/1000.);
+
+      if(dataset!=100 && dataset!=200 && dataset!=300 && dataset!=400 && dataset!=500 ) continue;
+      xsecTheo.push_back(xsec/1000.);
+      xsecTheoErr.push_back(xsecErr/1000.);
       it++;
     }
-    lines=it;
     inputFile.close();
 
 
@@ -99,7 +103,7 @@ void plot_limit_2d(TString filename){
     files.push_back(Form("logFiles/" + filename + "/res_mass_400GeV_ctau_%icm.log",lifetimes[ct]));
     files.push_back(Form("logFiles/" + filename + "/res_mass_500GeV_ctau_%icm.log",lifetimes[ct]));
 
-    //cout<<files.size()<<endl;
+    cout<<files.size()<<endl;
  
     for(unsigned int i=0; i<files.size(); i++){
       string file=files[i];
@@ -120,7 +124,6 @@ void plot_limit_2d(TString filename){
 	      //cout<<"pos = "<<pos<<endl;
 	      if(pos != std::string::npos)take_line=true;
 	      if(take_line){
-		bool done=false;
 		std::istringstream ss(line);
 		string s1,s2,s3,s4,s5,s6,s7;
 		double value=-1;
@@ -128,12 +131,10 @@ void plot_limit_2d(TString filename){
 		if(value!=-1){
 		  if(s1=="Observed"){
 		    obs.push_back(value);
-		    done=true;
 		  }
 		  if(s1=="Expected" && s2=="50.0%:"){
 		    //cout<<"expected limit = "<<value<<endl;
 		    exp.push_back(value);
-		    done=true;
 		  }
 		}
 		if(value!=-1){
@@ -164,24 +165,24 @@ void plot_limit_2d(TString filename){
   
     
 
-    double intExp = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,exp,Form("expected_%icm",lifetimes[ct]));
+    double intExp = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp,Form("expected_%icm",lifetimes[ct]));
     cout<<"intExp = "<<intExp<<endl;
-    double intExp_1sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,exp_1sig_down,Form("expected_1sigma_up_%icm",lifetimes[ct]));
+    double intExp_1sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_1sig_down,Form("expected_1sigma_up_%icm",lifetimes[ct]));
     cout<<"intExp_1sig_up = "<<intExp_1sig_up<<endl;
-    double intExp_1sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,exp_1sig_up,Form("expected_1sigma_down_%icm",lifetimes[ct]));
+    double intExp_1sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_1sig_up,Form("expected_1sigma_down_%icm",lifetimes[ct]));
     cout<<"intExp_1sig_down = "<<intExp_1sig_down<<endl;
-    double intExp_2sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,exp_2sig_down,Form("expected_2sigma_up_%icm",lifetimes[ct]));
+    double intExp_2sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_2sig_down,Form("expected_2sigma_up_%icm",lifetimes[ct]));
     cout<<"intExp_2sig_up = "<<intExp_2sig_up<<endl;
-    double intExp_2sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,exp_2sig_up,Form("expected_2sigma_down_%icm",lifetimes[ct]));
+    double intExp_2sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_2sig_up,Form("expected_2sigma_down_%icm",lifetimes[ct]));
     cout<<"intExp_2sig_down = "<<intExp_2sig_down<<endl;
-    double intObs = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,obs,Form("observed_%icm",lifetimes[ct]));
+    double intObs = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,Form("observed_%icm",lifetimes[ct]));
     cout<<"intObs = "<<intObs<<endl;
     cout<<endl;
 
     
     if(ct==0){
 
-      ctau_2d[ct]          = ctauMin;
+      ctau_2d[ct]          = ctauMin/(100*TMath::C()*pow(10,-9));
       ctau_Error_2d[ct]    = 0;
       obs_2d[ct]           = massMin;
       exp_2d[ct]           = massMin;
@@ -192,7 +193,7 @@ void plot_limit_2d(TString filename){
     }
     
     
-    ctau_2d[ct+1]          = lifetimes[ct];
+    ctau_2d[ct+1]          = lifetimes[ct]/(100*TMath::C()*pow(10,-9));
     ctau_Error_2d[ct+1]    = 0;
     obs_2d[ct+1]           = intObs;
     exp_2d[ct+1]           = intExp;
@@ -200,6 +201,8 @@ void plot_limit_2d(TString filename){
     exp_1sig_down_2d[ct+1] = intExp_1sig_down;
     exp_2sig_up_2d[ct+1]   = intExp_2sig_up;
     exp_2sig_down_2d[ct+1] = intExp_2sig_down;
+    
+
     
 
     /*
@@ -212,7 +215,8 @@ void plot_limit_2d(TString filename){
     exp_2sig_up_2d[ct] =intExp_2sig_up;
     exp_2sig_down_2d[ct] =intExp_2sig_down;
     */
-    make_plot(mass,xsecTheo,xsecTheoErr,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,lifetimes[ct]);    
+
+    make_plot(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,ct);
 
   }
 
@@ -266,11 +270,11 @@ void plot_limit_2d(TString filename){
   TGraph* g_exp_2sig_down = new TGraph(nBins, exp_2sig_down_2d, ctau_2d);
   TGraph* g_exp_1sig_up   = new TGraph(nBins, exp_1sig_up_2d,   ctau_2d);
   TGraph* g_exp_1sig_down = new TGraph(nBins, exp_1sig_down_2d, ctau_2d);
-  TGraph* g_exp           = new TGraph(nBins, exp_2d, ctau_2d);
-  TGraph* g_obs           = new TGraph(nBins, obs_2d, ctau_2d);
+  TGraph* g_exp           = new TGraph(nBins, exp_2d          , ctau_2d);
+  TGraph* g_obs           = new TGraph(nBins, obs_2d          , ctau_2d);
 
 
-  g_exp_2sig_up->GetXaxis()->SetLimits(100,500);
+  g_exp_2sig_up->GetXaxis()->SetLimits(100,600);
 
   g_exp_2sig_up->SetMarkerStyle(8);
   g_exp_2sig_up->SetMarkerSize(1);
@@ -308,7 +312,8 @@ void plot_limit_2d(TString filename){
   g_exp_2sig_up->GetYaxis()->SetTitleSize(0.05);
   g_exp_2sig_up->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
   g_exp_2sig_up->GetYaxis()->SetTitle("c#tau_{#Chi^{#pm}} [cm]");
-  g_exp_2sig_up->GetYaxis()->SetRangeUser(ctauMin,110);
+  g_exp_2sig_up->GetYaxis()->SetRangeUser(ctauMin,1100);
+  g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,300);
   g_exp_2sig_up->SetTitle();
 
   gPad->RedrawAxis();
@@ -324,6 +329,8 @@ void plot_limit_2d(TString filename){
   c->SetTicky();
   c->Update();
   c->SaveAs("LimitPlot_2d.pdf");
+  c->SetLogy();
+  c->SaveAs("LimitPlot_2d_log.pdf");
 
   return;
 }
@@ -334,34 +341,39 @@ double finter(double *x, double*par) {
   return TMath::Abs(f1->EvalPar(x,par) - f2->EvalPar(x,par));
 }
 
-double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> exp, TString title){
+double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> exp, TString title){
 
   vector<double> xsecTheoLow;
   vector<double> expTimesXsec;
   for(unsigned int i=0; i<xsecTheo.size();i++){
-    xsecTheoLow.push_back(xsecTheo[i]-xsecTheoErr[i]);
     expTimesXsec.push_back(exp[i]*xsecTheo[i]);
+  }
+
+  for(unsigned int i=0; i<xsecTheoAll.size();i++){
+    xsecTheoLow.push_back(xsecTheoAll[i]-xsecTheoErrAll[i]);
   }
 
 
   TCanvas *c3=0;
   // Get TF1 between xSecTheoLow  points
-  for(unsigned int i=0; i<xsecTheoLow.size()-1;i++){
-    f1 = new TF1("f1","[0]*x+[1]",mass[i],mass[i+1]);
-    f1->SetRange(mass[i],mass[i+1]);
-    double a = (xsecTheoLow[i]-xsecTheoLow[i+1])/(mass[i]-mass[i+1]);
-    double b = xsecTheoLow[i]-a*mass[i];
-    f1->SetParameter(0,a);
-    f1->SetParameter(1,b);
-   
-   
+  for(unsigned int i=0; i<xsecTheo.size()-1;i++){
     f2 = new TF1("f2","[0]*x+[1]",mass[i],mass[i+1]);
     f2->SetRange(mass[i],mass[i+1]);
-    a = (expTimesXsec[i]-expTimesXsec[i+1])/(mass[i]-mass[i+1]);
-    b = expTimesXsec[i]-a*mass[i];
+    double a = (expTimesXsec[i]-expTimesXsec[i+1])/(mass[i]-mass[i+1]);
+    double b = expTimesXsec[i]-a*mass[i];
     f2->SetParameter(0,a);
     f2->SetParameter(1,b);
-  
+  }
+
+  cout<<"xsecTheoLow.size() = "<<xsecTheoLow.size()<<endl;
+  for(unsigned int i=0; i<xsecTheoLow.size()-1;i++){
+    //cout<<"massAll["<<i<<"] = "<<massAll[i]<<endl;
+    //cout<<"massAll["<<i+1<<"] = "<<massAll[i+1]<<endl;
+    f1 = new TF1("f1","[0]*x+[1]",massAll[i],massAll[i+1]);
+    double a = (xsecTheoLow[i]-xsecTheoLow[i+1])/(massAll[i]-massAll[i+1]);
+    double b = xsecTheoLow[i]-a*massAll[i];
+    f1->SetParameter(0,a);
+    f1->SetParameter(1,b);
   
     double xmin, xmax;
     f1->GetRange(xmin,xmax);
@@ -379,7 +391,7 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
     f2->Draw("same");
     fint->Draw("lsame");
     */
-    if(xint!=mass[i] && xint !=mass[i+1]){
+    if(xint!=massAll[i] && xint !=massAll[i+1]){
       //c3->SaveAs("intersection_"+title+".pdf");
       return xint;
     }
@@ -394,7 +406,7 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau){
+void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau){
   TCanvas *c1 = new TCanvas;
   c1->SetLogy();
 
@@ -416,7 +428,6 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   l1->SetBorderSize(0);
 
 
-
   double x[nn];
   double xUpperErr[nn];
   double xLowerErr[nn];
@@ -424,8 +435,9 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   double yLowerErr[nn];
   double yUpperErr2[nn];
   double yLowerErr2[nn];
-  double xsec[nn];
-  double xsecErr[nn];
+  double *xAll    = new double[xsecTheoAll.size()];
+  double *xsec    = new double[xsecTheoAll.size()];
+  double *xsecErr = new double[xsecTheoAll.size()];
 
 
   double yexp[nn];
@@ -442,13 +454,16 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
     yLowerErr[j]=(exp[j]-exp_1sig_down[j])*xsecTheo[j];
     yUpperErr2[j]=(exp_2sig_up[j]-exp[j])*xsecTheo[j];
     yLowerErr2[j]=(exp[j]-exp_2sig_down[j])*xsecTheo[j];
-    xsec[j]=xsecTheo[j];
-    xsecErr[j]=xsecTheoErr[j];
     //cout<<exp_1sig_down[j]<<" "<<exp_2sig_down[j]<<endl;
+  }
+  for(unsigned int j=0; j<xsecTheoAll.size(); j++){
+    xAll[j]=massAll[j];
+    xsec[j]=xsecTheoAll[j];
+    xsecErr[j]=xsecTheoErrAll[j];
   }
   TGraph *expL= new TGraph(nBins,x,yexp);
   TGraph *obsL= new TGraph(nBins,x,yobs);
-  TGraphErrors *xsecL= new TGraphErrors(nBins,x,xsec,xLowerErr,xsecErr);
+  TGraphErrors *xsecL= new TGraphErrors(xsecTheoAll.size(),xAll,xsec,xLowerErr,xsecErr);
 
   TGraphAsymmErrors *exp_1sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr, yUpperErr);
   TGraphAsymmErrors *exp_2sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr2, yUpperErr2);
