@@ -12,7 +12,7 @@ iasCutMax = float(sys.argv[6])*100
 mass      = sys.argv[7]
 ctau      = sys.argv[8]
 
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
+format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<20}{5:<20}{6:<20}{7:<20}"
 fIn = open('../bkg/datacards/datacard_metCutEq%s_ptGt%s_Le%s_ECaloCutEq%s_IasGt0p%02.0f_Le0p%02.0f_mass_%sGeV_ctau_%scm.txt' %(metCut,ptCutMin,ptCutMax,ecaloCut,iasCutMin,iasCutMax,mass,ctau), 'r')
 linesOriginal = fIn.read().split("\n")
 
