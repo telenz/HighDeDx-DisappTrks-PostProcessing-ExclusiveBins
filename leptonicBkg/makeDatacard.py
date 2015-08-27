@@ -65,7 +65,7 @@ list4    = ['1','Muon', 1, muonBkg]
 
 
 
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
+format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<20}{5:<20}{6:<20}{7:<20}"
 for n in range(len(list0)):
     f.write(format_string.format(list[n], listErr[n], listN[n], list0[n], list1[n], list2[n], list3[n], list4[n]))
     f.write('\n')
