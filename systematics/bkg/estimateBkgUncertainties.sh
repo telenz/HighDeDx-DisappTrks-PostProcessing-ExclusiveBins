@@ -111,7 +111,7 @@ cd ../
 rm *~
 
 mass=("100" "200" "300" "400" "500")
-ctau=("1" "5" "10" "50" "100")                           #please specifiy in cm
+ctau=("1" "5" "10" "50" "100" "1000")                           #please specifiy in cm
 
 for ct in "${ctau[@]}"
   do
