@@ -41,6 +41,8 @@ int getSignalResult(double metCut, double jetptCut,  double ptCutMin,  double pt
   samples.push_back(sig_m100_ct50);
   sample sig_m100_ct100("Madgraph_signal_mass_100_ctau_100cm");
   samples.push_back(sig_m100_ct100);
+  sample sig_m100_ct1000("Madgraph_signal_mass_100_ctau_1000cm");
+  samples.push_back(sig_m100_ct1000);
 
   sample sig_m200_ct1("Madgraph_signal_mass_200_ctau_1cm");
   samples.push_back(sig_m200_ct1);
@@ -52,6 +54,8 @@ int getSignalResult(double metCut, double jetptCut,  double ptCutMin,  double pt
   samples.push_back(sig_m200_ct50);
   sample sig_m200_ct100("Madgraph_signal_mass_200_ctau_100cm");
   samples.push_back(sig_m200_ct100);
+  sample sig_m200_ct1000("Madgraph_signal_mass_200_ctau_1000cm");
+  samples.push_back(sig_m200_ct1000);
 
   sample sig_m300_ct1("Madgraph_signal_mass_300_ctau_1cm");
   samples.push_back(sig_m300_ct1);
@@ -63,6 +67,8 @@ int getSignalResult(double metCut, double jetptCut,  double ptCutMin,  double pt
   samples.push_back(sig_m300_ct50);
   sample sig_m300_ct100("Madgraph_signal_mass_300_ctau_100cm");
   samples.push_back(sig_m300_ct100);
+  sample sig_m300_ct1000("Madgraph_signal_mass_300_ctau_1000cm");
+  samples.push_back(sig_m300_ct1000);
 
   sample sig_m400_ct1("Madgraph_signal_mass_400_ctau_1cm");
   samples.push_back(sig_m400_ct1);
@@ -74,6 +80,8 @@ int getSignalResult(double metCut, double jetptCut,  double ptCutMin,  double pt
   samples.push_back(sig_m400_ct50);
   sample sig_m400_ct100("Madgraph_signal_mass_400_ctau_100cm");
   samples.push_back(sig_m400_ct100);
+  sample sig_m400_ct1000("Madgraph_signal_mass_400_ctau_1000cm");
+  samples.push_back(sig_m400_ct1000);
 
   sample sig_m500_ct1("Madgraph_signal_mass_500_ctau_1cm");
   samples.push_back(sig_m500_ct1);
@@ -85,6 +93,8 @@ int getSignalResult(double metCut, double jetptCut,  double ptCutMin,  double pt
   samples.push_back(sig_m500_ct50);
   sample sig_m500_ct100("Madgraph_signal_mass_500_ctau_100cm");
   samples.push_back(sig_m500_ct100);
+  sample sig_m500_ct1000("Madgraph_signal_mass_500_ctau_1000cm");
+  samples.push_back(sig_m500_ct1000);
 
 
   TFile *out = 0;
