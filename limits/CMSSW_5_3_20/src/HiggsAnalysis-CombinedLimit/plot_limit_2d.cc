@@ -328,8 +328,10 @@ void plot_limit_2d(TString filename){
   c->SetTickx();
   c->SetTicky();
   c->Update();
+  g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,1.5);
   c->SaveAs("LimitPlot_2d.pdf");
   c->SetLogy();
+  g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,300);
   c->SaveAs("LimitPlot_2d_log.pdf");
 
   return;
