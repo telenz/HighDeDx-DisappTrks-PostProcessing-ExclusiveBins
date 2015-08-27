@@ -2,7 +2,7 @@ ini6
 cmsenv
 
 massTable=("100" "200" "300" "400" "500")   #please specifiy in GeV
-decaywidthTable=("5" "10" "50" "100")   #please specifiy in cm
+decaywidthTable=("5" "10" "50" "100" "1000")   #please specifiy in cm
 
 #massTable=("300")   #please specifiy in GeV
 #decaywidthTable=("10")   #please specifiy in cm
