@@ -52,7 +52,6 @@ scanDatacards("HitsLostInner","Simulation of missing inner hits")
 scanDatacards("PU","PU")
 scanDatacards("TrkRecoEff","Track reconstruction efficiency")
 scanDatacards("Ias","Simulation of Ias")
-scanDatacards("xsec","Theoretical x-section")
 ##########################################################################################################################################################################################
 fout.write('\\hline')
 fout.write('\\end{tabular}  \n')
