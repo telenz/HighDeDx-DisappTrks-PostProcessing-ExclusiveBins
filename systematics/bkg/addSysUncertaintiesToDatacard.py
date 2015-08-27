@@ -35,7 +35,7 @@ for n in range(len(lines)):
         
 fout.write("\n# SYSTEMATIC UNCERTAINTIES \n\n")
 
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
+format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<20}{5:<20}{6:<20}{7:<20}"
 
 fout.write(format_string.format("pion_syst_rate", "lnN", "", "-", "-", uncertainty,"-", "-"))
 fout.write('\n')
@@ -50,7 +50,6 @@ for n in range(len(lines)):
         uncertainty = float(lines[n].split(' = ')[1]) + 1
         #print 'uncertainty = ' + str(uncertainty)
         
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("elec_syst_rate_" + str(ptCutMin) , "lnN", "", "-", "-", "-",uncertainty, "-"))
 fout.write('\n')
 
@@ -64,7 +63,6 @@ for n in range(len(lines)):
         uncertainty = float(lines[n].split(' = ')[1]) + 1.
         #print 'uncertainty = ' + str(uncertainty)
         
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("muon_syst_rate", "lnN", "", "-","-", "-", "-", uncertainty))
 fout.write('\n')
 
@@ -80,7 +78,6 @@ for n in range(len(lines)):
         #print 'uncertainty = ' + str(uncertainty)
         
 
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("pion_syst_ias" + str('_0p%02.0f' %(iasCutMin)), "lnN", "", "-", "-", uncertainty,"-", "-"))
 fout.write('\n')
 
@@ -94,7 +91,6 @@ for n in range(len(lines)):
         uncertainty = float(lines[n].split(' = ')[1]) + 1
         #print 'uncertainty = ' + str(uncertainty)
         
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("elec_syst_ias" + str('_0p%02.0f' %(iasCutMin)), "lnN", "", "-", "-", "-",uncertainty, "-"))
 fout.write('\n')
 
@@ -108,7 +104,6 @@ for n in range(len(lines)):
         uncertainty = float(lines[n].split(' = ')[1]) + 1
         #print 'uncertainty = ' + str(uncertainty)
         
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("muon_syst_ias" + str('_0p%02.0f' %(iasCutMin)), "lnN", "", "-","-", "-", "-", uncertainty))
 fout.write('\n')
 
@@ -123,7 +118,6 @@ for n in range(len(lines)):
         uncertainty = float(lines[n].split(' = ')[1]) + 1
         #print 'uncertainty = ' + str(uncertainty)
         
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("fake_syst_rate_" + str(ptCutMin), "lnN", "", "-", uncertainty,"-", "-", "-"))
 fout.write('\n')
 ####################################################################################################
@@ -137,7 +131,6 @@ for n in range(len(lines)):
         uncertainty = float(lines[n].split(' = ')[1]) + 1
         #print 'uncertainty = ' + str(uncertainty)
         
-format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("fake_syst_ias_" + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), "lnN", "", "-", uncertainty,"-", "-", "-"))
 fout.write('\n')
 ####################################################################################################
