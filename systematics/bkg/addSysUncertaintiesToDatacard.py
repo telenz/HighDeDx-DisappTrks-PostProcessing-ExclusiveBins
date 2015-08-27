@@ -31,7 +31,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 fout.write("\n# SYSTEMATIC UNCERTAINTIES \n\n")
 
@@ -48,7 +48,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("elec_syst_rate_" + str(ptCutMin) , "lnN", "", "-", "-", "-",uncertainty, "-"))
@@ -62,7 +62,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1.
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("muon_syst_rate", "lnN", "", "-","-", "-", "-", uncertainty))
@@ -77,7 +77,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 
 format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
@@ -92,7 +92,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("elec_syst_ias" + str('_0p%02.0f' %(iasCutMin)), "lnN", "", "-", "-", "-",uncertainty, "-"))
@@ -106,7 +106,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("muon_syst_ias" + str('_0p%02.0f' %(iasCutMin)), "lnN", "", "-","-", "-", "-", uncertainty))
@@ -121,7 +121,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("fake_syst_rate_" + str(ptCutMin), "lnN", "", "-", uncertainty,"-", "-", "-"))
@@ -135,7 +135,7 @@ for n in range(len(lines)):
 
     if lines[n].find('Final Uncertainty ') >= 0:
         uncertainty = float(lines[n].split(' = ')[1]) + 1
-        print 'uncertainty = ' + str(uncertainty)
+        #print 'uncertainty = ' + str(uncertainty)
         
 format_string = "{0:<40}{1:<5}{2:<10}{3:<40}{4:<30}{5:<30}{6:<30}{7:<30}"
 fout.write(format_string.format("fake_syst_ias_" + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), "lnN", "", "-", uncertainty,"-", "-", "-"))
