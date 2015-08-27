@@ -19,7 +19,7 @@ string dTs(double d){
 
 }
 
-void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau);
+void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau);
 
 void plot_limit_xsec(TString filename, int ctau){
   //this macro should read in limit results and make a nice plot out of it!
@@ -35,27 +35,6 @@ void plot_limit_xsec(TString filename, int ctau){
   vector<double> exp_1sig_down;
   vector<double> exp_2sig_down;
 
-  vector<double> xsecTheo;
-  vector<double> xsecTheoErr;
-  // Read in theoretical cross-sections
-  ifstream inputFile("xsectionsUpdated.txt");
-  int lines;
-  int it=1;
-  TString dataset;
-  double xsec,xsecErr;
-  while(inputFile>>dataset>>xsec>>xsecErr){
-    if(!dataset.Contains(ctauToString)) continue;
-    cout<<"name = "<<dataset<<endl;
-    cout<<"xsec = "<<xsec<<endl;
-    xsecTheo.push_back(xsec);
-    xsecTheoErr.push_back(xsecErr);
-    it++;
-  }
-  lines=it;
-  inputFile.close();
-  cout<<"haha2"<<endl;
-
-
   //to be nicend in the future;
   vector<double> mass;
   mass.push_back(100);
@@ -63,6 +42,28 @@ void plot_limit_xsec(TString filename, int ctau){
   mass.push_back(300);
   mass.push_back(400);
   mass.push_back(500);
+
+
+  vector<double> xsecTheo;
+  vector<double> xsecTheoErr;
+  vector<double> massAll;
+  vector<double> xsecTheoAll;
+  vector<double> xsecTheoErrAll;
+  // Read in theoretical cross-sections
+  ifstream inputFile("xsectionsUpdatedAllMasses.txt");
+  int it=1;
+  double dataset, xsec,xsecErr;
+  while(inputFile>>dataset>>xsec>>xsecErr){
+    massAll.push_back(dataset);
+    xsecTheoAll.push_back(xsec/1000.);
+    xsecTheoErrAll.push_back(xsecErr/1000.);
+    if(dataset!=100 && dataset!=200 && dataset!=300 && dataset!=400 && dataset!=500 ) continue;
+    xsecTheo.push_back(xsec/1000.);
+    xsecTheoErr.push_back(xsecErr/1000.);
+    it++;
+  }
+  inputFile.close();
+
   
   vector<string> files;
   files.push_back(Form("logFiles/" + filename + "/res_mass_100GeV_ctau_%icm.log",ctau));
@@ -71,7 +72,6 @@ void plot_limit_xsec(TString filename, int ctau){
   files.push_back(Form("logFiles/" + filename + "/res_mass_400GeV_ctau_%icm.log",ctau));
   files.push_back(Form("logFiles/" + filename + "/res_mass_500GeV_ctau_%icm.log",ctau));
 
-  cout<<files.size()<<endl;
  
   for(unsigned int i=0; i<files.size(); i++){
     string file=files[i];
@@ -92,7 +92,6 @@ void plot_limit_xsec(TString filename, int ctau){
 	  //cout<<"pos = "<<pos<<endl;
 	  if(pos != std::string::npos)take_line=true;
 	  if(take_line){
-	    bool done=false;
 	    std::istringstream ss(line);
 	    string s1,s2,s3,s4,s5,s6,s7;
 	    double value=-1;
@@ -100,12 +99,9 @@ void plot_limit_xsec(TString filename, int ctau){
 	    if(value!=-1){
 	      if(s1=="Observed"){
 		obs.push_back(value);
-		done=true;
 	      }
 	      if(s1=="Expected" && s2=="50.0%:"){
-		cout<<"expected limit = "<<value<<endl;
 		exp.push_back(value);
-		done=true;
 	      }
 	    }
 	    if(value!=-1){
@@ -134,17 +130,15 @@ void plot_limit_xsec(TString filename, int ctau){
     else cout << "Unable to open file "; 
   }//loop over all files
 
-  
-  make_plot(mass,xsecTheo,xsecTheoErr,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,ctau);
+  make_plot(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,ctau);
 
   return;
 }
 
 
-void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau){
+void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau){
   TCanvas *c1 = new TCanvas;
   c1->SetLogy();
-
   //gStyle->SetPadBottomMargin(10.5);
   gPad->SetBottomMargin(0.14);
   gPad->SetLeftMargin(0.14);
@@ -171,8 +165,9 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   double yLowerErr[nn];
   double yUpperErr2[nn];
   double yLowerErr2[nn];
-  double xsec[nn];
-  double xsecErr[nn];
+  double *xAll    = new double[xsecTheoAll.size()];
+  double *xsec    = new double[xsecTheoAll.size()];
+  double *xsecErr = new double[xsecTheoAll.size()];
 
 
   double yexp[nn];
@@ -189,14 +184,16 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
     yLowerErr[j]=(exp[j]-exp_1sig_down[j])*xsecTheo[j];
     yUpperErr2[j]=(exp_2sig_up[j]-exp[j])*xsecTheo[j];
     yLowerErr2[j]=(exp[j]-exp_2sig_down[j])*xsecTheo[j];
-    xsec[j]=xsecTheo[j];
-    xsecErr[j]=xsecTheoErr[j];
     //cout<<exp_1sig_down[j]<<" "<<exp_2sig_down[j]<<endl;
+  }
+  for(unsigned int j=0; j<xsecTheoAll.size(); j++){
+    xAll[j]=massAll[j];
+    xsec[j]=xsecTheoAll[j];
+    xsecErr[j]=xsecTheoErrAll[j];
   }
   TGraph *expL= new TGraph(nBins,x,yexp);
   TGraph *obsL= new TGraph(nBins,x,yobs);
-  TGraphErrors *xsecL= new TGraphErrors(nBins,x,xsec,xLowerErr,xsecErr);
-
+  TGraphErrors *xsecL= new TGraphErrors(xsecTheoAll.size(),xAll,xsec,xLowerErr,xsecErr);
   TGraphAsymmErrors *exp_1sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr, yUpperErr);
   TGraphAsymmErrors *exp_2sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr2, yUpperErr2);
   //exp_1sig->Draw("AF");
@@ -234,7 +231,7 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   l1->AddEntry(expL,"Expected Limit","l");
   l1->AddEntry(exp_1sig,"#pm 1#sigma","f");
   l1->AddEntry(exp_2sig,"#pm 2#sigma","f");
-  l1->AddEntry(xsecL,"Theoretical x-section","l");
+  //l1->AddEntry(xsecL,"Theoretical x-section","l");
 
   l1->Draw();
 
