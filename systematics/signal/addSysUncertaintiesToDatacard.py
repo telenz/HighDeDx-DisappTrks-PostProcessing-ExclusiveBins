@@ -30,7 +30,7 @@ def getUncertainty(filename, stringname ):
     for n in range(len(lines)):
         if lines[n].find('Final Uncertainty ') >= 0:
             uncertainty = float(lines[n].split(' = ')[1]) + 1
-            print 'uncertainty = ' + str(uncertainty)
+            #print 'uncertainty = ' + str(uncertainty)
     fout.write(format_string.format(stringname, "lnN", "", "{0:.4f}".format(uncertainty),"-", "-","-", "-"))
     fout.write('\n')
 #################################### function definition ####################################
