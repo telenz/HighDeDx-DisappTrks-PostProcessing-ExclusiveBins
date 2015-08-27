@@ -5,7 +5,7 @@ cmsenv
 cd -
 
 mass=("100" "200" "300" "400" "500")
-ctau=("5" "10" "50" "100")                           #please specifiy in cm
+ctau=("5" "10" "50" "100" "1000")                           #please specifiy in cm
 
 for m in "${mass[@]}"
 do
