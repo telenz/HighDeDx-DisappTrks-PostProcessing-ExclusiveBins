@@ -35,12 +35,19 @@ Precision                               = 5.69361%
 NEvents                                 = 342
 Average event weight                    = 0.786932
 
+filename = results/Signal_Madgraph_signal_mass_100_ctau_1000cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 483
+Yield Madgraph_signal_mass_100_ctau_1000cm = 33.4836 +/- 7.7077
+Precision                               = 23.0193%
+NEvents                                 = 22
+Average event weight                    = 1.52198
+
 filename = results/Signal_Madgraph_signal_mass_200_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 37
 Yield Madgraph_signal_mass_200_ctau_1cm = 0 +/- 0
-Precision                               = -nan%
+Precision                               = nan%
 NEvents                                 = 0
-Average event weight                    = -nan
+Average event weight                    = nan
 
 filename = results/Signal_Madgraph_signal_mass_200_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 857
@@ -70,12 +77,19 @@ Precision                               = 4.32649%
 NEvents                                 = 604
 Average event weight                    = 0.115674
 
+filename = results/Signal_Madgraph_signal_mass_200_ctau_1000cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 1129
+Yield Madgraph_signal_mass_200_ctau_1000cm = 29.8548 +/- 2.0081
+Precision                               = 6.72622%
+NEvents                                 = 250
+Average event weight                    = 0.119419
+
 filename = results/Signal_Madgraph_signal_mass_300_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 2
 Yield Madgraph_signal_mass_300_ctau_1cm = 0 +/- 0
-Precision                               = -nan%
+Precision                               = nan%
 NEvents                                 = 0
-Average event weight                    = -nan
+Average event weight                    = nan
 
 filename = results/Signal_Madgraph_signal_mass_300_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 473
@@ -105,12 +119,19 @@ Precision                               = 3.34577%
 NEvents                                 = 998
 Average event weight                    = 0.0229792
 
+filename = results/Signal_Madgraph_signal_mass_300_ctau_1000cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 1675
+Yield Madgraph_signal_mass_300_ctau_1000cm = 12.4847 +/- 0.574227
+Precision                               = 4.59944%
+NEvents                                 = 530
+Average event weight                    = 0.023556
+
 filename = results/Signal_Madgraph_signal_mass_400_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 5
 Yield Madgraph_signal_mass_400_ctau_1cm = 0 +/- 0
-Precision                               = -nan%
+Precision                               = nan%
 NEvents                                 = 0
-Average event weight                    = -nan
+Average event weight                    = nan
 
 filename = results/Signal_Madgraph_signal_mass_400_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 360
@@ -140,12 +161,19 @@ Precision                               = 2.78588%
 NEvents                                 = 1454
 Average event weight                    = 0.00645144
 
+filename = results/Signal_Madgraph_signal_mass_400_ctau_1000cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2131
+Yield Madgraph_signal_mass_400_ctau_1000cm = 5.44507 +/- 0.199192
+Precision                               = 3.65821%
+NEvents                                 = 838
+Average event weight                    = 0.0064977
+
 filename = results/Signal_Madgraph_signal_mass_500_ctau_1cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 2
 Yield Madgraph_signal_mass_500_ctau_1cm = 0 +/- 0
-Precision                               = -nan%
+Precision                               = nan%
 NEvents                                 = 0
-Average event weight                    = -nan
+Average event weight                    = nan
 
 filename = results/Signal_Madgraph_signal_mass_500_ctau_5cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
 Entries = 376
@@ -174,5 +202,12 @@ Yield Madgraph_signal_mass_500_ctau_100cm = 3.3163 +/- 0.0863251
 Precision                               = 2.60306%
 NEvents                                 = 1678
 Average event weight                    = 0.00197634
+
+filename = results/Signal_Madgraph_signal_mass_500_ctau_1000cm_metCutEq100_ptGt50_Le50000_ECaloCutEq5_IasGt0p30_Le0p99.root
+Entries = 2518
+Yield Madgraph_signal_mass_500_ctau_1000cm = 1.99579 +/- 0.0668127
+Precision                               = 3.34768%
+NEvents                                 = 1018
+Average event weight                    = 0.0019605
 
 (int)0
