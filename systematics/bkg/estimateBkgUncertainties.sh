@@ -114,8 +114,8 @@ for ct in "${ctau[@]}"
   do
     for m in "${mass[@]}"
     do
-	echo "m="$m
-	echo "ctau="$ct
+	#echo "m="$m
+	#echo "ctau="$ct
 	python addSysUncertaintiesToDatacard.py ${metCut} ${ptCutMin} ${ptCutMax} ${ecaloCut} "${iasCutMin}" "${iasCutMax}" "${m}" "${ct}"
     done
 done
