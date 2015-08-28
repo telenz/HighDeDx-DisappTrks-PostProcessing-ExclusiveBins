@@ -4,8 +4,7 @@ cd ../limits/CMSSW_5_3_20/src/HiggsAnalysis-CombinedLimit/
 cmsenv
 cd -
 
-mass=("100" "200" "300" "400" "500")
-ctau=("5" "10" "50" "100" "1000")                           #please specifiy in cm
+source ../variablesSetting.sh
 
 for m in "${mass[@]}"
 do
