@@ -9,12 +9,15 @@ ptCutMax  = sys.argv[3]
 ecaloCut  = sys.argv[4]
 iasCutMin = float(sys.argv[5])*100
 iasCutMax = float(sys.argv[6])*100
+mass      = sys.argv[7]
+ctau      = sys.argv[8]
+
 
 fIn = open('../leptonicBkg/datacards/datacard_metCutEq%s_ptGt%s_Le%s_ECaloCutEq%s_IasGt0p%02.0f_Le0p%02.0f.txt' %(metCut,ptCutMin,ptCutMax,ecaloCut,iasCutMin,iasCutMax), 'r')
 linesOriginal = fIn.read().split("\n")
 
 
-fIn = open('signal.log','r')
+fIn = open('logFiles/signal_mass_%sGeV_ctau_%scm.log' %(mass,ctau),'r')
 lines = fIn.read().split("\n")
 
 
@@ -22,17 +25,9 @@ for n in range(len(lines)):
 
 
     if lines[n].find('Yield Madgraph_signal_mass_') >= 0:
-        mass = lines[n].split('_')[3]
-        print 'mass = ' + str(mass)
-        ctau = lines[n].split('_')[5]
-        ctau = ctau.split('cm')[0]
-        print 'ctau = ' + str(ctau)
         pred = lines[n].split()[3]
-        print "pred = " + str(pred)
         n2 = n+2
         nEvents = lines[n2].split()[2]
-        print "nEvents = " + str(nEvents)
-        print ''
         
         # Write two datacard
         fout = open('datacards/datacard_metCutEq%s_ptGt%s_Le%s_ECaloCutEq%s_IasGt0p%02.0f_Le0p%02.0f_mass_' %(metCut,ptCutMin,ptCutMax,ecaloCut,iasCutMin,iasCutMax) + str(mass) + 'GeV_ctau_' + str(ctau) + 'cm.txt', 'w')
@@ -45,12 +40,10 @@ for n in range(len(lines)):
                 line = line.replace('x.xxxx', str("%.4f" % float(pred)));
 
             if line.find('signal_stat') >= 0:
-                print nEvents
                 if float(nEvents) == 0:
                     scaling = 0.000
                 else:
                     scaling = float(pred)/float(nEvents)
-                print scaling
                 line = line.replace('x.xxxx', str("%.4f" % scaling));
                 line = line.replace('x', str(nEvents));
 
