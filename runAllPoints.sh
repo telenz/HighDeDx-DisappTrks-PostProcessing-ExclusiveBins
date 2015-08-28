@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "variablesSetting.sh"
+
 metCut=100
 jetptCut=110
 ecaloCut=5
@@ -11,11 +13,9 @@ ptMaxArray=(50 50000)
 iasMinArray=(0.05 0.30)
 iasMaxArray=(0.30 0.99)
 
+
 find . -type f -name "*.log" -not -path "./limits/*" -not -path  "./systematics/signal/12_xsec/*" -not -path  "./systematics/signal/1_Luminosity/*" -not -path  "./systematics/signal/10_TrkRecoEff/*" -exec rm -f {} \;
 rm systematics/signal/datacards/*
-echo ""
-echo ${#ptMinArray}
-echo ""
 for ((i=0; i < ${#ptMinArray[@]}; i++))
 do
     ptCutMin=${ptMinArray[$i]}
@@ -35,7 +35,6 @@ do
 	python makeDatacard.py ${metCut} ${ptCutMin} ${ptCutMax} ${ecaloCut} "${iasCutMin}" "${iasCutMax}"
 	cd ../signal
 	source estimateSignal.sh
-	python makeSignalDatacard.py ${metCut} ${ptCutMin} ${ptCutMax} ${ecaloCut} "${iasCutMin}" "${iasCutMax}"
 	cd ../systematics/bkg
 	source estimateBkgUncertainties.sh
 	cd ../signal
