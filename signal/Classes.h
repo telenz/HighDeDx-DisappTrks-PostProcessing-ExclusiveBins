@@ -43,6 +43,7 @@ public:
   vector<int>    *trackPdgId;
   vector<int>    *trackStatus;
   double weight;
+  double weightReweighting;
   double weight_xsec_lumi;
   double met;
   double leadingJetPt;
@@ -152,6 +153,7 @@ public:
     tree->SetBranchAddress("MET",&met);
     tree->SetBranchAddress("LeadingJetPt",&leadingJetPt);
     tree->SetBranchAddress("weight",&weight);
+    tree->SetBranchAddress("weightReweighting",&weightReweighting);
     tree->SetBranchAddress("weight_xsec_lumi",&weight_xsec_lumi);
     tree->SetBranchAddress("trackDeDx1",&trackDeDx1);
     tree->SetBranchAddress("trackDeDx2",&trackDeDx2);
@@ -179,9 +181,8 @@ public:
 
     for(int n=0; n<tree->GetEntries(); n++){
 
-
+      weightReweighting = 1.;
       tree->GetEntry(n);
-
      
       if(met<metCut)                       continue;
       if(leadingJetPt<jetPtCut)            continue;
@@ -243,7 +244,7 @@ public:
 	
 	//histo         -> Fill(0.5);
 	//histo         -> Fill(0.5,weight);
-	histo         -> Fill(0.5,weight*weight_xsec_lumi);
+	histo         -> Fill(0.5,weight*weight_xsec_lumi*weightReweighting);
 	//if(weight>1) cout<<"weight = "<<weight*weight_xsec_lumi<<endl;
 	//      cout<<"weight_xsec_lumi = "<<weight_xsec_lumi<<endl;
 
