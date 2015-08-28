@@ -36,11 +36,19 @@ void plot_limit_2d(TString filename){
   //hard coded for asymptotic limit format for now
 
   vector<int> lifetimes;
+  lifetimes.push_back(2);
   lifetimes.push_back(5);
+  lifetimes.push_back(7);
   lifetimes.push_back(10);
+  lifetimes.push_back(20);
   lifetimes.push_back(50);
+  lifetimes.push_back(70);
   lifetimes.push_back(100);
+  lifetimes.push_back(200);
+  lifetimes.push_back(500);
+  lifetimes.push_back(700);
   lifetimes.push_back(1000);
+  lifetimes.push_back(2000);
 
   int size = lifetimes.size()+2;
 
@@ -102,7 +110,6 @@ void plot_limit_2d(TString filename){
     files.push_back(Form("logFiles/" + filename + "/res_mass_300GeV_ctau_%icm.log",lifetimes[ct]));
     files.push_back(Form("logFiles/" + filename + "/res_mass_400GeV_ctau_%icm.log",lifetimes[ct]));
     files.push_back(Form("logFiles/" + filename + "/res_mass_500GeV_ctau_%icm.log",lifetimes[ct]));
-
     cout<<files.size()<<endl;
  
     for(unsigned int i=0; i<files.size(); i++){
@@ -489,7 +496,7 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
   expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
   expL->GetXaxis()->SetRangeUser(100,500);
-  expL->GetYaxis()->SetRangeUser(0.01,10);
+  expL->GetYaxis()->SetRangeUser(0.005,10);
   expL->SetTitle();
 
   exp_1sig->SetFillColor(kGreen);
