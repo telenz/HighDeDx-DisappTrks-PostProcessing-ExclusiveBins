@@ -26,76 +26,10 @@
 #include "Classes.h"
 
 
-int getSignalResult(double metCut, double jetptCut,  double ptCutMin,  double ptCutMax, double ecaloCut, double iasCutMin, double iasCutMax, TString region){
+int getSignalResult(double metCut, double jetptCut,  double ptCutMin,  double ptCutMax, double ecaloCut, double iasCutMin, double iasCutMax, TString region, TString name){
 
   vector<sample> samples;
-  
-  
-  sample sig_m100_ct1("Madgraph_signal_mass_100_ctau_1cm");
-  samples.push_back(sig_m100_ct1);
-  sample sig_m100_ct5("Madgraph_signal_mass_100_ctau_5cm");
-  samples.push_back(sig_m100_ct5);
-  sample sig_m100_ct10("Madgraph_signal_mass_100_ctau_10cm");
-  samples.push_back(sig_m100_ct10);
-  sample sig_m100_ct50("Madgraph_signal_mass_100_ctau_50cm");
-  samples.push_back(sig_m100_ct50);
-  sample sig_m100_ct100("Madgraph_signal_mass_100_ctau_100cm");
-  samples.push_back(sig_m100_ct100);
-  sample sig_m100_ct1000("Madgraph_signal_mass_100_ctau_1000cm");
-  samples.push_back(sig_m100_ct1000);
-
-  sample sig_m200_ct1("Madgraph_signal_mass_200_ctau_1cm");
-  samples.push_back(sig_m200_ct1);
-  sample sig_m200_ct5("Madgraph_signal_mass_200_ctau_5cm");
-  samples.push_back(sig_m200_ct5);
-  sample sig_m200_ct10("Madgraph_signal_mass_200_ctau_10cm");
-  samples.push_back(sig_m200_ct10);
-  sample sig_m200_ct50("Madgraph_signal_mass_200_ctau_50cm");
-  samples.push_back(sig_m200_ct50);
-  sample sig_m200_ct100("Madgraph_signal_mass_200_ctau_100cm");
-  samples.push_back(sig_m200_ct100);
-  sample sig_m200_ct1000("Madgraph_signal_mass_200_ctau_1000cm");
-  samples.push_back(sig_m200_ct1000);
-
-  sample sig_m300_ct1("Madgraph_signal_mass_300_ctau_1cm");
-  samples.push_back(sig_m300_ct1);
-  sample sig_m300_ct5("Madgraph_signal_mass_300_ctau_5cm");
-  samples.push_back(sig_m300_ct5);
-  sample sig_m300_ct10("Madgraph_signal_mass_300_ctau_10cm");
-  samples.push_back(sig_m300_ct10);
-  sample sig_m300_ct50("Madgraph_signal_mass_300_ctau_50cm");
-  samples.push_back(sig_m300_ct50);
-  sample sig_m300_ct100("Madgraph_signal_mass_300_ctau_100cm");
-  samples.push_back(sig_m300_ct100);
-  sample sig_m300_ct1000("Madgraph_signal_mass_300_ctau_1000cm");
-  samples.push_back(sig_m300_ct1000);
-
-  sample sig_m400_ct1("Madgraph_signal_mass_400_ctau_1cm");
-  samples.push_back(sig_m400_ct1);
-  sample sig_m400_ct5("Madgraph_signal_mass_400_ctau_5cm");
-  samples.push_back(sig_m400_ct5);
-  sample sig_m400_ct10("Madgraph_signal_mass_400_ctau_10cm");
-  samples.push_back(sig_m400_ct10);
-  sample sig_m400_ct50("Madgraph_signal_mass_400_ctau_50cm");
-  samples.push_back(sig_m400_ct50);
-  sample sig_m400_ct100("Madgraph_signal_mass_400_ctau_100cm");
-  samples.push_back(sig_m400_ct100);
-  sample sig_m400_ct1000("Madgraph_signal_mass_400_ctau_1000cm");
-  samples.push_back(sig_m400_ct1000);
-
-  sample sig_m500_ct1("Madgraph_signal_mass_500_ctau_1cm");
-  samples.push_back(sig_m500_ct1);
-  sample sig_m500_ct5("Madgraph_signal_mass_500_ctau_5cm");
-  samples.push_back(sig_m500_ct5);
-  sample sig_m500_ct10("Madgraph_signal_mass_500_ctau_10cm");
-  samples.push_back(sig_m500_ct10);
-  sample sig_m500_ct50("Madgraph_signal_mass_500_ctau_50cm");
-  samples.push_back(sig_m500_ct50);
-  sample sig_m500_ct100("Madgraph_signal_mass_500_ctau_100cm");
-  samples.push_back(sig_m500_ct100);
-  sample sig_m500_ct1000("Madgraph_signal_mass_500_ctau_1000cm");
-  samples.push_back(sig_m500_ct1000);
-
+  samples.push_back(name);
 
   TFile *out = 0;
   TH1D *histoSignal = 0;
