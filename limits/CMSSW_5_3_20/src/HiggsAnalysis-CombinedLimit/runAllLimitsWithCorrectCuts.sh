@@ -2,13 +2,13 @@ ini6
 cmsenv
 
 massTable=("100" "200" "300" "400" "500")   #please specifiy in GeV
-decaywidthTable=("5" "10" "50" "100" "1000")   #please specifiy in cm
+decaywidthTable=("2" "5" "7" "10" "20" "50" "70" "100" "200" "500" "700" "1000" "2000")   #please specifiy in cm
 
 #massTable=("300")   #please specifiy in GeV
 #decaywidthTable=("10")   #please specifiy in cm
 
 
-filenameIn="datacardsCombined"
+filenameIn="datacardsCombinedALL"
 mkdir logFiles/${filenameIn}
 mkdir limits/${filenameIn}
 mkdir limits/${filenameIn}_xsec
@@ -21,7 +21,6 @@ do
 
 
 	datacardName=$(find ${filenameIn}/ -name "*mass_${mass}GeV_ctau_${ctau}cm.txt" )
-	
 	#combine -M Asymptotic --run expected -C 0.95 -t -1 --minimizerStrategy 2 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
 	combine -M Asymptotic -C 0.95   --minimizerStrategy 2  ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
 	if grep -ql 'nan' logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log 
