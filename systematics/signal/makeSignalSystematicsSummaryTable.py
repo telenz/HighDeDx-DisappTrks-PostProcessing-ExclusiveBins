@@ -9,6 +9,7 @@ def scanDatacards( searchstring, stringname ):
      uncertaintyMax = 0
      uncertaintyMin = 10000
      filenameMax=""
+     filenameMin=""
      for filename in glob.iglob('datacards/*.txt'):
           fIn   = open(filename, 'r')
           lines = fIn.read().split("\n")
@@ -21,10 +22,12 @@ def scanDatacards( searchstring, stringname ):
                          filenameMax = filename
                     if(float(uncertaintyAux) < float(uncertaintyMin)):
                          uncertaintyMin = uncertaintyAux
+                         filenameMin = filename
      fout.write(format_string.format(stringname,str('&') + str(round(float(uncertaintyMin*100),1)) , str('&') + str(round(float(uncertaintyMax*100),1)) ))
      fout.write('\\\\ \n')
      print stringname + " = " + str(uncertaintyMax*100)
-     print filenameMax
+     print "Maximal value from " + filenameMax
+     print "Minimal value from " + filenameMin
      print ""
 
 fout = open('signalSystematicsOverview.txt', 'w')
