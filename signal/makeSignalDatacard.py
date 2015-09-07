@@ -42,7 +42,8 @@ for n in range(len(lines)):
 
             if line.find('signal_stat') >= 0:
                 if float(nEvents) == 0:
-                    scaling = 0.000
+                    scaling = 0.0001
+                    nEvents = 1
                 else:
                     scaling = float(pred)/float(nEvents)
                 line = line.replace('x.xxxx', str("%.4f" % scaling));
