@@ -2,10 +2,10 @@ ini6
 cmsenv
 
 massTable=("100" "200" "300" "400" "500")   #please specifiy in GeV
-decaywidthTable=("2" "5" "7" "10" "20" "50" "70" "100" "200" "500" "700" "1000" "2000")   #please specifiy in cm
+decaywidthTable=("1" "2" "5" "7" "10" "20" "50" "70" "100" "200" "500" "700" "1000" "2000")   #please specifiy in cm
 
 #massTable=("300")   #please specifiy in GeV
-#decaywidthTable=("10")   #please specifiy in cm
+#decaywidthTable=("1")   #please specifiy in cm
 
 
 filenameIn="datacardsCombinedALL"
@@ -19,6 +19,10 @@ do
     do
 	echo "mass = " $mass
 
+	if [ "$ctau" == "1" ] && ([ "$mass" == "300" ] || [ "$mass" == "400" ] || [ "$mass" == "500" ])
+	then
+	    continue
+	fi
 
 	datacardName=$(find ${filenameIn}/ -name "*mass_${mass}GeV_ctau_${ctau}cm.txt" )
 	#combine -M Asymptotic --run expected -C 0.95 -t -1 --minimizerStrategy 2 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
@@ -34,8 +38,8 @@ do
 	echo ""
 
     done
-    root -l -b -q plot_limit_WithCorrectCuts.cc+"(\"${filenameIn}\", ${ctau})"
-    mv test_ctau${ctau}cm.pdf limits/${filenameIn}/LimitPlot_ctau${ctau}cm.pdf
+    #root -l -b -q plot_limit_WithCorrectCuts.cc+"(\"${filenameIn}\", ${ctau})"
+    #mv test_ctau${ctau}cm.pdf limits/${filenameIn}/LimitPlot_ctau${ctau}cm.pdf
     root -l -b -q plot_limit_xsec.cc+"(\"${filenameIn}\", ${ctau})"
     mv test_ctau${ctau}cm.pdf limits/${filenameIn}_xsec/LimitPlot_ctau${ctau}cm.pdf
 done
