@@ -37,6 +37,7 @@ for n in range(len(lines)):
                 line = line.replace('CharginoPair_mass_100GeV_ctau_5cm', str('CharginoPair_mass_%.0fGeV_ctau_%.0fcm') %(float(mass),float(ctau)) )
 
             if line.find('rate') >= 0:
+                #pred = float(pred)*2.
                 line = line.replace('x.xxxx', str("%.4f" % float(pred)));
 
             if line.find('signal_stat') >= 0:
