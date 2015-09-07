@@ -190,6 +190,7 @@ public:
 	
       for(unsigned int i=0; i<trackEta->size(); i++){
 
+	
 	if(abs(trackEta->at(i))>2.1)                                   continue;
 	if(abs(trackEta->at(i))>1.42 && abs(trackEta->at(i))<1.65 )    continue;
 	
@@ -229,6 +230,7 @@ int getSysUncertainty(double ptCutMin=20, double ptCutMax=50, double ecaloCut=5,
   reweighted.Selection( ptCutMin, ptCutMax, ecaloCut);
 
 
+  cout<<"Number of Events                     = "<<nominal.histo->GetEntries()<<endl;
   cout<<"nominal.histo->GetBinContent(1)      = "<<nominal.histo->GetBinContent(1)<<endl;
   cout<<"reweighted.histo->GetBinContent(1)   = "<<reweighted.histo->GetBinContent(1)<<endl;
   
