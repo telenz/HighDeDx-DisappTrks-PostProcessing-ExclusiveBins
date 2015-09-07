@@ -268,6 +268,7 @@ int getSysUncertainty(double ptCutMin, double ptCutMax, double ecaloCut, double 
   cout.precision(3);
 
   double uncertainty = (downUnc+upUnc)/2.;
+  if(isnan(uncertainty)) uncertainty=0.100;
   cout<<"Final Uncertainty = "<<fixed<<uncertainty<<endl;
   cout<<"###########################################################################"<<endl;
 
