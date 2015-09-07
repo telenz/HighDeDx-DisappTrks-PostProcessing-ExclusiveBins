@@ -37,12 +37,17 @@ void plot_limit_xsec(TString filename, int ctau){
 
   //to be nicend in the future;
   vector<double> mass;
-  mass.push_back(100);
-  mass.push_back(200);
-  mass.push_back(300);
-  mass.push_back(400);
-  mass.push_back(500);
-
+  if(ctau==1){
+    mass.push_back(100);
+    mass.push_back(200);
+  }
+  else{
+    mass.push_back(100);
+    mass.push_back(200);
+    mass.push_back(300);
+    mass.push_back(400);
+    mass.push_back(500);
+  }
 
   vector<double> xsecTheo;
   vector<double> xsecTheoErr;
@@ -66,11 +71,18 @@ void plot_limit_xsec(TString filename, int ctau){
 
   
   vector<string> files;
-  files.push_back(Form("logFiles/" + filename + "/res_mass_100GeV_ctau_%icm.log",ctau));
-  files.push_back(Form("logFiles/" + filename + "/res_mass_200GeV_ctau_%icm.log",ctau));
-  files.push_back(Form("logFiles/" + filename + "/res_mass_300GeV_ctau_%icm.log",ctau));
-  files.push_back(Form("logFiles/" + filename + "/res_mass_400GeV_ctau_%icm.log",ctau));
-  files.push_back(Form("logFiles/" + filename + "/res_mass_500GeV_ctau_%icm.log",ctau));
+  if(ctau==1){
+    cout<<"1cm!!!!!!!!!!!!!!!!"<<endl;
+    files.push_back(Form("logFiles/" + filename + "/res_mass_100GeV_ctau_%icm.log",ctau));
+    files.push_back(Form("logFiles/" + filename + "/res_mass_200GeV_ctau_%icm.log",ctau));
+  }
+  else{
+    files.push_back(Form("logFiles/" + filename + "/res_mass_100GeV_ctau_%icm.log",ctau));
+    files.push_back(Form("logFiles/" + filename + "/res_mass_200GeV_ctau_%icm.log",ctau));
+    files.push_back(Form("logFiles/" + filename + "/res_mass_300GeV_ctau_%icm.log",ctau));
+    files.push_back(Form("logFiles/" + filename + "/res_mass_400GeV_ctau_%icm.log",ctau));
+    files.push_back(Form("logFiles/" + filename + "/res_mass_500GeV_ctau_%icm.log",ctau));
+  }
 
  
   for(unsigned int i=0; i<files.size(); i++){
