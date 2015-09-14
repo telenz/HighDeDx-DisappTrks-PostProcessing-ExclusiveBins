@@ -36,19 +36,43 @@ void plot_limit_2d(TString filename){
   //hard coded for asymptotic limit format for now
 
   vector<int> lifetimes;
+  lifetimes.push_back(1);
   lifetimes.push_back(2);
+  lifetimes.push_back(3);
+  lifetimes.push_back(4);
   lifetimes.push_back(5);
+  lifetimes.push_back(6);
   lifetimes.push_back(7);
+  lifetimes.push_back(8);
+  lifetimes.push_back(9);
   lifetimes.push_back(10);
   lifetimes.push_back(20);
+  lifetimes.push_back(30);
+  lifetimes.push_back(40);
   lifetimes.push_back(50);
+  lifetimes.push_back(60);
   lifetimes.push_back(70);
+  lifetimes.push_back(80);
+  lifetimes.push_back(90);
   lifetimes.push_back(100);
   lifetimes.push_back(200);
+  lifetimes.push_back(300);
+  lifetimes.push_back(400);
   lifetimes.push_back(500);
+  lifetimes.push_back(600);
   lifetimes.push_back(700);
+  lifetimes.push_back(800);
+  lifetimes.push_back(900);
   lifetimes.push_back(1000);
   lifetimes.push_back(2000);
+  lifetimes.push_back(3000);
+  lifetimes.push_back(4000);
+  lifetimes.push_back(5000);
+  lifetimes.push_back(6000);
+  lifetimes.push_back(7000);
+  lifetimes.push_back(8000);
+  lifetimes.push_back(9000);
+  lifetimes.push_back(10000);
 
   int size = lifetimes.size()+2;
 
