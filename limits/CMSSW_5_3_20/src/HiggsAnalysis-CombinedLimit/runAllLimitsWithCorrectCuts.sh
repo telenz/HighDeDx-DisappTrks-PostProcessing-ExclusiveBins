@@ -2,29 +2,27 @@ ini6
 cmsenv
 
 massTable=("100" "200" "300" "400" "500")   #please specifiy in GeV
-decaywidthTable=("1" "2" "5" "7" "10" "20" "50" "70" "100" "200" "500" "700" "1000" "2000")   #please specifiy in cm
+decaywidthTable=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "20" "30" "40" "50" "60" "70" "80" "90" "100" "200" "300" "400" "500" "600" "700" "800" "900" "1000" "2000" "3000" "4000" "5000" "6000" "7000" "8000" "9000" "10000")   #please specifiy in cm
 
-#massTable=("300")   #please specifiy in GeV
+#massTable=("100")   #please specifiy in GeV
 #decaywidthTable=("1")   #please specifiy in cm
 
 
-filenameIn="datacardsCombinedALL"
+filenameIn="datacardsCombined_ChiPMChiPM"
 mkdir logFiles/${filenameIn}
 mkdir limits/${filenameIn}
 mkdir limits/${filenameIn}_xsec
 for ctau in "${decaywidthTable[@]}"
 do
-    echo "ctau = " $ctau
     for mass in "${massTable[@]}"
     do
-	echo "mass = " $mass
-
 	if [ "$ctau" == "1" ] && ([ "$mass" == "300" ] || [ "$mass" == "400" ] || [ "$mass" == "500" ])
 	then
 	    continue
 	fi
 
 	datacardName=$(find ${filenameIn}/ -name "*mass_${mass}GeV_ctau_${ctau}cm.txt" )
+	echo $datacardName
 	#combine -M Asymptotic --run expected -C 0.95 -t -1 --minimizerStrategy 2 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
 	combine -M Asymptotic -C 0.95   --minimizerStrategy 2  ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
 	if grep -ql 'nan' logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log 
