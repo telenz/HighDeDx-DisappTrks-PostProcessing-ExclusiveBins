@@ -77,6 +77,7 @@ int makeECaloTemplates(double metCut, double jetptCut, double ptCutMin, double p
 
   sample data;
   data.file = new TFile("~/myAnalysis/bkgEstimation/input_fakeCS/MET_Run2012_22Jan2013.root");
+  data.file = new TFile(fileFakeCS + "data.root");
 
   data.file   -> GetObject("chiTrackspreselection/Variables",data.tree);
   data.getTreeVariables();
