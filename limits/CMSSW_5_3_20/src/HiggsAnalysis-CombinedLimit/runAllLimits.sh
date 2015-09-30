@@ -1,14 +1,14 @@
 ini6
 cmsenv
 
-massTable=("100" "200" "300" "400" "500")   #please specifiy in GeV
+massTable=("100" "200" "300" "400" "500" "600")   #please specifiy in GeV
 decaywidthTable=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "20" "30" "40" "50" "60" "70" "80" "90" "100" "200" "300" "400" "500" "600" "700" "800" "900" "1000" "2000" "3000" "4000" "5000" "6000" "7000" "8000" "9000" "10000")   #please specifiy in cm
 
 #massTable=("100")   #please specifiy in GeV
 #decaywidthTable=("1")   #please specifiy in cm
 
 
-filenameIn="datacardsCombined_ChiPMChiPM"
+filenameIn="datacardsCombined"
 mkdir logFiles/${filenameIn}
 mkdir limits/${filenameIn}
 mkdir limits/${filenameIn}_xsec
@@ -16,7 +16,7 @@ for ctau in "${decaywidthTable[@]}"
 do
     for mass in "${massTable[@]}"
     do
-	if [ "$ctau" == "1" ] && ([ "$mass" == "300" ] || [ "$mass" == "400" ] || [ "$mass" == "500" ])
+	if [ "$ctau" == "1" ] && ([ "$mass" == "300" ] || [ "$mass" == "400" ] || [ "$mass" == "500" ] || [ "$mass" == "600" ])
 	then
 	    continue
 	fi
