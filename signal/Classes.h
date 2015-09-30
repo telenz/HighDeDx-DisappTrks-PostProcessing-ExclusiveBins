@@ -124,46 +124,29 @@ public:
   }
   
   void getTreeVariables(){
+    tree->SetBranchStatus("*",0);
+    tree->SetBranchStatus("trackEta",1);
     tree->SetBranchAddress("trackEta",&trackEta);
+    tree->SetBranchStatus("trackPt",1);
     tree->SetBranchAddress("trackPt",&trackPt);
-    tree->SetBranchAddress("trackP",&trackP);
-    tree->SetBranchAddress("trackGenPt",&trackGenPt);
+    tree->SetBranchStatus("trackDeDxASmi",1);
     tree->SetBranchAddress("trackDeDxASmi",&trackASmi);
-    tree->SetBranchAddress("trackDeDxHarm2",&trackHarm2);
+    tree->SetBranchStatus("trackCaloIsolation",1);
     tree->SetBranchAddress("trackCaloIsolation",&trackCaloIso);
-    tree->SetBranchAddress("trackMass",&trackMass);
-    tree->SetBranchAddress("trackIsolation",&trackIsolation);
-    tree->SetBranchAddress("trackGenE",&trackGenE);
-    tree->SetBranchAddress("trackGenEt",&trackGenEt);
-    tree->SetBranchAddress("trackEndVertexRho",&trackEndVertexRho);
-    tree->SetBranchAddress("trackChi2",&trackChi2);
-    tree->SetBranchAddress("trackNdof",&trackNdof);
+    tree->SetBranchStatus("trackNLostOuter",1);
     tree->SetBranchAddress("trackNLostOuter",&trackNLostOuter);
-    tree->SetBranchAddress("trackNLostInner",&trackNLostInner);
-    tree->SetBranchAddress("trackNLostMiddle",&trackNLostMiddle);
+    tree->SetBranchStatus("trackNValid",1);
     tree->SetBranchAddress("trackNValid",&trackNValid);
-    tree->SetBranchAddress("trackHCALRp5Isolation",&trackHCALRp5Isolation);
-    tree->SetBranchAddress("trackECALRp5Isolation",&trackECALRp5Isolation);
-    tree->SetBranchAddress("trackHCALRp4Isolation",&trackHCALRp4Isolation);
-    tree->SetBranchAddress("trackECALRp4Isolation",&trackECALRp4Isolation);
-    tree->SetBranchAddress("trackHCALRp3Isolation",&trackHCALRp3Isolation);
-    tree->SetBranchAddress("trackECALRp3Isolation",&trackECALRp3Isolation);
-    tree->SetBranchAddress("trackPdgId",&trackPdgId);
-    tree->SetBranchAddress("trackStatus",&trackStatus);
+    tree->SetBranchStatus("MET",1);
     tree->SetBranchAddress("MET",&met);
+    tree->SetBranchStatus("LeadingJetPt",1);
     tree->SetBranchAddress("LeadingJetPt",&leadingJetPt);
+    tree->SetBranchStatus("weight",1);
     tree->SetBranchAddress("weight",&weight);
+    tree->SetBranchStatus("weightReweighting",1);
     tree->SetBranchAddress("weightReweighting",&weightReweighting);
+    tree->SetBranchStatus("weight_xsec_lumi",1);
     tree->SetBranchAddress("weight_xsec_lumi",&weight_xsec_lumi);
-    tree->SetBranchAddress("trackDeDx1",&trackDeDx1);
-    tree->SetBranchAddress("trackDeDx2",&trackDeDx2);
-    tree->SetBranchAddress("trackDeDx3",&trackDeDx3);
-    tree->SetBranchAddress("trackDeDx4",&trackDeDx4);
-    tree->SetBranchAddress("trackDx1",&trackDx1);
-    tree->SetBranchAddress("trackDx2",&trackDx2);
-    tree->SetBranchAddress("trackDx3",&trackDx3);
-    tree->SetBranchAddress("trackDx4",&trackDx4);
-    tree->SetBranchAddress("trackMeasSize",&trackMeasSize);
   };
 
 
