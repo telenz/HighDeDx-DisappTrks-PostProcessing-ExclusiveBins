@@ -117,3 +117,5 @@ do
     done
 done
 
+python makeSignalSystematicsSummaryTable.py
+rm *~
