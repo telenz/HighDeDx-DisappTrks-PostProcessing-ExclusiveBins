@@ -13,6 +13,7 @@ ptCutMin    = sys.argv[1]
 ptCutMax    = sys.argv[2]
 iasCutMin   = float(sys.argv[3])*100
 iasCutMax   = float(sys.argv[4])*100
+folder      = sys.argv[5]
 
 
 ##############################################################################################
@@ -103,7 +104,7 @@ def getSignalUncertainties(filename):
     return math.sqrt(uncertainty)
 ##############################################################################################
 
-file    = 'signal/datacards/datacard_metCutEq%s_ptGt%s_Le%s_ECaloCutEq%s_IasGt0p%02.0f_Le0p%02.0f_mass_' %(100,ptCutMin,ptCutMax,5,iasCutMin,iasCutMax) + str(mass) + 'GeV_ctau_' + str(ctau) + 'cm.txt'
+file    = '%s/datacard_metCutEq%s_ptGt%s_Le%s_ECaloCutEq%s_IasGt0p%02.0f_Le0p%02.0f_mass_' %(folder,100,ptCutMin,ptCutMax,5,iasCutMin,iasCutMax) + str(mass) + 'GeV_ctau_' + str(ctau) + 'cm.txt'
 nSignal = getYield(file,"signal")
 nFake   = getYield(file,"fake")
 nPion   = getYield(file,"pion")
