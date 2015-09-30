@@ -70,6 +70,7 @@ public:
   vector<int>    *trackPdgId;
   double weight;
   double weight_xsec_lumi;
+  double weightReweighting;
   double met;
   double leadingJetPt;
 
@@ -159,15 +160,7 @@ public:
     tree->SetBranchAddress("LeadingJetPt",&leadingJetPt);
     tree->SetBranchAddress("weight",&weight);
     tree->SetBranchAddress("weight_xsec_lumi",&weight_xsec_lumi);
-    tree->SetBranchAddress("trackDeDx1",&trackDeDx1);
-    tree->SetBranchAddress("trackDeDx2",&trackDeDx2);
-    tree->SetBranchAddress("trackDeDx3",&trackDeDx3);
-    tree->SetBranchAddress("trackDeDx4",&trackDeDx4);
-    tree->SetBranchAddress("trackDx1",&trackDx1);
-    tree->SetBranchAddress("trackDx2",&trackDx2);
-    tree->SetBranchAddress("trackDx3",&trackDx3);
-    tree->SetBranchAddress("trackDx4",&trackDx4);
-    tree->SetBranchAddress("trackMeasSize",&trackMeasSize);
+    tree->SetBranchAddress("weightReweighting",&weightReweighting);
   };
 
 
@@ -188,7 +181,7 @@ public:
 
       tree->GetEntry(n);
 
-      auxWeight = weight_xsec_lumi*weight;
+      auxWeight = weight_xsec_lumi*weight*weightReweighting;
 
 
       if(met<100)           continue;
