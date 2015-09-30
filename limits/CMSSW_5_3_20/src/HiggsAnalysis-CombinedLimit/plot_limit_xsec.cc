@@ -47,6 +47,7 @@ void plot_limit_xsec(TString filename, int ctau){
     mass.push_back(300);
     mass.push_back(400);
     mass.push_back(500);
+    mass.push_back(600);
   }
 
   vector<double> xsecTheo;
@@ -63,7 +64,7 @@ void plot_limit_xsec(TString filename, int ctau){
     massAll.push_back(dataset);
     xsecTheoAll.push_back(xsec/1000.);
     xsecTheoErrAll.push_back(xsecErr/1000.);
-    if(dataset!=100 && dataset!=200 && dataset!=300 && dataset!=400 && dataset!=500 ) continue;
+    if(dataset!=100 && dataset!=200 && dataset!=300 && dataset!=400 && dataset!=500 && dataset!=600 ) continue;
     xsecTheo.push_back(xsec/1000.);
     xsecTheoErr.push_back(xsecErr/1000.);
     it++;
@@ -83,6 +84,7 @@ void plot_limit_xsec(TString filename, int ctau){
     files.push_back(Form("logFiles/" + filename + "/res_mass_300GeV_ctau_%icm.log",ctau));
     files.push_back(Form("logFiles/" + filename + "/res_mass_400GeV_ctau_%icm.log",ctau));
     files.push_back(Form("logFiles/" + filename + "/res_mass_500GeV_ctau_%icm.log",ctau));
+    files.push_back(Form("logFiles/" + filename + "/res_mass_600GeV_ctau_%icm.log",ctau));
   }
 
  
