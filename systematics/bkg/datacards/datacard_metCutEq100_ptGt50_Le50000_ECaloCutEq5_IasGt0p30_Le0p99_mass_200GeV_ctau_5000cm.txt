@@ -12,12 +12,12 @@ observation                            4
 bin                                                    1                                       1                   1                   1                   1                   
 process                                                CharginoPair_mass_200GeV_ctau_5000cm       Fake                Pion                Elec                Muon                
 process                                                0                                       1                   1                   1                   1                   
-rate                                                   7.5711                                  2.5240              0.0000              0.0430              0.0000              
+rate                                                   17.1333                                  2.5240              0.0000              0.0430              0.0000              
 
 
 # STATISTICAL UNCERTAINTIES
 
-signal_stat_50_0p30                     gmN  32         0.2366                                  -                   -                   -                   -                   
+signal_stat_50_0p30                     gmN  57         0.3006                                  -                   -                   -                   -                   
 fake_stat_50_0p30                       lnN            -                                       1.4513              -                   -                   -                   
 pion_stat_0p30                          gmN  0         -                                       -                   0.0022              -                   -                   
 elec_stat_50_0p30                       gmN  1         -                                       -                   -                   0.0434              -                   
