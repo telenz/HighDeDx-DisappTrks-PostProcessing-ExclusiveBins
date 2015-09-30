@@ -1,6 +1,8 @@
 #!bin/bash
 
 #source "../variablesSetting.sh"
+echo ""
+echo "%%%%%%%%%%%%%%%%%%%%%%% signal yield estimation %%%%%%%%%%%%%%%%%%%%%%%"
 
 for ct in "${ctau[@]}"
   do
