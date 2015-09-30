@@ -193,7 +193,7 @@ public:
 	histo -> Fill(0.5,auxWeight);
 	break;
 	// ****************************************** Particle Id **********************************
-      } 
+      }
 
     }
     purity=statistics/purity;
