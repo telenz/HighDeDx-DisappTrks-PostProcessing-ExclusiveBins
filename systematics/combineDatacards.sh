@@ -26,3 +26,4 @@ python makePrediction.py 30 50 0.30 0.99 ${folder}
 python makePrediction.py 50 50000 0.05 0.30 ${folder}
 python makePrediction.py 50 50000 0.30 0.99 ${folder}
 
+rm *~
