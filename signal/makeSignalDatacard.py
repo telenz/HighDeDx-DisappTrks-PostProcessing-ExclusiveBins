@@ -44,7 +44,7 @@ for line in linesOriginal:
     if line.find('CharginoPair_mass_100GeV_ctau_5cm') >= 0:
         line = line.replace('CharginoPair_mass_100GeV_ctau_5cm', str('CharginoPair_mass_%.0fGeV_ctau_%.0fcm') %(float(mass),float(ctau)) )
     if line.find('rate') >= 0:
-        line = line.replace('x.xxxxx', str("%.5f" % float(pred)));
+        line = line.replace('x.xxxx', str("%.3f" % float(pred)));
     fout.write(line)
     fout.write('\n')
     if line.find('muon_stat') >= 0:
