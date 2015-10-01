@@ -73,10 +73,11 @@ void plot_limit_2d(TString filename){
   lifetimes.push_back(8000);
   lifetimes.push_back(9000);
   lifetimes.push_back(10000);
-
+  
   int size = lifetimes.size()+2;
 
-  double* ctau_2d = new double[size];
+  double* ctau_2d    = new double[size];
+  double* ctau_2d_cm = new double[size];
   double* ctau_Error_2d = new double[size];
   double* obs_2d = new double[size];
   double* exp_2d = new double[size];
@@ -88,6 +89,7 @@ void plot_limit_2d(TString filename){
 
   for(unsigned int ct=0; ct<lifetimes.size();ct++){
 
+    cout<<endl<<"ctau = "<<lifetimes[ct]<<"cm :"<<endl;
     TString ctauToString = Form("%icm",lifetimes[ct]);
     //cout<<ctauToString<<endl;
 
@@ -137,7 +139,6 @@ void plot_limit_2d(TString filename){
     files.push_back(Form("logFiles/" + filename + "/res_mass_400GeV_ctau_%icm.log",lifetimes[ct]));
     files.push_back(Form("logFiles/" + filename + "/res_mass_500GeV_ctau_%icm.log",lifetimes[ct]));
     files.push_back(Form("logFiles/" + filename + "/res_mass_600GeV_ctau_%icm.log",lifetimes[ct]));
-    cout<<files.size()<<endl;
  
     for(unsigned int i=0; i<files.size(); i++){
       string file=files[i];
@@ -217,6 +218,7 @@ void plot_limit_2d(TString filename){
     if(ct==0){
 
       ctau_2d[ct]          = ctauMin/(100*TMath::C()*pow(10,-9));
+      ctau_2d_cm[ct]       = ctauMin;
       ctau_Error_2d[ct]    = 0;
       obs_2d[ct]           = massMin;
       exp_2d[ct]           = massMin;
@@ -228,6 +230,7 @@ void plot_limit_2d(TString filename){
     
     
     ctau_2d[ct+1]          = lifetimes[ct]/(100*TMath::C()*pow(10,-9));
+    ctau_2d_cm[ct+1]       = lifetimes[ct];
     ctau_Error_2d[ct+1]    = 0;
     obs_2d[ct+1]           = intObs;
     exp_2d[ct+1]           = intExp;
@@ -250,12 +253,13 @@ void plot_limit_2d(TString filename){
     exp_2sig_down_2d[ct] =intExp_2sig_down;
     */
 
-    make_plot(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,ct);
+    make_plot(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,lifetimes[ct]);
 
   }
 
 
   ctau_2d[size-1] = ctau_2d[size-2];
+  ctau_2d_cm[size-1] = ctau_2d_cm[size-2];
   ctau_Error_2d[size-1] = 0;
   obs_2d[size-1] = obs_2d[0];
   exp_2d[size-1] = exp_2d[0];
@@ -265,7 +269,7 @@ void plot_limit_2d(TString filename){
   exp_2sig_down_2d[size-1] = exp_2sig_down_2d[0];
 
 
-  TCanvas *c = new TCanvas;
+  TCanvas *c = new TCanvas("c","c",500,500);
   //c->SetLogy();
 
   gPad->SetBottomMargin(0.14);
@@ -307,6 +311,13 @@ void plot_limit_2d(TString filename){
   TGraph* g_exp           = new TGraph(nBins, exp_2d          , ctau_2d);
   TGraph* g_obs           = new TGraph(nBins, obs_2d          , ctau_2d);
 
+  TGraph* g_exp_2sig_up_cm   = new TGraph(nBins, exp_2sig_up_2d,   ctau_2d_cm);
+  TGraph* g_exp_2sig_down_cm = new TGraph(nBins, exp_2sig_down_2d, ctau_2d_cm);
+  TGraph* g_exp_1sig_up_cm   = new TGraph(nBins, exp_1sig_up_2d,   ctau_2d_cm);
+  TGraph* g_exp_1sig_down_cm = new TGraph(nBins, exp_1sig_down_2d, ctau_2d_cm);
+  TGraph* g_exp_cm           = new TGraph(nBins, exp_2d          , ctau_2d_cm);
+  TGraph* g_obs_cm           = new TGraph(nBins, obs_2d          , ctau_2d_cm);
+
 
   g_exp_2sig_up->GetXaxis()->SetLimits(100,600);
 
@@ -345,9 +356,10 @@ void plot_limit_2d(TString filename){
   g_exp_2sig_up->GetXaxis()->SetTitleSize(0.05);
   g_exp_2sig_up->GetYaxis()->SetTitleSize(0.05);
   g_exp_2sig_up->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
-  g_exp_2sig_up->GetYaxis()->SetTitle("c#tau_{#Chi^{#pm}} [cm]");
+  g_exp_2sig_up->GetYaxis()->SetTitle("c#tau_{#Chi^{#pm}} [ns]");
   g_exp_2sig_up->GetYaxis()->SetRangeUser(ctauMin,1100);
   g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,300);
+  g_exp_2sig_up->GetYaxis()->SetRangeUser(1,10);
   g_exp_2sig_up->SetTitle();
 
   gPad->RedrawAxis();
@@ -362,11 +374,73 @@ void plot_limit_2d(TString filename){
   c->SetTickx();
   c->SetTicky();
   c->Update();
-  g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,1.5);
+  g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,300);
   c->SaveAs("LimitPlot_2d.pdf");
   c->SetLogy();
   g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,300);
   c->SaveAs("LimitPlot_2d_log.pdf");
+
+  g_exp_2sig_up_cm->GetXaxis()->SetLimits(100,600);
+
+  g_exp_2sig_up_cm->SetMarkerStyle(8);
+  g_exp_2sig_up_cm->SetMarkerSize(1);
+  g_exp_2sig_up_cm->SetFillColor(kYellow);
+  g_exp_2sig_up_cm->SetLineWidth(9900);
+
+  g_exp_2sig_down_cm->SetMarkerStyle(8);
+  g_exp_2sig_down_cm->SetMarkerSize(1);
+  g_exp_2sig_down_cm->SetFillColor(kWhite);
+  g_exp_2sig_down_cm->SetLineWidth(9900);
+
+  g_exp_1sig_up_cm->SetMarkerStyle(8);
+  g_exp_1sig_up_cm->SetMarkerSize(1);
+  g_exp_1sig_up_cm->SetFillColor(kGreen);
+  g_exp_1sig_up_cm->SetLineWidth(9900);
+
+  g_exp_1sig_down_cm->SetMarkerStyle(8);
+  g_exp_1sig_down_cm->SetMarkerSize(1);
+  g_exp_1sig_down_cm->SetFillColor(kYellow);
+  g_exp_1sig_down_cm->SetLineWidth(9900);
+
+  g_exp_cm->SetLineWidth(2);
+  g_exp_cm->SetLineStyle(7);
+  g_obs_cm->SetLineWidth(2);
+
+  g_exp_2sig_up_cm  ->Draw("alf");
+  g_exp_1sig_up_cm->Draw("lf same");
+  g_exp_1sig_down_cm->Draw("lf same");
+  g_exp_2sig_down_cm->Draw("lf same");
+  g_exp_cm->Draw("l same");
+  g_obs_cm->Draw("l same");
+
+
+  g_exp_2sig_up_cm->GetXaxis()->SetTitleSize(0.05);
+  g_exp_2sig_up_cm->GetYaxis()->SetTitleSize(0.05);
+  g_exp_2sig_up_cm->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
+  g_exp_2sig_up_cm->GetYaxis()->SetTitle("c#tau_{#Chi^{#pm}} [cm]");
+  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(ctauMin,1100);
+  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(0.05,300);
+  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1,10);
+  g_exp_2sig_up_cm->SetTitle();
+
+  gPad->RedrawAxis();
+
+  l1->AddEntry(g_obs_cm,"Observed Limit","l");
+  l1->AddEntry(g_exp_cm,"Expected Limit","l");
+  l1->AddEntry(g_exp_1sig_up_cm,"#pm 1#sigma","f");
+  l1->AddEntry(g_exp_2sig_up_cm,"#pm 2#sigma","f");
+
+  l1->Draw();
+
+  c->SetTickx();
+  c->SetTicky();
+  c->Update();
+  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1,10000);
+  c->SaveAs("LimitPlot_2d_cm.pdf");
+  c->SetLogy();
+  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1,10000);
+  c->SaveAs("LimitPlot_2d_log_cm.pdf");
+
 
   return;
 }
@@ -382,6 +456,9 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
   vector<double> xsecTheoLow;
   vector<double> expTimesXsec;
   for(unsigned int i=0; i<xsecTheo.size();i++){
+    //cout<<"massAll["<<i<<"] = "<<massAll[i]<<endl;
+    //cout<<"exp["<<i<<"] = "<<exp[i]*xsecTheo[i]<<endl;
+    //cout<<"xsecTheo["<<i<<"] = "<<xsecTheo[i]<<endl;
     expTimesXsec.push_back(exp[i]*xsecTheo[i]);
   }
 
@@ -391,50 +468,58 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
 
 
   TCanvas *c3=0;
-  // Get TF1 between xSecTheoLow  points
-  for(unsigned int i=0; i<xsecTheo.size()-1;i++){
-    f2 = new TF1("f2","[0]*x+[1]",mass[i],mass[i+1]);
-    f2->SetRange(mass[i],mass[i+1]);
-    double a = (expTimesXsec[i]-expTimesXsec[i+1])/(mass[i]-mass[i+1]);
-    double b = expTimesXsec[i]-a*mass[i];
+  // f1 = theoretical cross-section
+  // f2 = xsection upper limit
+  for(unsigned int j=0; j<xsecTheo.size()-1;j++){
+   
+    f2 = new TF1("f2","[0]*x+[1]",mass[j],mass[j+1]);
+    f2->SetRange(mass[j],mass[j+1]);
+    double a = (expTimesXsec[j]-expTimesXsec[j+1])/(mass[j]-mass[j+1]);
+    double b = expTimesXsec[j]-a*mass[j];
     f2->SetParameter(0,a);
     f2->SetParameter(1,b);
-  }
 
-  cout<<"xsecTheoLow.size() = "<<xsecTheoLow.size()<<endl;
-  for(unsigned int i=0; i<xsecTheoLow.size()-1;i++){
-    //cout<<"massAll["<<i<<"] = "<<massAll[i]<<endl;
-    //cout<<"massAll["<<i+1<<"] = "<<massAll[i+1]<<endl;
-    f1 = new TF1("f1","[0]*x+[1]",massAll[i],massAll[i+1]);
-    double a = (xsecTheoLow[i]-xsecTheoLow[i+1])/(massAll[i]-massAll[i+1]);
-    double b = xsecTheoLow[i]-a*massAll[i];
-    f1->SetParameter(0,a);
-    f1->SetParameter(1,b);
-  
-    double xmin, xmax;
-    f1->GetRange(xmin,xmax);
-    fint = new TF1("fint_"+title,finter,xmin,xmax,0);
-    double xint = fint->GetMinimumX();
-    fint->SetLineColor(1);
-    /*
-    c3= new TCanvas("c3_"+title,title);
-    c3->cd();
-    //c3->SetLogy();
-    f1->SetMaximum(1);
-    f1->SetMinimum(0.0);
-    f1->SetTitle(title);
-    f1->Draw();
-    f2->Draw("same");
-    fint->Draw("lsame");
-    */
-    if(xint!=massAll[i] && xint !=massAll[i+1]){
-      //c3->SaveAs("intersection_"+title+".pdf");
-      return xint;
+    for(unsigned int i=0; i<xsecTheoLow.size()-1;i++){
+      if(massAll[i+1]>mass[j+1] && j+2 != xsecTheo.size()){
+	//cout<<"massAll["<<i+1<<"] = "<<massAll[i+1]<<endl;
+	//cout<<"mass["<<j+1<<"] = "<<mass[j+1]<<endl;
+	break;
+      }
+      f1 = new TF1("f1","[0]*x+[1]",massAll[i],massAll[i+1]);
+      double a = (xsecTheoLow[i]-xsecTheoLow[i+1])/(massAll[i]-massAll[i+1]);
+      double b = xsecTheoLow[i]-a*massAll[i];
+      f1->SetParameter(0,a);
+      f1->SetParameter(1,b);
+     
+      double xmin, xmax;
+      f1->GetRange(xmin,xmax);
+      fint = new TF1("fint_"+title,finter,xmin,xmax,0);
+      double xint = fint->GetMinimumX();
+      fint->SetLineColor(1);
+    
+      c3= new TCanvas("c3_"+title,title);
+      c3->cd();
+      TLegend *leg = new TLegend(0.1,0.7,0.48,0.9);
+      leg->AddEntry(f2,"xsec upper limit","l");
+      leg->AddEntry(f1,"theory xsec","l");
+      //c3->SetLogy();
+      f2->SetMaximum(1);
+      f2->SetMinimum(0.0);
+      f1->SetTitle(title);
+      //f1->Draw();
+      f2->Draw();
+      f1->Draw("same");
+      leg->Draw("same");
+      //fint->Draw("lsame");
+    
+      if(xint!=massAll[i] && xint !=massAll[i+1]){
+	c3->SaveAs("intersection_"+title+".pdf");
+	return xint;
+      }
+      delete c3;
     }
-    delete c3;
+
   }
-
-
   return -1;
 
 }
@@ -479,7 +564,7 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   double yexp[nn];
   double yobs[nn];
   int nBins = mass.size();
-  cout<<"Sizes of various vectors = "<<mass.size()<<" "<<exp.size()<<" "<< exp_1sig_up.size()<<" "<<exp_2sig_down.size()<<endl;
+  // cout<<"Sizes of various vectors = "<<mass.size()<<" "<<exp.size()<<" "<< exp_1sig_up.size()<<" "<<exp_2sig_down.size()<<endl;
   for(unsigned int j=0; j<mass.size(); j++){
     x[j]=mass[j];
     yexp[j]=exp[j]*xsecTheo[j];          // Something not working
@@ -522,8 +607,9 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   expL->GetYaxis()->SetTitleSize(0.05);
   expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
   expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
-  expL->GetXaxis()->SetRangeUser(100,500);
+  expL->GetXaxis()->SetRangeUser(50,650);
   expL->GetYaxis()->SetRangeUser(0.005,10);
+  //expL->GetYaxis()->SetRangeUser(0.2,5);
   expL->SetTitle();
 
   exp_1sig->SetFillColor(kGreen);
@@ -550,7 +636,7 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   c1->SetTickx();
   c1->SetTicky();
   c1->Update();
-  //c1->SaveAs(Form("test_ctau%icm.pdf",ctau));
+  c1->SaveAs(Form("test_ctau%icm.pdf",ctau));
 
   
   return;
