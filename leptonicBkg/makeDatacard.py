@@ -57,7 +57,7 @@ f.write('----------------------------------------\n\n\n')
 list     = ['bin','process','process','rate']
 listErr  = ['','','','']
 listN    = ['','','','']
-list0    = ['1','CharginoPair_mass_100GeV_ctau_5cm', 0, 'x.xxxxx']
+list0    = ['1','CharginoPair_mass_100GeV_ctau_5cm', 0, 'x.xxxx']
 list1    = ['1','Fake', 1, fakeBkg]
 list2    = ['1','Pion', 1, pionBkg]
 list3    = ['1','Elec', 1, elecBkg]
