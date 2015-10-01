@@ -12,17 +12,16 @@ observation                            34
 bin                                                    1                                       1                   1                   1                   1                   
 process                                                CharginoPair_mass_500GeV_ctau_600cm       Fake                Pion                Elec                Muon                
 process                                                0                                       1                   1                   1                   1                   
-rate                                                   1.5448                                  22.2110             0.0000              2.1740              0.0000              
+rate                                                   1.545                                  22.2110             0.0000              2.1740              0.0000              
 
 
 # STATISTICAL UNCERTAINTIES
 
-signal_stat_50_0p05                     gmN  384         0.0040                                  -                   -                   -                   -                   
 fake_stat_50_0p05                       lnN            -                                       1.1619              -                   -                   -                   
 pion_stat_0p05                          gmN  0         -                                       -                   0.2836              -                   -                   
 elec_stat_50_0p05                       gmN  1         -                                       -                   -                   2.1737              -                   
 muon_stat_0p05                          gmN  0         -                                       -                   -                   -                   0.2519              
-
+signal_stat_50_0p05                     gmN  384       0.00402                                 -                   -                   -                   -                   
 
 
 # SYSTEMATIC UNCERTAINTIES 
