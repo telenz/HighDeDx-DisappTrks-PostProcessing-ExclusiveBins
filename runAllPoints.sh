@@ -14,11 +14,11 @@ iasMinArray=(0.05 0.30)
 iasMaxArray=(0.30 0.99)
 
 
-#find . -type f -name "*.log" -not -path "./limits/*" -not -path  "./systematics/signal/12_xsec/*" -not -path  "./systematics/signal/1_Luminosity/*" -not -path  "./systematics/signal/10_TrkRecoEff/*" -exec rm -f {} \;
-#find leptonicBkg/results/. -type f -name "*.root"  -exec rm -f {} \;
-#find fakeBkg/results/. -type f -name "*.root"  -exec rm -f {} \;
-#find signal/results/. -type f -name "*.root"  -exec rm -f {} \;
-#rm systematics/signal/datacards/*
+find . -type f -name "*.log" -not -path "./limits/*" -not -path  "./systematics/signal/12_xsec/*" -not -path  "./systematics/signal/1_Luminosity/*" -not -path  "./systematics/signal/10_TrkRecoEff/*" -not -path "./.git/*" -not -path "./systematics/datacards*/*" -exec rm -f {} \;
+find leptonicBkg/results/. -type f -name "*.root"  -exec rm -f {} \;
+find fakeBkg/results/. -type f -name "*.root"  -exec rm -f {} \;
+find signal/results/. -type f -name "*.root"  -exec rm -f {} \;
+rm systematics/signal/datacards/*
 for ((i=0; i < ${#ptMinArray[@]}; i++))
 do
     ptCutMin=${ptMinArray[$i]}
