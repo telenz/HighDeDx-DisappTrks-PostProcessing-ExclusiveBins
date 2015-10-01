@@ -4,6 +4,7 @@ cmsenv
 massTable=("100" "200" "300" "400" "500" "600")   #please specifiy in GeV
 decaywidthTable=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "20" "30" "40" "50" "60" "70" "80" "90" "100" "200" "300" "400" "500" "600" "700" "800" "900" "1000" "2000" "3000" "4000" "5000" "6000" "7000" "8000" "9000" "10000")   #please specifiy in cm
 
+
 #massTable=("100")   #please specifiy in GeV
 #decaywidthTable=("1")   #please specifiy in cm
 
@@ -41,6 +42,10 @@ do
     root -l -b -q plot_limit_xsec.cc+"(\"${filenameIn}\", ${ctau})"
     mv test_ctau${ctau}cm.pdf limits/${filenameIn}_xsec/LimitPlot_ctau${ctau}cm.pdf
 done
+
+root -l -b -q plot_limit_2d.cc+"(\"${filenameIn}\")"
+mv LimitPlot_2d_log.pdf limits/${filenameIn}_xsec/LimitPlot_2d_log.pdf
+mv LimitPlot_2d.pdf limits/${filenameIn}_xsec/LimitPlot_2d.pdf
 
 rm *.root
 rm *.~
