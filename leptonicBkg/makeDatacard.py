@@ -57,7 +57,7 @@ f.write('----------------------------------------\n\n\n')
 list     = ['bin','process','process','rate']
 listErr  = ['','','','']
 listN    = ['','','','']
-list0    = ['1','CharginoPair_mass_100GeV_ctau_5cm', 0, 'x.xxxx']
+list0    = ['1','CharginoPair_mass_100GeV_ctau_5cm', 0, 'x.xxxxx']
 list1    = ['1','Fake', 1, fakeBkg]
 list2    = ['1','Pion', 1, pionBkg]
 list3    = ['1','Elec', 1, elecBkg]
@@ -152,14 +152,23 @@ else:
 f.write('\n\n')
 f.write('# STATISTICAL UNCERTAINTIES\n\n')
 
-list     = ['signal_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)) , 'fake_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), 'pion_stat' + str('_0p%02.0f' %(iasCutMin)), 'elec_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), 'muon_stat' + str('_0p%02.0f' %(iasCutMin))]
-listErr  = ['gmN'        , 'lnN'      , 'gmN'      , 'gmN'      , 'gmN'      ]
-listN    = ['x'          , ' '        , nPionSR    , nElecSR    , nMuonSR    ]
-list0    = ['x.xxxx'     , '-        ', '-        ', '-        ', '-        ']
-list1    = ['-'          , fakeError  , '-        ', '-        ', '-        ']
-list2    = ['-'          , '-        ', scale_pion , '-        ', '-        ']
-list3    = ['-'          , '-        ', '-        ', scale_elec , '-        ']
-list4    = ['-'          , '-        ', '-        ', '-        ', scale_muon ]
+list     = ['fake_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), 'pion_stat' + str('_0p%02.0f' %(iasCutMin)), 'elec_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), 'muon_stat' + str('_0p%02.0f' %(iasCutMin))]
+listErr  = ['lnN'      , 'gmN'      , 'gmN'      , 'gmN'      ]
+listN    = [' '        , nPionSR    , nElecSR    , nMuonSR    ]
+list0    = ['-        ', '-        ', '-        ', '-        ']
+list1    = [fakeError  , '-        ', '-        ', '-        ']
+list2    = ['-        ', scale_pion , '-        ', '-        ']
+list3    = ['-        ', '-        ', scale_elec , '-        ']
+list4    = ['-        ', '-        ', '-        ', scale_muon ]
+
+#list     = ['signal_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)) , 'fake_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), 'pion_stat' + str('_0p%02.0f' %(iasCutMin)), 'elec_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), 'muon_stat' + str('_0p%02.0f' %(iasCutMin))]
+#listErr  = ['gmN'        , 'lnN'      , 'gmN'      , 'gmN'      , 'gmN'      ]
+#listN    = ['x'          , ' '        , nPionSR    , nElecSR    , nMuonSR    ]
+#list0    = ['x.xxxx'     , '-        ', '-        ', '-        ', '-        ']
+#list1    = ['-'          , fakeError  , '-        ', '-        ', '-        ']
+#list2    = ['-'          , '-        ', scale_pion , '-        ', '-        ']
+#list3    = ['-'          , '-        ', '-        ', scale_elec , '-        ']
+#list4    = ['-'          , '-        ', '-        ', '-        ', scale_muon ]
 
 for n in range(len(list0)):
     f.write(format_string.format(list[n], listErr[n], listN[n], list0[n], list1[n], list2[n], list3[n], list4[n]))
