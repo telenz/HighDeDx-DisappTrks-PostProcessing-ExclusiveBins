@@ -230,7 +230,7 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   expL->GetYaxis()->SetTitleSize(0.05);
   expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
   expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
-  expL->GetXaxis()->SetRangeUser(50,550);
+  expL->GetXaxis()->SetRangeUser(50,650);
   expL->GetYaxis()->SetRangeUser(0.005,10);
   expL->SetTitle();
 
