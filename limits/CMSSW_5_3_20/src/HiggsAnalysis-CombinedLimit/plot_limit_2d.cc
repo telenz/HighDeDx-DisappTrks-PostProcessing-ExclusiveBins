@@ -214,6 +214,13 @@ void plot_limit_2d(TString filename){
     cout<<"intObs = "<<intObs<<endl;
     cout<<endl;
 
+    cout<<"lifetimes["<<ct<<"] = "<<lifetimes[ct]<<endl;
+    cout<<"intExp = "<<intExp<<endl;
+    if(ct==0 && (intExp>200 || intExp==-1)){
+
+      cout<<"wrong limit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
+      intExp=0;
+    }
     
     if(ct==0){
 
@@ -239,7 +246,20 @@ void plot_limit_2d(TString filename){
     exp_2sig_up_2d[ct+1]   = intExp_2sig_up;
     exp_2sig_down_2d[ct+1] = intExp_2sig_down;
     
+    cout<<"exp_2d["<<ct<<"] = "<<exp_2d[ct]<<endl;
+    if(exp_2d[ct]==0){
+      cout<<"in  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "<<endl;
+      ctau_2d[ct]          = ctau_2d[ct+1];
+      ctau_2d_cm[ct]       = ctau_2d_cm[ct+1];
+      ctau_Error_2d[ct]    = 0;
+      obs_2d[ct]           = massMin;
+      exp_2d[ct]           = massMin;
+      exp_1sig_up_2d[ct]   = massMin;
+      exp_1sig_down_2d[ct] = massMin;
+      exp_2sig_up_2d[ct]   = massMin;
+      exp_2sig_down_2d[ct] = massMin;
 
+    }
     
 
     /*
@@ -380,6 +400,9 @@ void plot_limit_2d(TString filename){
   g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,300);
   c->SaveAs("LimitPlot_2d_log.pdf");
 
+
+  delete c;
+  c = new TCanvas("c","c",500,500);
   g_exp_2sig_up_cm->GetXaxis()->SetLimits(100,600);
 
   g_exp_2sig_up_cm->SetMarkerStyle(8);
@@ -424,6 +447,15 @@ void plot_limit_2d(TString filename){
   g_exp_2sig_up_cm->SetTitle();
 
   gPad->RedrawAxis();
+
+  delete l1;
+  l1=new TLegend(0.15,0.65,0.45,0.85);
+  l1->SetLineColor(0);
+  l1->SetFillColor(0);
+  l1->SetFillStyle(0);
+  l1->SetTextFont(42);
+  l1->SetTextSize(0.04);
+  l1->SetBorderSize(0);
 
   l1->AddEntry(g_obs_cm,"Observed Limit","l");
   l1->AddEntry(g_exp_cm,"Expected Limit","l");
@@ -486,10 +518,10 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
 	break;
       }
       f1 = new TF1("f1","[0]*x+[1]",massAll[i],massAll[i+1]);
-      double a = (xsecTheoLow[i]-xsecTheoLow[i+1])/(massAll[i]-massAll[i+1]);
-      double b = xsecTheoLow[i]-a*massAll[i];
-      f1->SetParameter(0,a);
-      f1->SetParameter(1,b);
+      double a1 = (xsecTheoLow[i]-xsecTheoLow[i+1])/(massAll[i]-massAll[i+1]);
+      double b1 = xsecTheoLow[i]-a1*massAll[i];
+      f1->SetParameter(0,a1);
+      f1->SetParameter(1,b1);
      
       double xmin, xmax;
       f1->GetRange(xmin,xmax);
@@ -513,7 +545,7 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
       //fint->Draw("lsame");
     
       if(xint!=massAll[i] && xint !=massAll[i+1]){
-	c3->SaveAs("intersection_"+title+".pdf");
+	//c3->SaveAs("intersection_"+title+".pdf");
 	return xint;
       }
       delete c3;
@@ -636,7 +668,7 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   c1->SetTickx();
   c1->SetTicky();
   c1->Update();
-  c1->SaveAs(Form("test_ctau%icm.pdf",ctau));
+  //c1->SaveAs(Form("test_ctau%icm.pdf",ctau));
 
   
   return;
