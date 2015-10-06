@@ -116,6 +116,12 @@ for ct in "${ctau[@]}"
     do
 	#echo "m="$m
 	#echo "ctau="$ct
+
+	if [ "$ct" == "1" ] && ([ "$m" == "300" ] || [ "$m" == "400" ] || [ "$m" == "500" ] || [ "$m" == "600" ])
+	then
+	    continue
+	fi
+
 	python addSysUncertaintiesToDatacard.py ${metCut} ${ptCutMin} ${ptCutMax} ${ecaloCut} "${iasCutMin}" "${iasCutMax}" "${m}" "${ct}"
     done
 done
