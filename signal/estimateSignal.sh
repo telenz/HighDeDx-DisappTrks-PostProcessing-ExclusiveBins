@@ -3,10 +3,9 @@
 #source "../variablesSetting.sh"
 echo ""
 echo "%%%%%%%%%%%%%%%%%%%%%%% signal yield estimation %%%%%%%%%%%%%%%%%%%%%%%"
-
-for ct in "${ctau[@]}"
-  do
-    for m in "${mass[@]}"
+for m in "${mass[@]}"
+do
+    for ct in "${ctau[@]}"
     do
 	if [ "$ct" == "1" ] && ([ "$m" == "300" ] || [ "$m" == "400" ] || [ "$m" == "500" ] || [ "$m" == "600" ])
 	then
