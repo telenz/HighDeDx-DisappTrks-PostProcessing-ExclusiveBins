@@ -15,6 +15,7 @@
 #include "TMarker.h"
 #include "TFrame.h"
 #include "TMath.h"
+#include "TLatex.h"
 
 string dTs(double d){
  std::stringstream tmp;
@@ -73,7 +74,7 @@ void plot_limit_2d(TString filename){
   lifetimes.push_back(8000);
   lifetimes.push_back(9000);
   lifetimes.push_back(10000);
-  
+
   int size = lifetimes.size()+2;
 
   double* ctau_2d    = new double[size];
@@ -197,20 +198,24 @@ void plot_limit_2d(TString filename){
       else cout << "Unable to open file "; 
     }//loop over all files
 
-  
-    
+    double intExp           = 0;
+    double intExp_1sig_up   = 0;
+    double intExp_1sig_down = 0;
+    double intExp_2sig_up   = 0;
+    double intExp_2sig_down = 0;
+    double intObs           = 0;
 
-    double intExp = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp,Form("expected_%icm",lifetimes[ct]));
+    intExp = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp,Form("expected_%icm",lifetimes[ct]));
     cout<<"intExp = "<<intExp<<endl;
-    double intExp_1sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_1sig_down,Form("expected_1sigma_up_%icm",lifetimes[ct]));
+    intExp_1sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_1sig_down,Form("expected_1sigma_up_%icm",lifetimes[ct]));
     cout<<"intExp_1sig_up = "<<intExp_1sig_up<<endl;
-    double intExp_1sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_1sig_up,Form("expected_1sigma_down_%icm",lifetimes[ct]));
+    intExp_1sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_1sig_up,Form("expected_1sigma_down_%icm",lifetimes[ct]));
     cout<<"intExp_1sig_down = "<<intExp_1sig_down<<endl;
-    double intExp_2sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_2sig_down,Form("expected_2sigma_up_%icm",lifetimes[ct]));
+    intExp_2sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_2sig_down,Form("expected_2sigma_up_%icm",lifetimes[ct]));
     cout<<"intExp_2sig_up = "<<intExp_2sig_up<<endl;
-    double intExp_2sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_2sig_up,Form("expected_2sigma_down_%icm",lifetimes[ct]));
+    intExp_2sig_down = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_2sig_up,Form("expected_2sigma_down_%icm",lifetimes[ct]));
     cout<<"intExp_2sig_down = "<<intExp_2sig_down<<endl;
-    double intObs = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,Form("observed_%icm",lifetimes[ct]));
+    intObs = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,Form("observed_%icm",lifetimes[ct]));
     cout<<"intObs = "<<intObs<<endl;
     cout<<endl;
 
@@ -221,7 +226,7 @@ void plot_limit_2d(TString filename){
       cout<<"wrong limit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
       intExp=0;
     }
-    
+
     if(ct==0){
 
       ctau_2d[ct]          = ctauMin/(100*TMath::C()*pow(10,-9));
@@ -390,7 +395,7 @@ void plot_limit_2d(TString filename){
   l1->AddEntry(g_exp_2sig_up,"#pm 2#sigma","f");
 
   l1->Draw();
-
+  
   c->SetTickx();
   c->SetTicky();
   c->Update();
@@ -502,18 +507,41 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
   TCanvas *c3=0;
   // f1 = theoretical cross-section
   // f2 = xsection upper limit
-  for(unsigned int j=0; j<xsecTheo.size()-1;j++){
+  for(unsigned int j=xsecTheo.size()-2; j>=0;j--){
    
+    cout<<"j = "<<j<<endl;
+    cout<<"mass["<<j<<"] = "<<mass[j]<<endl;
+    cout<<"mass["<<j+1<<"] = "<<mass[j+1]<<endl;
+    //cout<<"mass["<<j+1<<"] = "<<mass[j+1]<<endl;
     f2 = new TF1("f2","[0]*x+[1]",mass[j],mass[j+1]);
+    //f2 = new TF1("f2","[0]*TMath::Exp([1]*x)",mass[j],mass[j+1]);
     f2->SetRange(mass[j],mass[j+1]);
+    f2->SetLineColor(kGreen);
+    cout<<"expTimesXsec["<<j<<"] = "<<expTimesXsec[j]<<endl;
+    cout<<"expTimesXsec["<<j+1<<"] = "<<expTimesXsec[j+1]<<endl;
     double a = (expTimesXsec[j]-expTimesXsec[j+1])/(mass[j]-mass[j+1]);
     double b = expTimesXsec[j]-a*mass[j];
+    //double b = TMath::Log((expTimesXsec[j]/expTimesXsec[j+1]))/(mass[j]-mass[j+1]);
+    //double a = expTimesXsec[j]/TMath::Exp(b*mass[j]);
     f2->SetParameter(0,a);
     f2->SetParameter(1,b);
+    for(unsigned int i=xsecTheoLow.size()-40; i>=0;i--){
+      
+      if(massAll[i+1]>mass[j+1] && j!=xsecTheo.size()-2) continue;
 
-    for(unsigned int i=0; i<xsecTheoLow.size()-1;i++){
-      if(massAll[i+1]>mass[j+1] && j+2 != xsecTheo.size()){
-	//cout<<"massAll["<<i+1<<"] = "<<massAll[i+1]<<endl;
+      if(massAll[i]<mass[j] /*&& j+2 != xsecTheo.size()*/){
+	//
+	//cout<<"mass["<<j+1<<"] = "<<mass[j+1]<<endl;
+	break;
+      }
+
+      cout<<"i = "<<i<<endl;
+      cout<<"massAll["<<i<<"] = "<<massAll[i]<<endl;
+      cout<<"massAll["<<i+1<<"] = "<<massAll[i+1]<<endl;
+      cout<<"xsecTheoLow["<<i<<"] = "<<xsecTheoLow[i]<<endl;
+      cout<<"xsecTheoLow["<<i+1<<"] = "<<xsecTheoLow[i+1]<<endl;
+      if(massAll[i]<mass[j] /*&& j+2 != xsecTheo.size()*/){
+	//
 	//cout<<"mass["<<j+1<<"] = "<<mass[j+1]<<endl;
 	break;
       }
@@ -522,27 +550,26 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
       double b1 = xsecTheoLow[i]-a1*massAll[i];
       f1->SetParameter(0,a1);
       f1->SetParameter(1,b1);
-     
       double xmin, xmax;
       f1->GetRange(xmin,xmax);
       fint = new TF1("fint_"+title,finter,xmin,xmax,0);
       double xint = fint->GetMinimumX();
-      fint->SetLineColor(1);
-    
+      cout<<"xint = "<<xint<<endl;
+      fint->SetLineColor(2);
       c3= new TCanvas("c3_"+title,title);
       c3->cd();
       TLegend *leg = new TLegend(0.1,0.7,0.48,0.9);
       leg->AddEntry(f2,"xsec upper limit","l");
       leg->AddEntry(f1,"theory xsec","l");
       //c3->SetLogy();
-      f2->SetMaximum(1);
+      f2->SetMaximum(10);
       f2->SetMinimum(0.0);
       f1->SetTitle(title);
       //f1->Draw();
       f2->Draw();
       f1->Draw("same");
       leg->Draw("same");
-      //fint->Draw("lsame");
+      fint->Draw("lsame");
     
       if(xint!=massAll[i] && xint !=massAll[i+1]){
 	//c3->SaveAs("intersection_"+title+".pdf");
@@ -659,6 +686,11 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   l1->AddEntry(xsecL,"Theoretical x-section","l");
 
   l1->Draw();
+
+  TLatex Tl;
+  Tl.SetTextAlign(12);
+  Tl.SetTextSize(0.04);
+  Tl.DrawLatex(0.6,0.2,Form("c#tau=%icm",ctau));
 
   TLine *line = new TLine(60,1,540,1);
   line->SetLineColor(kBlack);
