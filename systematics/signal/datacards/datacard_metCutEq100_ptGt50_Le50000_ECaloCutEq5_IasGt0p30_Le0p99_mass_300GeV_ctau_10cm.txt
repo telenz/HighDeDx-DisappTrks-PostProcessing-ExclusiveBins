@@ -36,14 +36,13 @@ fake_syst_rate_50                       lnN            -                        
 fake_syst_ias_50_0p30                   lnN            -                                       1.3861              -                   -                   -                   
 
 lumi                                    lnN            1.0260                                  -                   -                   -                   -                   
-ISR                                     lnN            1.1250                                  -                   -                   -                   -                   
-trigger                                 lnN            1.0266                                  -                   -                   -                   -                   
+ISR                                     lnN            1.1240                                  -                   -                   -                   -                   
+trigger                                 lnN            1.0299                                  -                   -                   -                   -                   
 JES                                     lnN            1.0120                                  -                   -                   -                   -                   
 JER                                     lnN            1.0070                                  -                   -                   -                   -                   
 PDF                                     lnN            1.0310                                  -                   -                   -                   -                   
 ECalo                                   lnN            1.0305                                  -                   -                   -                   -                   
 HitsLostMiddle                          lnN            1.0215                                  -                   -                   -                   -                   
 HitsLostInner                           lnN            1.0334                                  -                   -                   -                   -                   
-PU                                      lnN            1.0040                                  -                   -                   -                   -                   
 TrkRecoEff                              lnN            1.0460                                  -                   -                   -                   -                   
 Ias                                     lnN            1.0488                                  -                   -                   -                   -                   

@@ -12,7 +12,7 @@ observation                            34
 bin                                                    1                                       1                   1                   1                   1                   
 process                                                CharginoPair_mass_300GeV_ctau_500cm       Fake                Pion                Elec                Muon                
 process                                                0                                       1                   1                   1                   1                   
-rate                                                   18.352                                  22.2110             0.0000              2.1740              0.0000              
+rate                                                   19.780                                  22.2110             0.0000              2.1740              0.0000              
 
 
 # STATISTICAL UNCERTAINTIES
@@ -21,7 +21,7 @@ fake_stat_50_0p05                       lnN            -                        
 pion_stat_0p05                          gmN  0         -                                       -                   0.2836              -                   -                   
 elec_stat_50_0p05                       gmN  1         -                                       -                   -                   2.1737              -                   
 muon_stat_0p05                          gmN  0         -                                       -                   -                   -                   0.2519              
-signal_stat_50_0p05                     gmN  342       0.05366                                 -                   -                   -                   -                   
+signal_stat_50_0p05                     gmN  342       0.05784                                 -                   -                   -                   -                   
 
 
 # SYSTEMATIC UNCERTAINTIES 
@@ -36,14 +36,13 @@ fake_syst_rate_50                       lnN            -                        
 fake_syst_ias_50_0p05                   lnN            -                                       1.23064             -                   -                   -                   
 
 lumi                                    lnN            1.0260                                  -                   -                   -                   -                   
-ISR                                     lnN            1.1250                                  -                   -                   -                   -                   
-trigger                                 lnN            1.0266                                  -                   -                   -                   -                   
+ISR                                     lnN            1.1240                                  -                   -                   -                   -                   
+trigger                                 lnN            1.0299                                  -                   -                   -                   -                   
 JES                                     lnN            1.0120                                  -                   -                   -                   -                   
 JER                                     lnN            1.0070                                  -                   -                   -                   -                   
 PDF                                     lnN            1.0310                                  -                   -                   -                   -                   
 ECalo                                   lnN            1.0305                                  -                   -                   -                   -                   
 HitsLostMiddle                          lnN            1.0215                                  -                   -                   -                   -                   
 HitsLostInner                           lnN            1.0334                                  -                   -                   -                   -                   
-PU                                      lnN            1.0200                                  -                   -                   -                   -                   
 TrkRecoEff                              lnN            1.0460                                  -                   -                   -                   -                   
 Ias                                     lnN            1.0488                                  -                   -                   -                   -                   

@@ -37,13 +37,12 @@ fake_syst_ias_30_0p05                   lnN            -                        
 
 lumi                                    lnN            1.0260                                  -                   -                   -                   -                   
 ISR                                     lnN            1.1030                                  -                   -                   -                   -                   
-trigger                                 lnN            1.0462                                  -                   -                   -                   -                   
-JES                                     lnN            1.0160                                  -                   -                   -                   -                   
+trigger                                 lnN            1.0435                                  -                   -                   -                   -                   
+JES                                     lnN            1.0130                                  -                   -                   -                   -                   
 JER                                     lnN            1.0040                                  -                   -                   -                   -                   
 PDF                                     lnN            1.0520                                  -                   -                   -                   -                   
 ECalo                                   lnN            1.1210                                  -                   -                   -                   -                   
 HitsLostMiddle                          lnN            1.0221                                  -                   -                   -                   -                   
 HitsLostInner                           lnN            1.0366                                  -                   -                   -                   -                   
-PU                                      lnN            1.0990                                  -                   -                   -                   -                   
 TrkRecoEff                              lnN            1.0600                                  -                   -                   -                   -                   
 Ias                                     lnN            1.0488                                  -                   -                   -                   -                   
