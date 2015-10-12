@@ -6,7 +6,8 @@ decaywidthTable=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "20" "30" "40" "50" "6
 
 
 
-filenameIn="datacardsCombined"
+
+filenameIn="datacardsCombined_10_11"
 mkdir logFiles/${filenameIn}
 mkdir limits/${filenameIn}
 
@@ -22,11 +23,41 @@ do
 	datacardName=$(find ${filenameIn}/ -name "*mass_${mass}GeV_ctau_${ctau}cm.txt" )
 	echo $datacardName
 	#combine -M Asymptotic --run expected -C 0.95 -t -1 --minimizerStrategy 2 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
-	combine -M Asymptotic -C 0.95   --minimizerStrategy 2  ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
+	#combine -M Asymptotic -C 0.95   --minimizerStrategy 2  --rMax=10000 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
+	combine -M Asymptotic -C 0.95   --minimizerStrategy 2  ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log&
+	#if grep -ql 'nan' logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log 
+	#    then 
+	#    echo 'redo limit setting!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+	#    combine -M Asymptotic -C 0.95   --minimizerStrategy 2  --rMax 2 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
+	#fi
+	#if [[ ! -s logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log ]]
+	#    then
+	#    combine -M Asymptotic -C 0.95   --minimizerStrategy 2  --rMax=10000 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
+	#fi
+	#cat logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
+
+	#echo ""
+	#echo ""
+
+    done
+    sleep 25
+    echo "after wait"
+    for mass in "${massTable[@]}"
+    do
+	if [ "$ctau" == "1" ] && ([ "$mass" == "300" ] || [ "$mass" == "400" ] || [ "$mass" == "500" ] || [ "$mass" == "600" ])
+	then
+	    continue
+	fi
+
+	datacardName=$(find ${filenameIn}/ -name "*mass_${mass}GeV_ctau_${ctau}cm.txt" )
 	if grep -ql 'nan' logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log 
 	    then 
 	    echo 'redo limit setting!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
 	    combine -M Asymptotic -C 0.95   --minimizerStrategy 2  --rMax 2 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
+	fi
+	if [[ ! -s logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log ]]
+	    then
+	    combine -M Asymptotic -C 0.95   --minimizerStrategy 2  --rMax=10000 ${datacardName} > logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
 	fi
 	cat logFiles/${filenameIn}/res_mass_${mass}GeV_ctau_${ctau}cm.log
 
