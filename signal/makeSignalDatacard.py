@@ -49,7 +49,7 @@ for line in linesOriginal:
     fout.write('\n')
     if line.find('muon_stat') >= 0:
         break
-
+#print "mass:" + str(mass)+ ", ctau: " + str(ctau) + "cm  = " + str(pred)
 fout.write(format_string.format('signal_stat_' + str(ptCutMin) + str('_0p%02.0f' %(iasCutMin)), 'gmN', str(nEvents), str("%.5f" % scaling) , '-', '-', '-', '-'))
 fout.write('\n')
             
