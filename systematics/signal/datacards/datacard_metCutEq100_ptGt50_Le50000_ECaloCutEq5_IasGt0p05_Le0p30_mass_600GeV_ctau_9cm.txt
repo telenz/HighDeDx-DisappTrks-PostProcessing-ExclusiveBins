@@ -44,6 +44,6 @@ PDF                                     lnN            1.0500                   
 ECalo                                   lnN            1.0305                                  -                   -                   -                   -                   
 HitsLostMiddle                          lnN            1.0215                                  -                   -                   -                   -                   
 HitsLostInner                           lnN            1.0334                                  -                   -                   -                   -                   
-PU                                      lnN            1.0240                                  -                   -                   -                   -                   
+PU                                      lnN            1.0210                                  -                   -                   -                   -                   
 TrkRecoEff                              lnN            1.0460                                  -                   -                   -                   -                   
 Ias                                     lnN            1.0488                                  -                   -                   -                   -                   
