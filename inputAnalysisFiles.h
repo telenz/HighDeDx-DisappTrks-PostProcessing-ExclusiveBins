@@ -39,8 +39,8 @@ TString inputJERup           = "/nfs/dust/cms/user/tlenz/ANALYSIS/workdir/analys
 TString inputJERdown         = "/nfs/dust/cms/user/tlenz/ANALYSIS/workdir/analysis_2015_09_18_JERunc_down/results/analyzer/ntuples/input_weighted/";
 
 TString inputPUcentral      = fileSR;
-TString inputPUup           = "/nfs/dust/cms/user/tlenz/ANALYSIS/workdir/analysis_2015_10_02_PUunc_up/results/analyzer/ntuples/input_weighted/";
-TString inputPUdown         = "/nfs/dust/cms/user/tlenz/ANALYSIS/workdir/analysis_2015_10_02_PUunc_down/results/analyzer/ntuples/input_weighted/";
+TString inputPUup           = "/nfs/dust/cms/user/tlenz/ANALYSIS/workdir/analysis_2015_10_11_PUunc_up/results/analyzer/ntuples/input_weighted/";
+TString inputPUdown         = "/nfs/dust/cms/user/tlenz/ANALYSIS/workdir/analysis_2015_10_11_PUunc_down/results/analyzer/ntuples/input_weighted/";
 
 
 TString inputEcaloUnc       = "/nfs/dust/cms/user/tlenz/ANALYSIS/workdir/analysis_2015_08_05_METGt0_JetPtGt0_FakeCS/results/analyzer/ntuples/input_weighted/";
