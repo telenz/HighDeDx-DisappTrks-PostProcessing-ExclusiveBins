@@ -1,7 +1,7 @@
-At r = 0.679937:	q_mu = 3.48207	q_A  = 4.75999	CLsb = 0.03102	CLb  = 0.62389	CLs  = 0.04972
+At r = 0.679956:	q_mu = 3.48203	q_A  = 4.76007	CLsb = 0.03102	CLb  = 0.62390	CLs  = 0.04972
 
  -- Asymptotic -- 
-Observed Limit: r < 0.6799
+Observed Limit: r < 0.6800
 Expected  2.5%: r < 0.3211
 Expected 16.0%: r < 0.4271
 Expected 50.0%: r < 0.5918
