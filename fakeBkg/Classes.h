@@ -221,13 +221,13 @@ public:
 
       if(fakeSelection){
 
-	//if(trackNLostOuter->at(0)<1)     continue; 
+ 	//if(trackNLostOuter->at(0)<1)     continue; 
 	if(abs(trackEta->at(0))>2.1)     continue;
 	if(abs(trackEta->at(0))>1.42 && abs(trackEta->at(0))<1.65 )  continue;
-	
+
 	if(trackPt->at(0)<ptCutMin)         continue;
 	if(trackPt->at(0)>ptCutMax)         continue;
-		
+
 	if(ecaloSelection){      
 	  if(LowECaloRegion){
 	    if(trackCaloIso->at(0)>ecaloCut)  continue;
@@ -238,11 +238,11 @@ public:
 
 	}
 	//	if(trackNValid->at(0)<7)         continue;
-      }
 
-      if(histo)      histo        -> Fill(0.5,weight_xsec_lumi*weight);
-      if(histoASmi)  histoASmi    -> Fill(trackASmi->at(0),weight_xsec_lumi*weight);
-      if(histoECalo) histoECalo   -> Fill(trackCaloIso->at(0),weight_xsec_lumi*weight);
+	if(histo)      histo        -> Fill(0.5,weight_xsec_lumi*weight);
+	if(histoASmi)  histoASmi    -> Fill(trackASmi->at(0),weight_xsec_lumi*weight);
+	if(histoECalo) histoECalo   -> Fill(trackCaloIso->at(0),weight_xsec_lumi*weight);
+      }
         
     }
   };
