@@ -175,13 +175,11 @@ public:
     histo= new TH1D("histo" + (TString) file->GetName(),"histo",1,0,1);
     histo->Sumw2();
 
-    //cout<<"N events = "<<tree->GetEntries()<<endl;
-    
     for(int n=0; n<tree->GetEntries(); n++){
 
       tree->GetEntry(n);
 
-      auxWeight = weight_xsec_lumi*weight*weightReweighting;
+      auxWeight = weight*weight_xsec_lumi*weightReweighting;
 
 
       if(met<100)           continue;
@@ -222,7 +220,7 @@ int getSysUncertainty(double ptCutMin, double ptCutMax, double ecaloCut, double 
   down.file       =  new TFile(inputPUdown    + "/" + inputSample,"READ");
   central.file    =  new TFile(inputPUcentral + "/" + inputSample,"READ");
   
-  TString select = "chiTrackspreselectionTrigger/Variables";
+  TString select = "chiTrackspreselection/Variables";
 
   up.file       -> GetObject(select , up.tree);
   down.file     -> GetObject(select , down.tree);
@@ -235,22 +233,21 @@ int getSysUncertainty(double ptCutMin, double ptCutMax, double ecaloCut, double 
   down.Selection(   ptCutMin, ptCutMax, ecaloCut, iasCutMin, iasCutMax);
   central.Selection( ptCutMin, ptCutMax, ecaloCut, iasCutMin, iasCutMax);
   
-
+  cout.precision(4);
+  cout<<"up.histo->GetEntries()          = "<<up.histo->GetEntries()<<endl;
+  cout<<"down.histo->GetEntries()        = "<<down.histo->GetEntries()<<endl;
+  cout<<"central.histo->GetEntries()     = "<<central.histo->GetEntries()<<endl;
   cout<<"up.histo->GetBinContent(1)      = "<<up.histo->GetBinContent(1)<<endl;
   cout<<"down.histo->GetBinContent(1)    = "<<down.histo->GetBinContent(1)<<endl;
   cout<<"central.histo->GetBinContent(1) = "<<central.histo->GetBinContent(1)<<endl;
   
 
   double nUp               =  up.histo->GetBinContent(1);
-  double nUpError          =  up.histo->GetBinError(1);
   double nDown             =  down.histo->GetBinContent(1);
-  double nDownError        =  down.histo->GetBinError(1);
   double nCentral          =  central.histo->GetBinContent(1);
-  double nCentralError     =  central.histo->GetBinError(1);
 
   double upUnc           = abs(nUp/nCentral - 1);
   double downUnc         = abs(nDown/nCentral - 1);
-
 
   cout<<"###########################################################################"<<endl;
   cout.precision(1);
