@@ -107,8 +107,9 @@ void plot_limit_2d(TString filename){
     vector<double> xsecTheoAll;
     vector<double> xsecTheoErrAll;
     // Read in theoretical cross-sections
-    //ifstream inputFile("xsectionsUpdatedAllMasses.txt");
-    ifstream inputFile("xsectionsUpdatedAllMasses_AllProcesses.txt");
+    ifstream inputFile("xsectionsUpdated.txt");
+    //ifstream inputFile("xsectionsUpdatedAllMasses_AllProcesses.txt");
+    
     int it=1;
     double dataset,xsec,xsecErr;
     while(inputFile>>dataset>>xsec>>xsecErr){
@@ -195,7 +196,6 @@ void plot_limit_2d(TString filename){
 	    }
 	  myfile.close();
 	}
-      else cout << "Unable to open file "; 
     }//loop over all files
 
     double intExp           = 0;
@@ -204,7 +204,6 @@ void plot_limit_2d(TString filename){
     double intExp_2sig_up   = 0;
     double intExp_2sig_down = 0;
     double intObs           = 0;
-
     intExp = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp,Form("expected_%icm",lifetimes[ct]));
     cout<<"intExp = "<<intExp<<endl;
     intExp_1sig_up = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp_1sig_down,Form("expected_1sigma_up_%icm",lifetimes[ct]));
@@ -217,6 +216,9 @@ void plot_limit_2d(TString filename){
     cout<<"intExp_2sig_down = "<<intExp_2sig_down<<endl;
     intObs = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,Form("observed_%icm",lifetimes[ct]));
     cout<<"intObs = "<<intObs<<endl;
+    intExp = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp,Form("expected_%icm",lifetimes[ct]));
+    cout<<"intExp = "<<intExp<<endl;
+
     cout<<endl;
 
     cout<<"lifetimes["<<ct<<"] = "<<lifetimes[ct]<<endl;
@@ -297,8 +299,8 @@ void plot_limit_2d(TString filename){
   TCanvas *c = new TCanvas("c","c",500,500);
   //c->SetLogy();
 
-  gPad->SetBottomMargin(0.14);
-  gPad->SetLeftMargin(0.14);
+  gPad->SetBottomMargin(0.20);
+  gPad->SetLeftMargin(0.20);
   
   TLegend *l1=new TLegend(0.15,0.65,0.45,0.85);
   l1->SetLineColor(0);
@@ -407,6 +409,9 @@ void plot_limit_2d(TString filename){
 
 
   delete c;
+  gStyle -> SetPadBottomMargin(0.15);
+  gStyle -> SetPadLeftMargin(0.15);
+
   c = new TCanvas("c","c",500,500);
   g_exp_2sig_up_cm->GetXaxis()->SetLimits(100,600);
 
@@ -472,10 +477,10 @@ void plot_limit_2d(TString filename){
   c->SetTickx();
   c->SetTicky();
   c->Update();
-  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1,10000);
+  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1.7,9000);
   c->SaveAs("LimitPlot_2d_cm.pdf");
   c->SetLogy();
-  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1,10000);
+  g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1.7,9000);
   c->SaveAs("LimitPlot_2d_log_cm.pdf");
 
 
@@ -496,11 +501,11 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
     //cout<<"massAll["<<i<<"] = "<<massAll[i]<<endl;
     //cout<<"exp["<<i<<"] = "<<exp[i]*xsecTheo[i]<<endl;
     //cout<<"xsecTheo["<<i<<"] = "<<xsecTheo[i]<<endl;
-    expTimesXsec.push_back(exp[i]*xsecTheo[i]);
+    expTimesXsec.push_back(log(exp[i]*xsecTheo[i]));
   }
 
   for(unsigned int i=0; i<xsecTheoAll.size();i++){
-    xsecTheoLow.push_back(xsecTheoAll[i]-xsecTheoErrAll[i]);
+    xsecTheoLow.push_back(log(xsecTheoAll[i]-xsecTheoErrAll[i]));
   }
 
 
@@ -508,7 +513,7 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
   // f1 = theoretical cross-section
   // f2 = xsection upper limit
   for(unsigned int j=xsecTheo.size()-2; j>=0;j--){
-   
+
     cout<<"j = "<<j<<endl;
     cout<<"mass["<<j<<"] = "<<mass[j]<<endl;
     cout<<"mass["<<j+1<<"] = "<<mass[j+1]<<endl;
@@ -525,10 +530,10 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
     //double a = expTimesXsec[j]/TMath::Exp(b*mass[j]);
     f2->SetParameter(0,a);
     f2->SetParameter(1,b);
-    for(unsigned int i=xsecTheoLow.size()-40; i>=0;i--){
-      
-      if(massAll[i+1]>mass[j+1] && j!=xsecTheo.size()-2) continue;
 
+    for(unsigned int i=xsecTheoLow.size()-2; i>=0;i--){
+
+      if(massAll[i+1]>mass[j+1] && j!=xsecTheo.size()-2) continue;
       if(massAll[i]<mass[j] /*&& j+2 != xsecTheo.size()*/){
 	//
 	//cout<<"mass["<<j+1<<"] = "<<mass[j+1]<<endl;
@@ -536,8 +541,6 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
       }
 
       cout<<"i = "<<i<<endl;
-      cout<<"massAll["<<i<<"] = "<<massAll[i]<<endl;
-      cout<<"massAll["<<i+1<<"] = "<<massAll[i+1]<<endl;
       cout<<"xsecTheoLow["<<i<<"] = "<<xsecTheoLow[i]<<endl;
       cout<<"xsecTheoLow["<<i+1<<"] = "<<xsecTheoLow[i+1]<<endl;
       if(massAll[i]<mass[j] /*&& j+2 != xsecTheo.size()*/){
@@ -588,7 +591,7 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
 
 void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau){
   TCanvas *c1 = new TCanvas;
-  c1->SetLogy();
+  //c1->SetLogy();
 
   //gStyle->SetPadBottomMargin(10.5);
   gPad->SetBottomMargin(0.14);
@@ -665,7 +668,8 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   expL->GetXaxis()->SetTitleSize(0.05);
   expL->GetYaxis()->SetTitleSize(0.05);
   expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
-  expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
+  //expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
+  expL->GetYaxis()->SetTitle("95% CL upper limit on #sigma");
   expL->GetXaxis()->SetRangeUser(50,650);
   expL->GetYaxis()->SetRangeUser(0.005,10);
   //expL->GetYaxis()->SetRangeUser(0.2,5);
@@ -688,9 +692,8 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   l1->Draw();
 
   TLatex Tl;
-  Tl.SetTextAlign(12);
   Tl.SetTextSize(0.04);
-  Tl.DrawLatex(0.6,0.2,Form("c#tau=%icm",ctau));
+  Tl.DrawLatex(500.,0.8,Form("c#tau=%icm",ctau));
 
   TLine *line = new TLine(60,1,540,1);
   line->SetLineColor(kBlack);
@@ -700,8 +703,9 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   c1->SetTickx();
   c1->SetTicky();
   c1->Update();
-  //c1->SaveAs(Form("test_ctau%icm.pdf",ctau));
-
+  c1->SaveAs(Form("test_ctau%icm.pdf",ctau));
+  c1->SetLogy();
+  c1->SaveAs(Form("test_ctau%icm_log.pdf",ctau));
   
   return;
 
