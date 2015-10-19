@@ -95,9 +95,11 @@ def getSignalUncertainties(filename):
 # Get xsection
 lines  = open("xsectionsUpdated.txt",'r').readlines()
 for n in range(len(lines)):
-    if lines[n].find("Madgraph_signal_mass_" + str(mass) + "_ctau_" + str(ctau) +"cm") >= 0:
-        columns = lines[n].split()
-        xsec = float(columns[1])
+  aux = lines[n].split()[0]
+  if aux == mass:
+    columns = lines[n].split()
+    xsec = float(columns[1])/1000.
+    break
 
 
 bestValuePtCut=0
@@ -106,12 +108,11 @@ bestValueXsec=10000
 
 # Loop over pt
 for l in range(1,10):
-    ptCut = 20+10*l
-    for i in range(1,9):
+    ptCut = 10+10*l
+    for i in range(1,11):
         iasCut=00+i*5
-        if not os.path.exists('datacards/datacard_metCutEq%s_ptCutEq%s_ECaloCutEq%s_IasCutEq0p%02.0f_mass_' %(100,ptCut,5,iasCut) + str(mass) + 'GeV_ctau_' + str(ctau) + 'cm.txt'): continue
-        file    = 'datacards/datacard_metCutEq%s_ptCutEq%s_ECaloCutEq%s_IasCutEq0p%02.0f_mass_' %(100,ptCut,5,iasCut) + str(mass) + 'GeV_ctau_' + str(ctau) + 'cm.txt'
-        #print file
+        if not os.path.exists('datacards/datacard_metCutEq%s_ptGt%s_Le50000_ECaloCutEq%s_IasGt0p%02.0f_Le0p99_mass_' %(100,ptCut,5,iasCut) + str(mass) + 'GeV_ctau_' + str(ctau) + 'cm.txt'): continue
+        file    = 'datacards/datacard_metCutEq%s_ptGt%s_Le50000_ECaloCutEq%s_IasGt0p%02.0f_Le0p99_mass_' %(100,ptCut,5,iasCut) + str(mass) + 'GeV_ctau_' + str(ctau) + 'cm.txt'
         nSignal = getYield(file,"signal")
         if nSignal == 0: continue
         nFake   = getYield(file,"fake")
@@ -133,13 +134,14 @@ for l in range(1,10):
         # Add everthing together
         bkgUnc = math.sqrt(pow(fakeUnc,2) + pow(pionUnc,2) + pow(elecUnc,2) + pow(muonUnc,2) )
         #print "bkg = " + str(round(nBkg,2)) + "+/-" +str(round(bkgUnc,2))
-        signalUnc = getSignalUncertainties(file)
+        signalUnc = 0#getSignalUncertainties(file)
         #print "signal = " + str(round(nSignal,2)) + "+/-" +str(round(signalUnc,2))
 
 
         # Now loop over different xsec and find xsection with which 5sigma discovery is possible
         for k in range(0,10000):
             sOverB = k/math.sqrt(pow(bkgUnc,2) + pow(signalUnc/nSignal*k,2))
+            #print sOverB
             if(sOverB>5):
                 #print "Discovery possible!"
                 #print "k = " + str(k)
