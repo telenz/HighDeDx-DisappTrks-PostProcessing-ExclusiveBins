@@ -1,0 +1,49 @@
+imax 1 number of channels 
+jmax 4 number of backgrounds 
+kmax * number of nuisance parameters 
+
+
+----------------------------------------
+bin                                    1
+observation                            7
+----------------------------------------
+
+
+bin                                                    1                                       1                   1                   1                   1                   
+process                                                CharginoPair_mass_500GeV_ctau_10cm       Fake                Pion                Elec                Muon                
+process                                                0                                       1                   1                   1                   1                   
+rate                                                   1.269                                  4.6070              0.0000              0.0990              0.0000              
+
+
+# STATISTICAL UNCERTAINTIES
+
+fake_stat_55_0p20                       lnN            -                                       1.3388              -                   -                   -                   
+pion_stat_0p20                          gmN  0         -                                       -                   0.0107              -                   -                   
+elec_stat_55_0p20                       gmN  1         -                                       -                   -                   0.0989              -                   
+muon_stat_0p20                          gmN  0         -                                       -                   -                   -                   0.2195              
+signal_stat_55_0p20                     gmN  433       0.00293                                 -                   -                   -                   -                   
+
+
+# SYSTEMATIC UNCERTAINTIES 
+
+pion_syst_rate                          lnN            -                                       -                   1.78592             -                   -                   
+elec_syst_rate_55                       lnN            -                                       -                   -                   1.8503              -                   
+muon_syst_rate                          lnN            -                                       -                   -                   -                   1.38639             
+pion_syst_ias_0p20                      lnN            -                                       -                   1.8147              -                   -                   
+elec_syst_ias_0p20                      lnN            -                                       -                   -                   1.37127             -                   
+muon_syst_ias_0p20                      lnN            -                                       -                   -                   -                   1.77269             
+fake_syst_rate_55                       lnN            -                                       1.34843             -                   -                   -                   
+fake_syst_ias_55_0p20                   lnN            -                                       1.28568             -                   -                   -                   
+
+lumi                                    lnN            1.0260                                  -                   -                   -                   -                   
+ISR                                     lnN            1.1260                                  -                   -                   -                   -                   
+trigger                                 lnN            1.0260                                  -                   -                   -                   -                   
+JES                                     lnN            1.0080                                  -                   -                   -                   -                   
+JER                                     lnN            1.0030                                  -                   -                   -                   -                   
+PDF                                     lnN            1.0420                                  -                   -                   -                   -                   
+ECalo                                   lnN            1.0259                                  -                   -                   -                   -                   
+HitsLostMiddle                          lnN            1.0220                                  -                   -                   -                   -                   
+HitsLostInner                           lnN            1.0334                                  -                   -                   -                   -                   
+PU                                      lnN            1.0240                                  -                   -                   -                   -                   
+TrkRecoEff                              lnN            1.0460                                  -                   -                   -                   -                   
+Ias                                     lnN            1.0488                                  -                   -                   -                   -                   
