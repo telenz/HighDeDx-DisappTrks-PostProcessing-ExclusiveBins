@@ -16,6 +16,7 @@
 #include "TFrame.h"
 #include "TMath.h"
 #include "TLatex.h"
+#include "TFile.h"
 
 string dTs(double d){
  std::stringstream tmp;
@@ -37,7 +38,7 @@ void plot_limit_2d(TString filename){
   //hard coded for asymptotic limit format for now
 
   vector<int> lifetimes;
-  lifetimes.push_back(1);
+  //lifetimes.push_back(1);
   lifetimes.push_back(2);
   lifetimes.push_back(3);
   lifetimes.push_back(4);
@@ -231,15 +232,15 @@ void plot_limit_2d(TString filename){
 
     if(ct==0){
 
-      ctau_2d[ct]          = ctauMin/(100*TMath::C()*pow(10,-9));
-      ctau_2d_cm[ct]       = ctauMin;
+      ctau_2d[ct]          = lifetimes[ct]/(100*TMath::C()*pow(10,-9));
+      ctau_2d_cm[ct]       = lifetimes[ct];
       ctau_Error_2d[ct]    = 0;
-      obs_2d[ct]           = massMin;
-      exp_2d[ct]           = massMin;
-      exp_1sig_up_2d[ct]   = massMin;
-      exp_1sig_down_2d[ct] = massMin;
-      exp_2sig_up_2d[ct]   = massMin;
-      exp_2sig_down_2d[ct] = massMin;
+      obs_2d[ct]           = 0;
+      exp_2d[ct]           = 0;
+      exp_1sig_up_2d[ct]   = 0;
+      exp_1sig_down_2d[ct] = 0;
+      exp_2sig_up_2d[ct]   = 0;
+      exp_2sig_down_2d[ct] = 0;
     }
     
     
@@ -253,6 +254,7 @@ void plot_limit_2d(TString filename){
     exp_2sig_up_2d[ct+1]   = intExp_2sig_up;
     exp_2sig_down_2d[ct+1] = intExp_2sig_down;
     
+    /*
     cout<<"exp_2d["<<ct<<"] = "<<exp_2d[ct]<<endl;
     if(exp_2d[ct]==0){
       cout<<"in  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "<<endl;
@@ -267,7 +269,7 @@ void plot_limit_2d(TString filename){
       exp_2sig_down_2d[ct] = massMin;
 
     }
-    
+    */
 
     /*
     ctau_2d[ct] = lifetimes[ct];
@@ -483,6 +485,13 @@ void plot_limit_2d(TString filename){
   g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1.7,9000);
   c->SaveAs("LimitPlot_2d_log_cm.pdf");
 
+
+  // Save root file with observed limit points
+
+  TFile* f = new TFile("ObservedLimit.root","RECREATE");
+  f->cd();
+  g_obs->Write();
+  f->Close();
 
   return;
 }
