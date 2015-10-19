@@ -19,6 +19,8 @@ find leptonicBkg/results/. -type f -name "*.root"  -exec rm -f {} \;
 find fakeBkg/results/. -type f -name "*.root"  -exec rm -f {} \;
 find signal/results/. -type f -name "*.root"  -exec rm -f {} \;
 rm systematics/signal/datacards/*
+rm systematics/bkg/datacards/*
+
 for ((i=0; i < ${#ptMinArray[@]}; i++))
 do
     ptCutMin=${ptMinArray[$i]}
