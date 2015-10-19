@@ -160,7 +160,6 @@ int a3_getFakePrediction(double metCut, double jetptCut, double ecaloCut=5., dou
 
   // Low ECalo region
   cout<<"Low Ecalo = "<<endl;
-  cout<<"hello"<<endl;
   cout<<histoLowECalo->Integral()<<endl;
   double lowIas     = histoLowECalo->GetBinContent(1);
   double lowIasErr  = histoLowECalo->GetBinError(1);
