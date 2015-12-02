@@ -32,25 +32,29 @@ def getOneSidedLowerLimit(mu, cl):
     return muLow;
 #################################### function definition ####################################
 def getYield(filename, type ):
-    fileIn = open(filename,'r')
-    lines = fileIn.read().split("\n")
-    if type == "signal": column=1
-    elif type == "fake": column=2
-    elif type == "pion": column=3
-    elif type == "elec": column=4
-    elif type == "muon": column=5
-    for n in range(len(lines)):
-        if lines[n].find('rate') >= 0:
-            columns = lines[n].split()
+  #if type is 'fake':
+  #  return 0
+  fileIn = open(filename,'r')
+  lines = fileIn.read().split("\n")
+  if type == "signal": column=1
+  elif type == "fake": column=2
+  elif type == "pion": column=3
+  elif type == "elec": column=4
+  elif type == "muon": column=5
+  for n in range(len(lines)):
+    if lines[n].find('rate') >= 0:
+      columns = lines[n].split()
             #print columns
-            break
-    return float(columns[column])
+      break
+  return float(columns[column])
 ##############################################################################################
 def getStatUncertainties(filename):
   uncertaintyUp=0
   uncertaintyDown=0
   lines = open(filename,'r').readlines()[10:-1]
   for type in ['fake','pion','elec','muon']:
+    #if type is 'fake':
+    #  continue
     for n in range(len(lines)):
       if lines[n].find(type + '_stat') >= 0:
         if lines[n].find('lnN') >= 0:
@@ -79,6 +83,8 @@ def getSysUncertainties(filename):
   lines = open(filename,'r').readlines()[10:-1]
   for n in range(len(lines)):
     for type in ['fake','pion','elec','muon']:
+      #if type is 'fake':
+      # continue
       if lines[n].find(type + '_syst') >= 0:
         aux = lines[n].split("lnN")[1]
         columns = aux.split()
