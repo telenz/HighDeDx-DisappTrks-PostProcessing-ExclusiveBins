@@ -49,6 +49,8 @@ void makeFit(double ptmin = 0.95, double ptmax = 1.00){
   histoData = getMomentumSlide(histoIasPData, ptmin, ptmax, "histoData");
   histoMC   = getMomentumSlide(histoIasPMC,   ptmin, ptmax, "histoMC");
 
+  histoMC->Sumw2();
+  histoData->Sumw2();
   // ********************************************************************************************************************************************************************************************************
 
   histoMC   -> SetLineColor(kRed);
@@ -56,11 +58,12 @@ void makeFit(double ptmin = 0.95, double ptmax = 1.00){
   histoMC   -> SetMarkerSize(0.7);
   histoData -> SetMarkerSize(0.7);
 
+  histoMC   -> Scale(1./histoMC->Integral());
+  histoData -> Scale(1./histoData->Integral());
 
   histoMC   -> GetXaxis()->SetRangeUser(0.2,1.0);
   histoData -> GetXaxis()->SetRangeUser(0.2,1.0);
-
-  histoMC ->Scale(histoData->Integral()/histoMC->Integral());
+ 
 
   double maximumMC = histoMC->GetXaxis()->GetBinCenter(histoMC->GetMaximumBin());
   cout<<"maximumMC = "<<maximumMC<<endl;
@@ -71,6 +74,8 @@ void makeFit(double ptmin = 0.95, double ptmax = 1.00){
   TF1* fData = new TF1("fData","gaus",maximumMC-0.3,maximumMC+0.3);
 
   fMC->SetLineColor(kRed);
+  fMC->SetLineWidth(2);
+  fData->SetLineWidth(2);
 
   //cout<<"MC:"<<endl;
   histoMC   -> Fit("fMC","RQ0");
@@ -82,6 +87,8 @@ void makeFit(double ptmin = 0.95, double ptmax = 1.00){
   histoMC->GetXaxis()->SetTitle("I_{as}");
   histoData -> Draw("same e");
 
+  fMC   -> SetRange(fMC   -> GetParameter(1) - 0.2, fMC   -> GetParameter(1) +0.2);
+  fData -> SetRange(fData   -> GetParameter(1) - 0.2, fData   -> GetParameter(1) +0.2);
   fMC   -> Draw("same");
   fData -> Draw("same");
 
