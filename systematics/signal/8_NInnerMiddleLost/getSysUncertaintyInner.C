@@ -206,7 +206,6 @@ public:
 	histoBefore->Fill(0.5,auxWeight);
 	if(trackNLostInner->at(i)  >0)                                    continue;
 	histoAfter->Fill(0.5,auxWeight);
-
 	break;
       } 
 
