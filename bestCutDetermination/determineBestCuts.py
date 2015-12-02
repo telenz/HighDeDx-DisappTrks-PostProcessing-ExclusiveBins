@@ -161,7 +161,7 @@ if printTitle=="1":
     print format_string.format("mass [GeV]", "lifetime [cm]", "optimal pt Cut", "optimal Ias Cut","min. excluded xsection [pb]" ,"actual xsection [pb]")
     fileOut.write(format_string.format("mass [GeV]", "lifetime [cm]", "optimal pt Cut", "optimal Ias Cut","min. excluded xsection [pb]" ,"actual xsection [pb]"))
     fileOut.write("\n")
-print format_string.format(mass, ctau, bestValuePtCut, "0." + str(bestValueIasCut),"{0:.4f}".format(bestValueXsec) ,"{0:.4f}".format(xsec))
+print format_string.format(mass + "&", str(ctau) + "&", str(bestValuePtCut) + "&", "0." + str(bestValueIasCut) + "&","{0:.2f}".format(bestValueXsec)+ "\\\\" ,"{0:.2f}".format(xsec))
 fileOut.write(format_string.format(mass, ctau, bestValuePtCut, "0." + str(bestValueIasCut),"{0:.4f}".format(bestValueXsec) ,"{0:.4f}".format(xsec)))
 fileOut.write("\n")
 #print "best pt cut = " + str(bestValuePtCut)
