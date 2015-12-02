@@ -144,6 +144,10 @@ public:
     tree->SetBranchStatus("weight*",1);
     tree->SetBranchAddress("weight",&weight);
     tree->SetBranchAddress("weight_xsec_lumi",&weight_xsec_lumi);
+    tree->SetBranchStatus("MET",1);
+    tree->SetBranchAddress("MET",&met);
+    tree->SetBranchStatus("LeadingJetPt",1);
+    tree->SetBranchAddress("LeadingJetPt",&leadingJetPt);
   };
 
 
@@ -167,14 +171,13 @@ public:
 
       if(doKinSelection){
 	if(met<0)                         continue;
-	if(leadingJetPt<0)                continue;	
+	if(leadingJetPt<70)                continue;	
       }
 
 
       if(doTrkSelection){
 
 
-	//if(trackEta->size()>1)   cout<<"trackEta->size() = "<<trackEta->size()<<endl;
 	for(unsigned int i=0; i<trackEta->size(); i++){
 
 	  if(abs(trackEta->at(i))>2.1)                                 continue;
@@ -217,14 +220,13 @@ int getSysUncertainty(double ptCutMin, double ptCutMax, double ecaloCut){
   wjetsKin.file = new TFile(fileSR + "/wjets.root","READ");
   //wjetsKin.file -> GetObject("chiTracksQCDsupression/Variables",wjetsKin.tree);
   wjetsKin.file -> GetObject("chiTrackstriggerRequirements/Variables",wjetsKin.tree);
-  //wjetsKin.file -> GetObject("chiTracksnoSelection/Variables",wjetsKin.tree);
   wjetsKin.getTreeVariables();
   wjetsKin.file -> GetObject("chiTrackspreselectionNoQCDCuts/Variables",wjetsDT.tree);
-  //wjetsKin.file -> GetObject("chiTrackspreselectionNoQCDCutsNoTrigger/Variables",wjetsDT.tree);
+  //wjetsKin.file -> GetObject("chiTrackspreselection/Variables",wjetsDT.tree);
   wjetsDT.getTreeVariables();
 
-  wjetsKin.Selection(0,0);
-  wjetsDT.Selection(0,1, ptCutMin, ptCutMax, ecaloCut);
+  wjetsKin.Selection(1,0);
+  wjetsDT.Selection(1,1, ptCutMin, ptCutMax, ecaloCut);
 
   
   cout<<"###########################################################################"<<endl;
