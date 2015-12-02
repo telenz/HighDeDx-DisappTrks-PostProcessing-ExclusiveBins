@@ -27,6 +27,8 @@
 
 int a4_addBkgsTogether(double metCut, double ptCutMin, double ptCutMax, double ecaloCut, double iasCutMin, double iasCutMax, TString region){
 
+  ofstream outputFile("thesisOutput.txt");
+
   TFile *fPions     = new TFile(Form("results/Bkg211_metCutEq%.0f_ptGt%0.f_Le%0.f_ECaloCutEq%.0f_IasGt0p%02.0f_Le0p%02.0f_",metCut,ptCutMin,ptCutMax,ecaloCut,iasCutMin*100,iasCutMax*100) + region + ".root", "READ");
   TFile *fElectrons = new TFile(Form("results/Bkg11_metCutEq%.0f_ptGt%0.f_Le%0.f_ECaloCutEq%.0f_IasGt0p%02.0f_Le0p%02.0f_",metCut,ptCutMin,ptCutMax,ecaloCut,iasCutMin*100,iasCutMax*100) + region + ".root","READ");
   TFile *fMuons     = new TFile(Form("results/Bkg13_metCutEq%.0f_ptGt%0.f_Le%0.f_ECaloCutEq%.0f_IasGt0p%02.0f_Le0p%02.0f_",metCut,ptCutMin,ptCutMax,ecaloCut,iasCutMin*100,iasCutMax*100) + region + ".root","READ");
@@ -46,6 +48,7 @@ int a4_addBkgsTogether(double metCut, double ptCutMin, double ptCutMax, double e
   fData      -> GetObject("data",hData);
 
   cout.precision(3);
+  outputFile.precision(2);
   double nAll         = 0;
   double nAllErrorUp  = 0;
   double nAllErrorLow = 0;
@@ -60,25 +63,13 @@ int a4_addBkgsTogether(double metCut, double ptCutMin, double ptCutMax, double e
 
   TString eq = "=";
 
-  gPions              -> GetPoint(0,aux,n);
-  nErrorUp  = gPions  -> GetErrorYhigh(0);
-  nErrorLow = gPions  -> GetErrorYlow(0);
-  if(nErrorUp==0) eq = "<";
-  else            eq = "=";
-  cout<<fixed<<"Pion bkg         "<<eq<<" "<<n<<" + "<<nErrorUp<<" - "<<nErrorLow<<"\\\\"<<endl;
-  nAll         += n ; 
-  nAllErrorUp  += pow(nErrorUp,2);
-  nAllErrorLow += pow(nErrorLow,2);
-  nLeptons         += n ; 
-  nLeptonsErrorUp  += pow(nErrorUp,2);
-  nLeptonsErrorLow += pow(nErrorLow,2);
-
   gElectrons              -> GetPoint(0,aux,n);
   nErrorUp  = gElectrons  -> GetErrorYhigh(0);
   nErrorLow = gElectrons  -> GetErrorYlow(0);
   if(nErrorUp==0) eq = "<";
   else            eq = "=";
   cout<<fixed<<"Electron bkg     "<<eq<<" "<<n<<" + "<<nErrorUp<<" - "<<nErrorLow<<"\\\\"<<endl;
+  outputFile<<fixed<<setw(10)<<"Electrons"<<setw(10)<<" &$"<<setw(3)<<n<<"^{+"<<setw(3)<<nErrorUp<<"}_{-"<<setw(3)<<nErrorLow<<"}$"<<setw(20)<<"  & \\\\"<<endl;
   nAll         += n ; 
   nAllErrorUp  += pow(nErrorUp,2);
   nAllErrorLow += pow(nErrorLow,2);
@@ -92,6 +83,21 @@ int a4_addBkgsTogether(double metCut, double ptCutMin, double ptCutMax, double e
   if(nErrorUp==0) eq = "<";
   else            eq = "=";
   cout<<fixed<<"Muon bkg         "<<eq<<" "<<n<<" + "<<nErrorUp<<" - "<<nErrorLow<<"\\\\"<<endl;
+  outputFile<<fixed<<setw(10)<<"Muons"<<setw(10)<<" &$"<<setw(3)<<n<<"^{+"<<setw(3)<<nErrorUp<<"}_{-"<<setw(3)<<nErrorLow<<"}$"<<setw(20)<<"  & \\\\"<<endl;
+  nAll         += n ; 
+  nAllErrorUp  += pow(nErrorUp,2);
+  nAllErrorLow += pow(nErrorLow,2);
+  nLeptons         += n ; 
+  nLeptonsErrorUp  += pow(nErrorUp,2);
+  nLeptonsErrorLow += pow(nErrorLow,2);
+
+  gPions              -> GetPoint(0,aux,n);
+  nErrorUp  = gPions  -> GetErrorYhigh(0);
+  nErrorLow = gPions  -> GetErrorYlow(0);
+  if(nErrorUp==0) eq = "<";
+  else            eq = "=";
+  cout<<fixed<<"Pion bkg         "<<eq<<" "<<n<<" + "<<nErrorUp<<" - "<<nErrorLow<<"\\\\"<<endl;
+  outputFile<<fixed<<setw(10)<<"Taus"<<setw(10)<<" &$"<<setw(3)<<n<<"^{+"<<setw(3)<<nErrorUp<<"}_{-"<<setw(3)<<nErrorLow<<"}$"<<setw(20)<<"  & \\\\"<<endl;
   nAll         += n ; 
   nAllErrorUp  += pow(nErrorUp,2);
   nAllErrorLow += pow(nErrorLow,2);
@@ -105,6 +111,7 @@ int a4_addBkgsTogether(double metCut, double ptCutMin, double ptCutMax, double e
   if(nErrorUp==0) eq = "<";
   else            eq = "=";
   cout<<"Fake bkg         "<<eq<<" "<<n<<" + "<<nErrorUp<<" - "<<nErrorUp<<"\\\\"<<endl;
+  outputFile<<fixed<<setw(10)<<"Fakes"<<setw(10)<<" &$"<<setw(3)<<n<<"^{+"<<setw(3)<<nErrorUp<<"}_{-"<<setw(3)<<nErrorLow<<"}$"<<setw(20)<<"  & \\\\"<<endl;
   nAll         += n ; 
   nAllErrorUp  += pow(nErrorUp,2);
   nAllErrorLow += pow(nErrorLow,2);
@@ -121,7 +128,7 @@ int a4_addBkgsTogether(double metCut, double ptCutMin, double ptCutMax, double e
   nFakesErrorUp  = sqrt(nFakesErrorUp);
   nFakesErrorLow = sqrt(nFakesErrorLow);
   cout<<"Total bkg        = "<<nAll<<" + "<<nAllErrorUp<<" - "<<nAllErrorLow<<"\\\\"<<endl;
-
+  outputFile<<fixed<<setw(10)<<"Total bkg"<<setw(10)<<" &$"<<setw(3)<<nAll<<"^{+"<<setw(3)<<nAllErrorUp<<"}_{-"<<setw(3)<<nAllErrorLow<<"}$"<<setw(20);
 
   //*********** save total bkg in histogram ***********
   TH1D* total  = new TH1D("totalBkg","total bkg",1,0,1);
@@ -147,8 +154,9 @@ int a4_addBkgsTogether(double metCut, double ptCutMin, double ptCutMax, double e
 
   n = hData->Integral();
   cout.precision(0);
+  outputFile.precision(0);
   cout<<endl<<"Data Yield = "<<n<<"\\\\"<<endl<<endl;
-
+  outputFile<<"  &"<<n<<" \\\\"<<endl;
 
 
   return 0;
