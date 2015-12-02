@@ -107,13 +107,13 @@ int main(int argc, char** argv)
   // Declare histograms
   //---------------------------------------------------------------------------
   TH1D *hIasNP          = new TH1D("hIasNP","hIasNP",100,0,1);
-  TH2D *hIasPNP         = new TH2D("hIasPNP","hIasPNP",150,0,1.5,100,0,1.);
+  TH2D *hIasPNP         = new TH2D("hIasPNP","hIasPNP",250,0,2.5,100,0,1.);
   TH1D *hIas            = new TH1D("hIas","hIas",100,0,1);
-  TH2D *hIasP           = new TH2D("hIasP","hIasP",150,0,1.5,100,0,1.);
+  TH2D *hIasP           = new TH2D("hIasP","hIasP",250,0,2.5,100,0,1.);
   TH1D *hHarm2NP        = new TH1D("hHarm2NP","hHarm2NP",100,0,14);
-  TH2D *hHarm2PNP       = new TH2D("hHarm2PNP","hHarm2PNP",150,0,1.5,100,0,14.);
+  TH2D *hHarm2PNP       = new TH2D("hHarm2PNP","hHarm2PNP",250,0,2.5,100,0,14.);
   TH1D *hHarm2          = new TH1D("hHarm2","hHarm2",100,0,14);
-  TH2D *hHarm2P         = new TH2D("hHarm2P","hHarm2P",150,0,1.5,100,0,14.);
+  TH2D *hHarm2P         = new TH2D("hHarm2P","hHarm2P",250,0,2.5,100,0,14.);
 
   //-------------------------------------------------------------------------------------
   // Declare additional branch addresses for hit information
