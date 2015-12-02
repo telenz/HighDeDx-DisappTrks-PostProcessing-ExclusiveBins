@@ -135,10 +135,19 @@ int a3_getFakePrediction(double metCut, double jetptCut, double ecaloCut=5., dou
   cout<<"histogram = "<<histoName<<endl; 
   inCaloIso->GetObject(histoName,histoECalo);
 
+  double EcaloScaling =1.4;
+  if(ptCutMin<40)       EcaloScaling =1.4;
+  else if(ptCutMin<60)  EcaloScaling =1.5;
+  else if(ptCutMin<80)  EcaloScaling =1.6;
+  else if(ptCutMin<90)  EcaloScaling =1.7;
+  else if(ptCutMin<100) EcaloScaling =1.8;
   double lowCaloRegion     = histoECalo->GetBinContent(1);
   double lowCaloRegionErr  = histoECalo->GetBinError(1);
-  double highCaloRegion    = histoECalo->GetBinContent(2);
-  double highCaloRegionErr = histoECalo->GetBinError(2);
+  double highCaloRegion    = histoECalo->GetBinContent(2)*EcaloScaling;
+  double highCaloRegionErr = histoECalo->GetBinError(2)*EcaloScaling;
+  //double lowCaloRegion     = 1. - histoECalo->GetBinContent(2)*EcaloScaling;
+  //double lowCaloRegionErr  = histoECalo->GetBinError(2)*EcaloScaling;
+
 
   double nCR1CR2    = nSRCR3*highCaloRegion/lowCaloRegion;
   double nCR1CR2Err = nCR1CR2 * sqrt( pow( nSRCR3Err/nSRCR3 ,2) + pow( highCaloRegionErr/highCaloRegion ,2) + pow( lowCaloRegionErr/lowCaloRegion ,2) );

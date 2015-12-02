@@ -49,7 +49,7 @@ int makeIasTemplates(double metCut, double jetptCut, double ptCutMin, double ptC
 
     if(j==0) LowECaloRegion=false;
     else     LowECaloRegion=true;
-    
+    LowECaloRegion=true;
     Double_t xbinsASmi[4]  = {0,iasCutMin,iasCutMax,1};
 
     TString histoName = (TString) Form("fake_bkg_data_IascutMin_0p%02.0f_IascutMax_0p%02.0f_EcaloLow_%i",iasCutMin*100,iasCutMax*100,j);
@@ -76,7 +76,7 @@ int makeIasTemplates(double metCut, double jetptCut, double ptCutMin, double ptC
 int makeECaloTemplates(double metCut, double jetptCut, double ptCutMin, double ptCutMax, double ecaloCut){
 
   sample data;
-  data.file = new TFile("~/myAnalysis/bkgEstimation/input_fakeCS/MET_Run2012_22Jan2013.root");
+  data.file = new TFile(fileFakeCS + "/data.root");
   data.file = new TFile(fileFakeCS + "data.root");
 
   data.file   -> GetObject("chiTrackspreselection/Variables",data.tree);
