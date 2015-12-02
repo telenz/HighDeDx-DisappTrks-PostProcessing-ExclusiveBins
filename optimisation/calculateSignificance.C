@@ -12,6 +12,8 @@
 #include "TLegend.h"
 #include "TLatex.h"
 #include "TROOT.h"
+#include "TGaxis.h"
+#include "TAxis.h"
 #include "TStyle.h"
 #include "TLine.h"
 #include "TTree.h"
@@ -24,7 +26,8 @@
 #include <cmath>
 #include <algorithm>
 #include <iomanip>
-#include "../plotStyle.h"
+//#include "../plotStyle.h"
+#include "/afs/desy.de/user/t/tlenz/Thesis/rootFiles/plotStyleThesis.h"
 #include "../poisson/getPoissonCL.h"
 
 //TString folder = "NLostOuterGe0";
@@ -33,66 +36,89 @@
 int calculateSignificance(double metCut, double ecaloCut, TString region, TString folder = "NLostOuterGe0"){
 
   gStyle->SetOptStat(0);
-  TeresaPlottingStyle::init();
-
-  gStyle -> SetPadRightMargin(0.20);
-  gStyle -> SetTitleOffset(1.3,"Z");
+  TeresaPlottingStyle2d::init();
+  gStyle -> SetTitleSize(0.05,"Z");
+  gStyle -> SetTitleOffset(1.2,"Z");
+  gStyle -> SetOptTitle(1);
+  gStyle -> SetNdivisions(507,"Z");
+  //gStyle->SetTitleBorderSize(0);
+  //gStyle -> SetPadRightMargin(0.20);
+  //gStyle->SetTitleFont(42,"");
 
   vector<TString> samples;
+  vector<TString> titles;
   TString sig_m100_ct1 = "Madgraph_signal_mass_100_ctau_1cm";
   samples.push_back(sig_m100_ct1);
+  titles.push_back("mass=100GeV, c#tau=1cm");
   TString sig_m100_ct5 = "Madgraph_signal_mass_100_ctau_5cm";
   samples.push_back(sig_m100_ct5);
+  titles.push_back("mass=100GeV, c#tau=5cm");
+  TString sig_m100_ct10 = "Madgraph_signal_mass_100_ctau_10cm";
+  samples.push_back(sig_m100_ct10);
+  titles.push_back("mass=100GeV, c#tau=10cm");
   TString sig_m100_ct50 = "Madgraph_signal_mass_100_ctau_50cm";
   samples.push_back(sig_m100_ct50);
+  titles.push_back("mass=100GeV, c#tau=50cm");
   TString sig_m200_ct1 = "Madgraph_signal_mass_200_ctau_1cm";
-  samples.push_back(sig_m200_ct1);
+  //samples.push_back(sig_m200_ct1);
   TString sig_m200_ct5 = "Madgraph_signal_mass_200_ctau_5cm";
-  samples.push_back(sig_m200_ct5);
+  //samples.push_back(sig_m200_ct5);
   TString sig_m200_ct50 = "Madgraph_signal_mass_200_ctau_50cm";
-  samples.push_back(sig_m200_ct50);
+  //samples.push_back(sig_m200_ct50);
   TString sig_m300_ct5 = "Madgraph_signal_mass_300_ctau_5cm";
-  samples.push_back(sig_m300_ct5);
+  //samples.push_back(sig_m300_ct5);
   TString sig_m300_ct10 = "Madgraph_signal_mass_300_ctau_10cm";
-  samples.push_back(sig_m300_ct10);
+  //samples.push_back(sig_m300_ct10);
   TString sig_m300_ct50 = "Madgraph_signal_mass_300_ctau_50cm";
-  samples.push_back(sig_m300_ct50);
+  //samples.push_back(sig_m300_ct50);
+  TString sig_m500_ct1 = "Madgraph_signal_mass_500_ctau_1cm";
+  samples.push_back(sig_m500_ct1);
+  titles.push_back("mass=500GeV, c#tau=1cm");
   TString sig_m500_ct5 = "Madgraph_signal_mass_500_ctau_5cm";
   samples.push_back(sig_m500_ct5);
+  titles.push_back("mass=500GeV, c#tau=5cm");
   TString sig_m500_ct10 = "Madgraph_signal_mass_500_ctau_10cm";
   samples.push_back(sig_m500_ct10);
+  titles.push_back("mass=500GeV, c#tau=10cm");
   TString sig_m500_ct50 = "Madgraph_signal_mass_500_ctau_50cm";
   samples.push_back(sig_m500_ct50);
-  
+  titles.push_back("mass=500GeV, c#tau=50cm");
 
   
   for(unsigned int i=0; i<samples.size(); i++){
 
+    
     TH2D* sig1 = new TH2D("significance",samples[i] + ": s/#Delta b_{stat}",9,20,65,9,0.00,0.45);
-    sig1->GetXaxis()->SetTitle("pt cut [GeV]");
-    sig1->GetYaxis()->SetTitle("Ias cut");
-    sig1->GetZaxis()->SetTitle("minimal possible x-sec to dicover [pb]");
+    sig1->GetXaxis()->SetTitle("p_{T} cut [GeV]");
+    sig1->GetYaxis()->SetTitle("I_{as} cut");
+    sig1->GetZaxis()->SetTitle("minimum possible x-sec to discover [pb]");
+    sig1->GetZaxis()->CenterTitle();
+    sig1->SetTitle(titles[i]);
 
     //    TH2D* sig2 = new TH2D("significance",samples[i]+ ": s/#sqrt((#Delta b_{stat})^{2} + (#Delta b_{sys}^{fake})^{2} + (10 #upoint #Delta b_{sys}^{lepton})^{2})",7,30,65,9,0.00,0.45);
     TH2D* sig2 = new TH2D("significance",samples[i]+ ": s/#Delta b_{stat + sys}",9,20,65,9,0.00,0.45);
-    sig2->GetXaxis()->SetTitle("pt cut [GeV]");
-    sig2->GetYaxis()->SetTitle("Ias cut");
-    sig2->GetZaxis()->SetTitle("minimal possible x-sec to dicover [pb]");
+    sig2->GetXaxis()->SetTitle("p_{T} cut [GeV]");
+    sig2->GetYaxis()->SetTitle("I_{as} cut");
+    sig2->GetZaxis()->SetTitle("minimum possible x-sec to discover [pb]");
+    sig2->GetZaxis()->CenterTitle();
+    sig2->SetTitle(titles[i]);
+    sig2->GetZaxis()->SetNoExponent(kTRUE);
 
     TH2D* hBkgYield = new TH2D("hBkgYield","Bkg Yield",9,20,65,9,0.00,0.45);
-    hBkgYield -> GetXaxis()->SetTitle("pt cut [GeV]");
-    hBkgYield -> GetYaxis()->SetTitle("Ias cut");
+    hBkgYield -> GetXaxis()->SetTitle("p_{T} cut [GeV]");
+    hBkgYield -> GetYaxis()->SetTitle("I_{as} cut");
     hBkgYield -> GetZaxis()->SetTitle("bkg yield");
 
     TH2D* hBkgUnc = new TH2D("hBkgUnc","Bkg Unc",9,20,65,9,0.00,0.45);
-    hBkgUnc -> GetXaxis()->SetTitle("pt cut [GeV]");
-    hBkgUnc -> GetYaxis()->SetTitle("Ias cut");
+    hBkgUnc -> GetXaxis()->SetTitle("p_{T} cut [GeV]");
+    hBkgUnc -> GetYaxis()->SetTitle("I_{as} cut");
     hBkgUnc -> GetZaxis()->SetTitle("bkg uncertainty [%]");
 
     TH2D* hSignalYield = new TH2D("hSignalYield",samples[i] + ": Signal Yield",9,20,65,9,0.00,0.45);
-    hSignalYield -> GetXaxis()->SetTitle("pt cut [GeV]");
-    hSignalYield -> GetYaxis()->SetTitle("Ias cut");
+    hSignalYield -> GetXaxis()->SetTitle("p_{T} cut [GeV]");
+    hSignalYield -> GetYaxis()->SetTitle("I_{as} cut");
     hSignalYield -> GetZaxis()->SetTitle("signal yield");
+    hSignalYield -> SetTitle(titles[i]);
 
     //----------------------------------------------------------------------------------------------------------
     // Get theory cross-section:
@@ -198,7 +224,7 @@ int calculateSignificance(double metCut, double ecaloCut, TString region, TStrin
 	  sOverDeltabUpStatPlusSys            = k/sqrt( pow( getOneSidedUpperLimit(nAll,0.6827)-nAll ,2) + pow(fakeStatError ,2) + pow(leptonStatError ,2) + pow(fakeSysError ,2) + pow(leptonSysError ,2));
 	   
 
-	  if(sOverDeltabUpStatPlusSys>3){
+	  if(sOverDeltabUpStatPlusSys>5){
 	    cout<<"Dicovery possible !!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
 
 	    minExcludedXsec =1.*k/hSignal->GetBinContent(1)*xsec;
