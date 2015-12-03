@@ -10,6 +10,8 @@
 #include "TAxis.h"
 #include "TLine.h"
 #include "TStyle.h"
+#include "TLatex.h"
+#include "/afs/desy.de/user/t/tlenz/Thesis/rootFiles/plotStyleThesis.h"
 
 string dTs(double d){
  std::stringstream tmp;
@@ -24,6 +26,9 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
 void plot_limit_xsec(TString filename, int ctau){
   //this macro should read in limit results and make a nice plot out of it!
   //hard coded for asymptotic limit format for now
+
+  TeresaPlottingStyle::init();
+  gROOT->ForceStyle();
 
   TString ctauToString = Form("%icm",ctau);
   cout<<ctauToString<<endl;
@@ -162,16 +167,6 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   //TGraphAsymmErrors *exp_1sig= new TGraphAsymmErrors(mass,exp,exp_1sig_up,exp_1sig_down);
   const int nn = 11;
   
-  TLegend *l1=new TLegend(0.15,0.65,0.45,0.85);
-  //l1=new TLegend(0.7,0.65,0.95,0.9);
-  l1->SetLineColor(0);
-  l1->SetFillColor(0);
-  l1->SetFillStyle(0);
-  l1->SetTextFont(42);
-  l1->SetTextSize(0.04);
-  l1->SetBorderSize(0);
-
-
 
   double x[nn];
   double xUpperErr[nn];
@@ -212,15 +207,15 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   TGraphAsymmErrors *exp_1sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr, yUpperErr);
   TGraphAsymmErrors *exp_2sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr2, yUpperErr2);
   //exp_1sig->Draw("AF");
-  expL->Draw("ALP");
+  expL->Draw("AL");
   exp_2sig->Draw("same l3");
   exp_1sig->Draw("same l3");
 
 
   obsL->SetLineColor(kBlack);
   obsL->SetLineWidth(2);
-  xsecL->SetLineColor(kGreen+1);
-  xsecL->SetFillColor(kGreen+1);
+  xsecL->SetLineColor(867);
+  xsecL->SetFillColor(867);
   xsecL->SetLineWidth(2);
 
   //expL->SetMarkerStyle(22);
@@ -228,32 +223,54 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   expL->SetLineWidth(2);
   expL->GetXaxis()->SetTitleSize(0.05);
   expL->GetYaxis()->SetTitleSize(0.05);
-  expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
-  expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
+  expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} [GeV]");
+  expL->GetYaxis()->SetTitle("95% CL limit on #sigma [pb]");
   expL->GetXaxis()->SetRangeUser(50,650);
-  expL->GetYaxis()->SetRangeUser(0.005,10);
+  expL->GetYaxis()->SetRangeUser(0.005,20);
   expL->SetTitle();
 
   exp_1sig->SetFillColor(kGreen);
   exp_2sig->SetFillColor(kYellow);
-  expL->Draw("LP same");
-  obsL->Draw("LP same");
-  xsecL->Draw("LP same 3");
+  exp_1sig->SetLineColor(kGreen);
+  exp_2sig->SetLineColor(kYellow);
+  expL->Draw("L same");
+  obsL->Draw("L same");
+  xsecL->Draw("L same 3");
 
   gPad->RedrawAxis();
 
-  l1->AddEntry(obsL,"Observed Limit","l");
-  l1->AddEntry(expL,"Expected Limit","l");
-  l1->AddEntry(exp_1sig,"#pm 1#sigma","f");
-  l1->AddEntry(exp_2sig,"#pm 2#sigma","f");
+  TLegend *l1=new TLegend(0.6,0.65,0.90,0.90);
+  //l1=new TLegend(0.7,0.65,0.95,0.9);
+  //l1->SetLineColor(0);
+  //l1->SetFillColor(0);
+  //l1->SetFillStyle(0);
+  //l1->SetTextFont(42);
+  l1->SetTextSize(0.04);
+  //l1->SetBorderSize(0);
+
+
+  TGraphErrors *xsecLDummy = (TGraphErrors*) xsecL->Clone();
+  xsecLDummy->SetLineWidth(3);
+  TGraphErrors *expLDummy = (TGraphErrors*) expL->Clone();
+  expLDummy->SetLineWidth(3);
+  TGraphErrors *obsLDummy = (TGraphErrors*) obsL->Clone();
+  obsLDummy->SetLineWidth(3);
+  l1->AddEntry(obsLDummy,"Observed limit","l");
+  l1->AddEntry(expLDummy,"Expected limit","l");
+  l1->AddEntry(exp_1sig,"#pm 1#sigma exp. limit","f");
+  l1->AddEntry(exp_2sig,"#pm 2#sigma exp. limit","f");
+  l1->AddEntry(xsecLDummy,"#sigma^{theo}","l");
+
   //l1->AddEntry(xsecL,"Theoretical x-section","l");
 
   l1->Draw();
 
-  TLine *line = new TLine(60,1,540,1);
-  line->SetLineColor(kBlack);
-  line->SetLineWidth(2);
-  //line->Draw("same");
+  TLatex*  info   = new TLatex();
+  info-> SetNDC();
+  //info->SetTextSize(0.04);
+  TString AuxString = Form("c#tau = %icm",ctau);
+  //info->DrawLatex(0.62,0.61,AuxString);
+  info->DrawLatex(0.2,0.22,AuxString);
 
   c1->SetTickx();
   c1->SetTicky();
