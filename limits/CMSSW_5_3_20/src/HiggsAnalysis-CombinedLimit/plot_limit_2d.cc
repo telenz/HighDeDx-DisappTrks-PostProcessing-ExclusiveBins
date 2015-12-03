@@ -8,6 +8,7 @@
 #include "TGraphErrors.h"
 #include "TGraphAsymmErrors.h"
 #include "TAxis.h"
+#include "TGaxis.h"
 #include "TLine.h"
 #include "TStyle.h"
 #include "TF1.h"
@@ -17,6 +18,7 @@
 #include "TMath.h"
 #include "TLatex.h"
 #include "TFile.h"
+#include "/afs/desy.de/user/t/tlenz/Thesis/rootFiles/plotStyleThesis.h"
 
 string dTs(double d){
  std::stringstream tmp;
@@ -36,6 +38,15 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
 void plot_limit_2d(TString filename){
   //this macro should read in limit results and make a nice plot out of it!
   //hard coded for asymptotic limit format for now
+
+  TeresaPlottingStyle::init();
+  gStyle -> SetPadBottomMargin(0.17);
+  gStyle -> SetPadLeftMargin(0.17);
+  gStyle -> SetPadTopMargin(0.10);
+  gStyle -> SetPadRightMargin(0.17);
+  gStyle->SetTitleOffset(1.2,"XY");
+  gStyle->SetPadTickY(0);
+  gROOT->ForceStyle();
 
   vector<int> lifetimes;
   //lifetimes.push_back(1);
@@ -282,7 +293,7 @@ void plot_limit_2d(TString filename){
     exp_2sig_down_2d[ct] =intExp_2sig_down;
     */
 
-    make_plot(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,lifetimes[ct]);
+    //make_plot(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,lifetimes[ct]);
 
   }
 
@@ -382,8 +393,6 @@ void plot_limit_2d(TString filename){
   g_obs->Draw("l same");
 
 
-  g_exp_2sig_up->GetXaxis()->SetTitleSize(0.05);
-  g_exp_2sig_up->GetYaxis()->SetTitleSize(0.05);
   g_exp_2sig_up->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
   g_exp_2sig_up->GetYaxis()->SetTitle("c#tau_{#Chi^{#pm}} [ns]");
   g_exp_2sig_up->GetYaxis()->SetRangeUser(ctauMin,1100);
@@ -400,8 +409,8 @@ void plot_limit_2d(TString filename){
 
   l1->Draw();
   
-  c->SetTickx();
-  c->SetTicky();
+  //c->SetTickx();
+  //c->SetTicky();
   c->Update();
   g_exp_2sig_up->GetYaxis()->SetRangeUser(0.05,300);
   c->SaveAs("LimitPlot_2d.pdf");
@@ -420,6 +429,7 @@ void plot_limit_2d(TString filename){
   g_exp_2sig_up_cm->SetMarkerStyle(8);
   g_exp_2sig_up_cm->SetMarkerSize(1);
   g_exp_2sig_up_cm->SetFillColor(kYellow);
+  g_exp_2sig_up_cm->SetLineColor(kYellow);
   g_exp_2sig_up_cm->SetLineWidth(9900);
 
   g_exp_2sig_down_cm->SetMarkerStyle(8);
@@ -430,15 +440,18 @@ void plot_limit_2d(TString filename){
   g_exp_1sig_up_cm->SetMarkerStyle(8);
   g_exp_1sig_up_cm->SetMarkerSize(1);
   g_exp_1sig_up_cm->SetFillColor(kGreen);
+  g_exp_1sig_up_cm->SetLineColor(kGreen);
   g_exp_1sig_up_cm->SetLineWidth(9900);
 
   g_exp_1sig_down_cm->SetMarkerStyle(8);
   g_exp_1sig_down_cm->SetMarkerSize(1);
   g_exp_1sig_down_cm->SetFillColor(kYellow);
+  g_exp_1sig_down_cm->SetLineColor(kYellow);
   g_exp_1sig_down_cm->SetLineWidth(9900);
 
   g_exp_cm->SetLineWidth(2);
-  g_exp_cm->SetLineStyle(7);
+  //g_exp_cm->SetLineStyle(7);
+  g_obs_cm->SetLineColor(kRed);
   g_obs_cm->SetLineWidth(2);
 
   g_exp_2sig_up_cm  ->Draw("alf");
@@ -449,9 +462,7 @@ void plot_limit_2d(TString filename){
   g_obs_cm->Draw("l same");
 
 
-  g_exp_2sig_up_cm->GetXaxis()->SetTitleSize(0.05);
-  g_exp_2sig_up_cm->GetYaxis()->SetTitleSize(0.05);
-  g_exp_2sig_up_cm->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
+  g_exp_2sig_up_cm->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} [GeV]");
   g_exp_2sig_up_cm->GetYaxis()->SetTitle("c#tau_{#Chi^{#pm}} [cm]");
   g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(ctauMin,1100);
   g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(0.05,300);
@@ -461,7 +472,7 @@ void plot_limit_2d(TString filename){
   gPad->RedrawAxis();
 
   delete l1;
-  l1=new TLegend(0.15,0.65,0.45,0.85);
+  l1=new TLegend(0.18,0.45,0.50,0.65);
   l1->SetLineColor(0);
   l1->SetFillColor(0);
   l1->SetFillStyle(0);
@@ -469,15 +480,36 @@ void plot_limit_2d(TString filename){
   l1->SetTextSize(0.04);
   l1->SetBorderSize(0);
 
-  l1->AddEntry(g_obs_cm,"Observed Limit","l");
-  l1->AddEntry(g_exp_cm,"Expected Limit","l");
-  l1->AddEntry(g_exp_1sig_up_cm,"#pm 1#sigma","f");
-  l1->AddEntry(g_exp_2sig_up_cm,"#pm 2#sigma","f");
+  TGraph* g_obs_cmDummy = (TGraph*) g_obs_cm->Clone();
+  g_obs_cmDummy->SetLineWidth(3);
+  TGraph* g_exp_cmDummy = (TGraph*) g_exp_cm->Clone();
+  g_exp_cmDummy->SetLineWidth(3);
+  l1->AddEntry(g_obs_cmDummy,"Observed limit","l");
+  l1->AddEntry(g_exp_cmDummy,"Expected limit","l");
+  l1->AddEntry(g_exp_1sig_up_cm,"#pm 1#sigma exp. limit","f");
+  l1->AddEntry(g_exp_2sig_up_cm,"#pm 2#sigma exp. limit","f");
 
   l1->Draw();
+  double rightmax=50000;
+  cout<<"gPad->GetUxmax() = "<<gPad->GetUxmax()<<endl;
+  cout<<"gPad->GetUxmin() = "<<gPad->GetUxmin()<<endl;
 
-  c->SetTickx();
-  c->SetTicky();
+  double lowEdge  = 1.7 / (100*TMath::C()*pow(10,-9));
+  double highEdge = 9000 / (100*TMath::C()*pow(10,-9));
+
+  TGaxis *axis = new TGaxis(600, 1.7, 600, 9000, lowEdge, highEdge,505,"+LG");
+  axis->SetTitle("#tau_{#Chi^{#pm}} [ns]");
+  axis->SetTitleOffset(1.35);
+  //axis->SetLabelOffset(0.07);
+  axis->SetTitleSize(0.06);
+  axis->SetTitleFont(42);
+  axis->SetLabelSize(0.05);
+  axis->SetLabelFont(42);
+  axis->Draw("same");
+  
+
+  //c->SetTickx();
+  //c->SetTicky();
   c->Update();
   g_exp_2sig_up_cm->GetYaxis()->SetRangeUser(1.7,9000);
   c->SaveAs("LimitPlot_2d_cm.pdf");
@@ -674,8 +706,6 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   //expL->SetMarkerStyle(22);
   expL->SetLineColor(kRed);
   expL->SetLineWidth(2);
-  expL->GetXaxis()->SetTitleSize(0.05);
-  expL->GetYaxis()->SetTitleSize(0.05);
   expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
   //expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
   expL->GetYaxis()->SetTitle("95% CL upper limit on #sigma");
@@ -685,7 +715,9 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   expL->SetTitle();
 
   exp_1sig->SetFillColor(kGreen);
+  exp_1sig->SetLineColor(kGreen);
   exp_2sig->SetFillColor(kYellow);
+  exp_2sig->SetLineColor(kYellow);
   expL->Draw("LP same");
   obsL->Draw("LP same");
   xsecL->Draw("LP same 3");
