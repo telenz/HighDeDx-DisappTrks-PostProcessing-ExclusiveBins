@@ -1,9 +1,16 @@
 #include "TMath.h"
+#include "TFile.h"
+#include "TGraph.h"
+#include "TBox.h"
+#include "TColor.h"
+#include "TCanvas.h"
+#include "TLegend.h"
 #include <iostream>
 #include <cmath>
 #include <iomanip>   
-
-
+#include <fstream>
+#include <vector>
+#include "/afs/desy.de/user/t/tlenz/Thesis/rootFiles/plotStyleThesis.h"
 
 
 /*
@@ -67,7 +74,7 @@ double calculateLifetime(double deltaM, double m_chi){
   return hbar/width*TMath::C()*100.;
 }
 
-void calculateMassSplittingIter(double ctau, double mass){
+double calculateMassSplittingIter(double ctau, double mass){
 
   double fPi = 0.093;
   double gF  = 1.166379*pow(10,-5);
@@ -100,8 +107,8 @@ void calculateMassSplittingIter(double ctau, double mass){
 
 
     if(abs(1 -  lifetimeGuess / lifetimeInSec) < precision){
-      	cout<<setprecision(10)<<"deltaM = "<<deltaM<<endl;
-	cout<<setprecision(10)<<"lifetimeGuess = "<<lifetimeGuessinCM<<endl;
+      //cout<<setprecision(10)<<"deltaM = "<<deltaM<<endl;
+      //cout<<setprecision(10)<<"lifetimeGuess = "<<lifetimeGuessinCM<<endl;
 	break;
       }
       else{
@@ -124,46 +131,75 @@ void calculateMassSplittingIter(double ctau, double mass){
 	}
       }
   }
-
+  return deltaM;
    
 }
 
-/*
-def calcMassSplitting(mass, lifetimeInSec, deltaM, prevDeltaMGuess):
-    #    print "Debug:  running calcMassSplitting with mass=", mass, ", lifetimeInSec=", lifetimeInSec, ", deltaM=", deltaM, ", prevDeltaMGuess=", prevDeltaMGuess
-    
-    fPi = float(0.093)
-    gF = 1.166379E-5   # units if GeV^-2
-    mPi = 0.13957018  # units of GeV, from PDG
-    hBarinGeVs = 6.582119E-25
-    neuMass = float(mass) - float(deltaM)
- 
-    a = math.pow(float(fPi),2) * math.pow(float(gF),2) / (4 * math.pi * math.pow(float(mass),2))
-    b = (math.sqrt((math.fabs(math.pow((math.pow((mass),2) + math.pow((neuMass),2) - math.pow((mPi),2)), 2) - (4) * (math.pow((mass),2)) * (math.pow((neuMass),2)) ))))/(2*(mass))  #old, mostly works
-    c = math.pow(math.pow(mass, 2) - math.pow(neuMass, 2),2)
-    d = float(math.pow(float(mPi),2))
- 
-    lifetimeGuess = hBarinGeVs / (4.0 * a * b * (c - d * deltaM))
-    precision = 0.0001  # precision of desired result
-    lowerlimit = mPi  # value below which deltaM is undefined
-    if math.fabs((lifetimeInSec - lifetimeGuess) / lifetimeInSec) < precision:
-        return (deltaM, prevDeltaMGuess)
-    elif math.fabs((deltaM - prevDeltaMGuess) / deltaM) < precision / 10:
-        #        print "Difference between deltaM=", deltaM, " and prevDeltaMGuess=", prevDeltaMGuess, " is less than precision = ', precision
-        return (deltaM, prevDeltaMGuess)
-    else:
-        if (lifetimeInSec - lifetimeGuess) > 0:
-            tmp = deltaM
-            deltaM -= 0.5 * math.fabs(deltaM - prevDeltaMGuess)
-            if deltaM < lowerlimit:
-                deltaM = lowerlimit * (1.0 + precision)
-            prevDeltaMGuess = tmp
-            return calcMassSplitting(mass, lifetimeInSec, deltaM, prevDeltaMGuess)
-        else:
-            tmp = deltaM
-            deltaM += 0.5 * math.fabs(deltaM - prevDeltaMGuess)
-            if deltaM < lowerlimit:
-                deltaM = lowerlimit * (1.0 + precision)
-            prevDeltaMGuess = tmp
-            return calcMassSplitting(mass, lifetimeInSec, deltaM, prevDeltaMGuess)
-*/
+void make2dLimitPlot(){
+
+  TeresaPlottingStyle::init();
+  gStyle->SetNdivisions(506,"Y");
+  gROOT->ForceStyle();
+
+
+  TCanvas *c = new TCanvas();
+  c->cd();
+
+  TFile* input = new TFile("ObservedLimit.root","READ");
+  TGraph* excl;
+  input -> GetObject("Graph",excl);
+  excl->Draw("APL");
+
+  double *mass = 0;
+  double *ctau = 0;
+  mass = excl->GetX();
+  ctau = excl->GetY();
+
+  double* deltaM  = new double[20];
+  double* chiMass = new double[20];
+  cout<<setprecision(1);
+  for(int i=0; i<20; i++){
+
+    if(i==0) chiMass[i] = 100;
+    else     chiMass[i] = mass[i];
+    deltaM[i] = calculateMassSplittingIter(ctau[i], mass[i])*1000;
+    if(i==1) deltaM[i-1] = deltaM[i];
+    cout<<left<<"point = "<<left<<setw(10)<<fixed<<chiMass[i-1]<<"   "<<fixed<<ctau[i]<<"   "<<fixed<<deltaM[i-1]<<endl;
+  }
+
+  TGraph* g_obs = new TGraph(19,chiMass,deltaM);
+
+  double ymin = 130.;
+  double ymax = 220.;
+  // ****************************************************************************
+  g_obs -> SetLineColor(kRed); 
+  g_obs -> SetLineWidth(2); 
+  g_obs -> GetXaxis() -> SetLimits(100,600); 
+  g_obs -> GetYaxis() -> SetRangeUser(ymin,ymax); 
+  g_obs -> GetXaxis() -> SetTitle("mass_{#Chi^{#pm}_{1}} [GeV]"); 
+  g_obs -> GetYaxis() -> SetTitle("#Delta m_{#Chi^{#pm}_{1}#Chi^{0}_{1}} [MeV]"); 
+  // ****************************************************************************
+
+  g_obs->Draw("AL");
+
+
+  TBox *b = new TBox(100, ymin, 600, 139.57); 
+  b->SetFillColor(kGray+1);
+  b->Draw("same");
+
+
+  TLegend *l1=new TLegend(0.50,0.75,0.80,0.90);
+  l1->SetTextSize(0.05);
+
+  l1->AddEntry(g_obs,"Observed Limit","l");
+
+  l1->Draw();
+
+
+  c->RedrawAxis();
+  c->SaveAs("MassSplittingLimitPlot.pdf");
+
+  delete[] mass;
+  delete[] ctau;
+
+}
