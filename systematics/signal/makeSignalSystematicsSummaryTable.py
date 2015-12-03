@@ -3,6 +3,7 @@
 from decimal import Decimal
 import sys
 import glob
+import math
 
 
 def scanDatacards( searchstring, stringname ):
@@ -12,12 +13,22 @@ def scanDatacards( searchstring, stringname ):
      filenameMin=""
      for filename in glob.iglob('datacards/*.txt'):
           fIn   = open(filename, 'r')
+          aux   = filename.split("mass_")[1]
+          mass  = aux.split("GeV")[0]
+          aux   = filename.split("ctau_")[1]
+          ctau  = aux.split("cm")[0]
           lines = fIn.read().split("\n")
           for n in range(len(lines)):
                if lines[n].find(searchstring) >= 0:
                     aux = lines[n].split('lnN')[1]
                     uncertaintyAux = float(aux.split(' - ')[0]) -1.
                     if(float(uncertaintyAux) > float(uncertaintyMax)):
+                         if float(ctau)<0.855*math.exp(0.0085*float(mass)):
+                              continue
+                         if float(ctau)>20138.*math.exp(-0.007*float(mass)):
+                              continue
+                         if float(mass)>550.:
+                              continue
                          uncertaintyMax = uncertaintyAux
                          filenameMax = filename
                     if(float(uncertaintyAux) < float(uncertaintyMin)):
