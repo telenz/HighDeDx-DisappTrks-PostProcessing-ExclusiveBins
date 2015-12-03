@@ -5,6 +5,7 @@
 #include "TColor.h"
 #include "TCanvas.h"
 #include "TLegend.h"
+#include "TLatex.h"
 #include <iostream>
 #include <cmath>
 #include <iomanip>   
@@ -195,6 +196,10 @@ void make2dLimitPlot(){
 
   l1->Draw();
 
+  TLatex*  info   = new TLatex();
+  info -> SetNDC();
+  info -> SetTextSize(0.04);
+  info -> DrawLatex(0.45,0.20,"#Delta m_{#Chi^{#pm}_{1}#Chi^{0}_{1}} < m_{#pi}");
 
   c->RedrawAxis();
   c->SaveAs("MassSplittingLimitPlot.pdf");
