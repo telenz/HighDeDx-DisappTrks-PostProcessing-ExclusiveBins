@@ -4,16 +4,16 @@ Summary table of all systematic uncertainties\\
 \begin{tabular}{|l|c|c|}  \hline 
 Uncertainty                             &Min [\%]           &Max [\%]           \\ \hline 
 Luminosity                              &2.6                &2.6                \\ 
-ISR                                     &9.2                &12.6               \\ 
-Trigger efficiency                      &1.9                &4.4                \\ 
+Simulation of ISR                       &9.2                &12.6               \\ 
+Simulation of trigger efficiency        &1.9                &4.4                \\ 
 JES                                     &0.4                &3.1                \\ 
 JER                                     &0.1                &2.0                \\ 
-PDF                                     &2.6                &6.8                \\ 
+Simulation of PDF                       &2.6                &6.8                \\ 
+Pile-up reweighting                     &0.0                &16.0               \\ 
 Simulation of calorimeter isolation     &3.0                &12.1               \\ 
 Simulation of missing middle hits       &2.2                &2.2                \\ 
 Simulation of missing inner hits        &3.3                &3.7                \\ 
-PU                                      &0.0                &16.0               \\ 
-Track reconstruction efficiency         &4.6                &6.0                \\ 
 Simulation of Ias                       &4.9                &4.9                \\ 
+Simulation of track reconstruction efficiency&4.6                &6.0                \\ 
 \hline\end{tabular}  
 \end{table} 

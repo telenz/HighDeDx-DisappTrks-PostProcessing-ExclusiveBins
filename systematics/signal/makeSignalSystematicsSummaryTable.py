@@ -55,17 +55,17 @@ format_string = "{0:<40}{1:<20}{2:<20}"
 
 ##########################################################################################################################################################################################
 scanDatacards("lumi","Luminosity")
-scanDatacards("ISR","ISR")
-scanDatacards("trigger","Trigger efficiency")
+scanDatacards("ISR","Simulation of ISR")
+scanDatacards("trigger","Simulation of trigger efficiency")
 scanDatacards("JES","JES")
 scanDatacards("JER","JER")
-scanDatacards("PDF","PDF")
+scanDatacards("PDF","Simulation of PDF")
+scanDatacards("PU","Pile-up reweighting")
 scanDatacards("ECalo","Simulation of calorimeter isolation")
 scanDatacards("HitsLostMiddle","Simulation of missing middle hits")
 scanDatacards("HitsLostInner","Simulation of missing inner hits")
-scanDatacards("PU","PU")
-scanDatacards("TrkRecoEff","Track reconstruction efficiency")
 scanDatacards("Ias","Simulation of Ias")
+scanDatacards("TrkRecoEff","Simulation of track reconstruction efficiency")
 ##########################################################################################################################################################################################
 fout.write('\\hline')
 fout.write('\\end{tabular}  \n')
