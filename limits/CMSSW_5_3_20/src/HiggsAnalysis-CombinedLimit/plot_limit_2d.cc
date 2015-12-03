@@ -522,7 +522,7 @@ void plot_limit_2d(TString filename){
 
   TFile* f = new TFile("ObservedLimit.root","RECREATE");
   f->cd();
-  g_obs->Write();
+  g_obs_cm->Write();
   f->Close();
 
   return;
