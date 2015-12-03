@@ -8,4 +8,4 @@ Expected 50.0%: r < 3.5781
 Expected 84.0%: r < 4.9700
 Expected 97.5%: r < 6.6033
 
-Done in 0.15 min (cpu), 0.15 min (real)
+Done in 0.27 min (cpu), 0.28 min (real)
