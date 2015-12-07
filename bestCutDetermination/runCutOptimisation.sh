@@ -3,7 +3,10 @@
 rm results.txt
 
 mass=("100" "200" "300" "400" "500")
-ctau=("1" "5" "10") 
+ctau=("1" "10" "50") 
+
+#mass=("500")
+#ctau=("5") 
 
 printTitle=1
 for ct in "${ctau[@]}"
