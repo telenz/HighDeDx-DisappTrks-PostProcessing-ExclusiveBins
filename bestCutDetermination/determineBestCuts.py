@@ -91,6 +91,10 @@ def getSignalUncertainties(filename):
                 #print "uncertainty lnN = " + str(uncertainty)
     return math.sqrt(uncertainty)
 ##############################################################################################
+def getStatUncertainty(nBkg):
+  statUnc = getOneSidedUpperLimit(nBkg,0.6827)-nBkg
+  return statUnc
+##############################################################################################
 
 # Get xsection
 lines  = open("xsectionsUpdated.txt",'r').readlines()
@@ -120,6 +124,10 @@ for l in range(1,10):
         nElec   = getYield(file,"elec")
         nMuon   = getYield(file,"muon")
         nBkg    = nFake + nPion + nElec + nMuon  
+        #print "nBkg = " + str(nBkg)
+        statUnc = getStatUncertainty(nBkg)
+        #statUnc=0
+        #print "statUnc = " + str(statUnc)
 
         muonUnc = getUncertainties(file,"muon")
         #print "muonUnc = " + str(muonUnc)
@@ -131,22 +139,34 @@ for l in range(1,10):
         #print "fakeUnc = " + str(fakeUnc)
 
 
+
         # Add everthing together
-        bkgUnc = math.sqrt(pow(fakeUnc,2) + pow(pionUnc,2) + pow(elecUnc,2) + pow(muonUnc,2) )
+        bkgUnc = math.sqrt(pow(fakeUnc,2) + pow(pionUnc,2) + pow(elecUnc,2) + pow(muonUnc,2) + pow(statUnc,2))
         #print "bkg = " + str(round(nBkg,2)) + "+/-" +str(round(bkgUnc,2))
         signalUnc = 0#getSignalUncertainties(file)
         #print "signal = " + str(round(nSignal,2)) + "+/-" +str(round(signalUnc,2))
 
 
         # Now loop over different xsec and find xsection with which 5sigma discovery is possible
-        for k in range(0,10000):
-            sOverB = k/math.sqrt(pow(bkgUnc,2) + pow(signalUnc/nSignal*k,2))
-            #print sOverB
-            if(sOverB>5):
+        for k in range(1,200):
+            alpha=1*k
+            sOverB = alpha/math.sqrt(pow(bkgUnc,2) + pow(signalUnc/nSignal*alpha,2))
+            if(sOverB>=5.0):
+                #print sOverB
                 #print "Discovery possible!"
                 #print "k = " + str(k)
                 #print "xsec = " + str(xsec)
-                minExcludedXsec = k/nSignal*xsec
+                minExcludedXsec = alpha/nSignal*xsec
+                #print ""
+                #print "ptCut = " + str(ptCut)
+                #print "alpha = " + str(alpha)
+                #print "sOverB = " + str(sOverB)
+                #print "sigma_min = " + str(minExcludedXsec)
+                #print "bkg = " + str(nBkg)
+                #print "bkgUnc = " + str(bkgUnc)
+                #print "nSignal = " + str(nSignal)
+                #print "xsec = " + str(xsec)
+                
                 if minExcludedXsec<bestValueXsec:
                     bestValueXsec=minExcludedXsec
                     bestValuePtCut=ptCut
@@ -156,13 +176,20 @@ for l in range(1,10):
 
 
 
-format_string = "{0:<30}{1:<30}{2:<30}{3:<30}{4:<30}{5:<30}"
+format_string = "{0:<25}{1:<25}{2:<25}{3:<25}{4:<25}{5:<25}"
 if printTitle=="1":
     print format_string.format("mass [GeV]", "lifetime [cm]", "optimal pt Cut", "optimal Ias Cut","min. excluded xsection [pb]" ,"actual xsection [pb]")
     fileOut.write(format_string.format("mass [GeV]", "lifetime [cm]", "optimal pt Cut", "optimal Ias Cut","min. excluded xsection [pb]" ,"actual xsection [pb]"))
     fileOut.write("\n")
-print format_string.format(mass + "&", str(ctau) + "&", str(bestValuePtCut) + "&", "0." + str(bestValueIasCut) + "&","{0:.2f}".format(bestValueXsec)+ "\\\\" ,"{0:.2f}".format(xsec))
-fileOut.write(format_string.format(mass, ctau, bestValuePtCut, "0." + str(bestValueIasCut),"{0:.4f}".format(bestValueXsec) ,"{0:.4f}".format(xsec)))
+
+if bestValueXsec<9000:
+  print format_string.format(mass + "&", str(ctau) + "&", str(bestValuePtCut) + "&", "0." + str(bestValueIasCut) + "&","{0:.3f}".format(bestValueXsec)+ "\\\\" ,"{0:.2f}".format(xsec))
+else:
+  print format_string.format(mass + "&", str(ctau) + "&", "n/a &", "n/a &", "n/a \\\\" ,"{0:.2f}".format(xsec))
+if bestValueXsec<9000:
+  fileOut.write(format_string.format(mass, ctau, bestValuePtCut, "0." + str(bestValueIasCut),"{0:.4f}".format(bestValueXsec) ,"{0:.4f}".format(xsec)))
+else:
+  fileOut.write(format_string.format(mass, ctau, "n/a", "n/a", "n/a" ,"{0:.4f}".format(xsec)))
 fileOut.write("\n")
 #print "best pt cut = " + str(bestValuePtCut)
 #print "best ias cut = " + str(bestValueIasCut)     
