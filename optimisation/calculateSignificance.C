@@ -35,12 +35,18 @@
 
 int calculateSignificance(double metCut, double ecaloCut, TString region, TString folder = "NLostOuterGe0"){
 
+  TString nlost = "";
+  if(folder.Contains("NLostOuterGe0")) nlost="0";
+  else if(folder.Contains("NLostOuterGe1")) nlost="1";
+  else if(folder.Contains("NLostOuterGe2")) nlost="2";
+  else if(folder.Contains("NLostOuterGe3")) nlost="3";
+
   gStyle->SetOptStat(0);
   TeresaPlottingStyle2d::init();
   gStyle -> SetTitleSize(0.05,"Z");
   gStyle -> SetTitleOffset(1.2,"Z");
   gStyle -> SetOptTitle(1);
-  gStyle -> SetNdivisions(507,"Z");
+  gStyle -> SetNdivisions(505,"Z");
   //gStyle->SetTitleBorderSize(0);
   //gStyle -> SetPadRightMargin(0.20);
   //gStyle->SetTitleFont(42,"");
@@ -72,8 +78,8 @@ int calculateSignificance(double metCut, double ecaloCut, TString region, TStrin
   TString sig_m300_ct50 = "Madgraph_signal_mass_300_ctau_50cm";
   //samples.push_back(sig_m300_ct50);
   TString sig_m500_ct1 = "Madgraph_signal_mass_500_ctau_1cm";
-  samples.push_back(sig_m500_ct1);
-  titles.push_back("mass=500GeV, c#tau=1cm");
+  //samples.push_back(sig_m500_ct1);
+  //titles.push_back("mass=500GeV, c#tau=1cm");
   TString sig_m500_ct5 = "Madgraph_signal_mass_500_ctau_5cm";
   samples.push_back(sig_m500_ct5);
   titles.push_back("mass=500GeV, c#tau=5cm");
@@ -101,8 +107,10 @@ int calculateSignificance(double metCut, double ecaloCut, TString region, TStrin
     sig2->GetYaxis()->SetTitle("I_{as} cut");
     sig2->GetZaxis()->SetTitle("minimum possible x-sec to discover [pb]");
     sig2->GetZaxis()->CenterTitle();
+    //sig2->SetTitle(titles[i] + ", N_{lost}^{outer}>" + nlost);
     sig2->SetTitle(titles[i]);
     sig2->GetZaxis()->SetNoExponent(kTRUE);
+    //sig2->GetZaxis()->SetRangeUser(30,200);
 
     TH2D* hBkgYield = new TH2D("hBkgYield","Bkg Yield",9,20,65,9,0.00,0.45);
     hBkgYield -> GetXaxis()->SetTitle("p_{T} cut [GeV]");
@@ -280,6 +288,7 @@ int calculateSignificance(double metCut, double ecaloCut, TString region, TStrin
 
     TCanvas *c1 = new TCanvas(samples[i],samples[i],500,500);
     sig2->Draw("COLZ");
+    //c1->SaveAs(Form("plots" + folder + "/" + samples[i] + "_ECaloLe%.0f" + "_SOverDeltaBStatPlusSys_" + nlost+ ".pdf",ecaloCut));
     c1->SaveAs(Form("plots" + folder + "/" + samples[i] + "_ECaloLe%.0f" + "_SOverDeltaBStatPlusSys.pdf",ecaloCut));
 
     TCanvas *c2 = new TCanvas(samples[i],samples[i],500,500);
