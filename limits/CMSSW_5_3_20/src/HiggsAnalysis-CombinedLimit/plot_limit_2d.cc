@@ -230,7 +230,7 @@ void plot_limit_2d(TString filename){
     cout<<"intObs = "<<intObs<<endl;
     intExp = getIntersectionPoint(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,exp,Form("expected_%icm",lifetimes[ct]));
     cout<<"intExp = "<<intExp<<endl;
-
+    
     cout<<endl;
 
     cout<<"lifetimes["<<ct<<"] = "<<lifetimes[ct]<<endl;
@@ -522,7 +522,8 @@ void plot_limit_2d(TString filename){
 
   TFile* f = new TFile("ObservedLimit.root","RECREATE");
   f->cd();
-  g_obs_cm->Write();
+  g_obs_cm->Write("Limit_cm");
+  g_obs   ->Write("Limit_ns");
   f->Close();
 
   return;
