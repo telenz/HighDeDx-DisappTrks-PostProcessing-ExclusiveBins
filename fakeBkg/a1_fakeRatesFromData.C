@@ -109,8 +109,10 @@ int a1_fakeRatesFromData(double ptCutMin, double ptCutMax, double ecaloCut){
   double muFakeRate      = muFakeControlRegionInt/muControlRegionInt;
   double muFakeRateError = muFakeRate * sqrt( pow(muFakeControlRegionIntErr/muFakeControlRegionInt,2) + pow(muControlRegionIntErr/muControlRegionInt,2) ) ;
   cout<<"Fake rate (from muon sample)         = "<<muFakeRate<<" +/- "<<muFakeRateError<<endl;
+  cout<<"With: muFakeControlRegionInt = "<<muFakeControlRegionInt<<"   and  muControlRegionInt = "<<muControlRegionInt<<endl;
   double eleFakeRate      = eleFakeControlRegionInt/eleControlRegionInt;
   double eleFakeRateError = eleFakeRate * sqrt( pow(eleFakeControlRegionIntErr/eleFakeControlRegionInt,2) + pow(eleControlRegionIntErr/eleControlRegionInt,2) ) ;
+  cout<<"With: eleFakeControlRegionInt = "<<eleFakeControlRegionInt<<"   and  eleControlRegionInt = "<<eleControlRegionInt<<endl;
   cout<<"Fake rate (from electron sample)     = "<<eleFakeRate<<" +/- "<<eleFakeRateError<<endl;
   cout<<"###########################################################################"<<endl;
   cout<<"Fake control region       = "<<FakeControlRegionInt<<" +/- "<<FakeControlRegionIntErr<<endl;
