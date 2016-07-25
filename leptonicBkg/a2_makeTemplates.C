@@ -14,7 +14,7 @@
 #include <cmath>
 #include <algorithm>
 #include <iomanip>
-#include "/afs/desy.de/user/t/tlenz/myAnalysis/bkgEstimation/plotStyle.h"
+#include "../plotStyle.h"
 #include "Classes.h"
 
 
