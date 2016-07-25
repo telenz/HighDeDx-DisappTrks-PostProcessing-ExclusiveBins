@@ -27,7 +27,7 @@
 #include <algorithm>
 #include <iomanip>
 //#include "../plotStyle.h"
-#include "/afs/desy.de/user/t/tlenz/Thesis/rootFiles/plotStyleThesis.h"
+#include "plotStyleThesis.h"
 #include "../poisson/getPoissonCL.h"
 
 //TString folder = "NLostOuterGe0";
@@ -35,6 +35,7 @@
 
 int calculateSignificance(double metCut, double ecaloCut, TString region, TString folder = "NLostOuterGe0"){
 
+  
   TString nlost = "";
   if(folder.Contains("NLostOuterGe0")) nlost="0";
   else if(folder.Contains("NLostOuterGe1")) nlost="1";
@@ -47,6 +48,11 @@ int calculateSignificance(double metCut, double ecaloCut, TString region, TStrin
   gStyle -> SetTitleOffset(1.2,"Z");
   gStyle -> SetOptTitle(1);
   gStyle -> SetNdivisions(505,"Z");
+
+  gStyle->SetTitleStyle(1); 
+  gStyle->SetStatStyle(0);
+  gROOT->ForceStyle(); 
+
   //gStyle->SetTitleBorderSize(0);
   //gStyle -> SetPadRightMargin(0.20);
   //gStyle->SetTitleFont(42,"");
@@ -97,7 +103,8 @@ int calculateSignificance(double metCut, double ecaloCut, TString region, TStrin
     TH2D* sig1 = new TH2D("significance",samples[i] + ": s/#Delta b_{stat}",9,20,65,9,0.00,0.45);
     sig1->GetXaxis()->SetTitle("p_{T} cut [GeV]");
     sig1->GetYaxis()->SetTitle("I_{as} cut");
-    sig1->GetZaxis()->SetTitle("minimum possible x-sec to discover [pb]");
+    //sig1->GetZaxis()->SetTitle("minimum possible x-sec to discover [pb]");
+    sig1->GetZaxis()->SetTitle("minimal discoverable x-sec [pb]");
     sig1->GetZaxis()->CenterTitle();
     sig1->SetTitle(titles[i]);
 
@@ -105,12 +112,12 @@ int calculateSignificance(double metCut, double ecaloCut, TString region, TStrin
     TH2D* sig2 = new TH2D("significance",samples[i]+ ": s/#Delta b_{stat + sys}",9,20,65,9,0.00,0.45);
     sig2->GetXaxis()->SetTitle("p_{T} cut [GeV]");
     sig2->GetYaxis()->SetTitle("I_{as} cut");
-    sig2->GetZaxis()->SetTitle("minimum possible x-sec to discover [pb]");
+    sig2->GetZaxis()->SetTitle("minimal discoverable x-sec [pb]");
     sig2->GetZaxis()->CenterTitle();
-    //sig2->SetTitle(titles[i] + ", N_{lost}^{outer}>" + nlost);
+    //sig2->SetTitle(titles[i] + ", N_{lost}^{outer}#geq" + nlost);
     sig2->SetTitle(titles[i]);
     sig2->GetZaxis()->SetNoExponent(kTRUE);
-    //sig2->GetZaxis()->SetRangeUser(30,200);
+    //sig2->GetZaxis()->SetRangeUser(0.5,2.5);
 
     TH2D* hBkgYield = new TH2D("hBkgYield","Bkg Yield",9,20,65,9,0.00,0.45);
     hBkgYield -> GetXaxis()->SetTitle("p_{T} cut [GeV]");
