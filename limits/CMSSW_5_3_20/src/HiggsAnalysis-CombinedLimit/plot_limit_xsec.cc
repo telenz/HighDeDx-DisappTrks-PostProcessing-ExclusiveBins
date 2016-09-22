@@ -212,14 +212,14 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   exp_1sig->Draw("same l3");
 
 
-  obsL->SetLineColor(kBlack);
+  obsL->SetLineColor(kRed);
   obsL->SetLineWidth(2);
   xsecL->SetLineColor(867);
   xsecL->SetFillColor(867);
   xsecL->SetLineWidth(2);
 
   //expL->SetMarkerStyle(22);
-  expL->SetLineColor(kRed);
+  expL->SetLineColor(kBlack);
   expL->SetLineWidth(2);
   expL->GetXaxis()->SetTitleSize(0.05);
   expL->GetYaxis()->SetTitleSize(0.05);
@@ -271,6 +271,12 @@ void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsec
   TString AuxString = Form("c#tau = %icm",ctau);
   //info->DrawLatex(0.62,0.61,AuxString);
   info->DrawLatex(0.2,0.22,AuxString);
+
+  info->SetTextSize(0.045);
+  info->DrawLatex(0.65,0.95,"19.7 fb^{-1} (8 TeV)");
+  info->SetTextSize(0.040);
+  //info->DrawLatex(0.65,0.50,"pp #rightarrow #chi^{#pm}#chi^{#pm}");
+  //info->DrawLatex(0.65,0.45,"pp #rightarrow #chi^{#pm}#chi^{0}");
 
   c1->SetTickx();
   c1->SetTicky();
