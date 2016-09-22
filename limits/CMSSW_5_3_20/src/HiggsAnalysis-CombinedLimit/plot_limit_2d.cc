@@ -31,7 +31,6 @@ string dTs(double d){
 double ctauMin=1;
 double massMin=100;
 
-void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau);
 
 double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> exp, TString title);
 
@@ -293,7 +292,6 @@ void plot_limit_2d(TString filename){
     exp_2sig_down_2d[ct] =intExp_2sig_down;
     */
 
-    //make_plot(mass,xsecTheo,xsecTheoErr,massAll,xsecTheoAll,xsecTheoErrAll,obs,exp,exp_1sig_up,exp_2sig_up,exp_1sig_down,exp_2sig_down,lifetimes[ct]);
 
   }
 
@@ -319,7 +317,6 @@ void plot_limit_2d(TString filename){
   l1->SetLineColor(0);
   l1->SetFillColor(0);
   l1->SetFillStyle(0);
-  l1->SetTextFont(42);
   l1->SetTextSize(0.04);
   l1->SetBorderSize(0);
 
@@ -473,12 +470,8 @@ void plot_limit_2d(TString filename){
 
   delete l1;
   l1=new TLegend(0.18,0.45,0.50,0.65);
-  l1->SetLineColor(0);
-  l1->SetFillColor(0);
-  l1->SetFillStyle(0);
-  l1->SetTextFont(42);
   l1->SetTextSize(0.04);
-  l1->SetBorderSize(0);
+
 
   TGraph* g_obs_cmDummy = (TGraph*) g_obs_cm->Clone();
   g_obs_cmDummy->SetLineWidth(3);
@@ -507,6 +500,10 @@ void plot_limit_2d(TString filename){
   axis->SetLabelFont(42);
   axis->Draw("same");
   
+  TLatex*  info   = new TLatex();
+  info-> SetNDC();
+  info->SetTextSize(0.045);
+  info->DrawLatex(0.55,0.91,"19.7 fb^{-1} (8 TeV)");
 
   //c->SetTickx();
   //c->SetTicky();
@@ -630,125 +627,3 @@ double getIntersectionPoint(vector<double> mass, vector<double> xsecTheo, vector
 
 
 //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-void make_plot(vector<double> mass, vector<double> xsecTheo, vector<double> xsecTheoErr, vector<double> massAll, vector<double> xsecTheoAll, vector<double> xsecTheoErrAll, vector<double> obs,vector<double> exp, vector<double> exp_1sig_up,  vector<double> exp_2sig_up,vector<double> exp_1sig_down,  vector<double> exp_2sig_down, int ctau){
-  TCanvas *c1 = new TCanvas;
-  //c1->SetLogy();
-
-  //gStyle->SetPadBottomMargin(10.5);
-  gPad->SetBottomMargin(0.14);
-  gPad->SetLeftMargin(0.14);
-  
-
-  //TGraphAsymmErrors *exp_1sig= new TGraphAsymmErrors(mass,exp,exp_1sig_up,exp_1sig_down);
-  const int nn = 11;
-  
-  TLegend *l1=new TLegend(0.15,0.65,0.45,0.85);
-  //l1=new TLegend(0.7,0.65,0.95,0.9);
-  l1->SetLineColor(0);
-  l1->SetFillColor(0);
-  l1->SetFillStyle(0);
-  l1->SetTextFont(42);
-  l1->SetTextSize(0.04);
-  l1->SetBorderSize(0);
-
-
-  double x[nn];
-  double xUpperErr[nn];
-  double xLowerErr[nn];
-  double yUpperErr[nn];
-  double yLowerErr[nn];
-  double yUpperErr2[nn];
-  double yLowerErr2[nn];
-  double *xAll    = new double[xsecTheoAll.size()];
-  double *xsec    = new double[xsecTheoAll.size()];
-  double *xsecErr = new double[xsecTheoAll.size()];
-
-
-  double yexp[nn];
-  double yobs[nn];
-  int nBins = mass.size();
-  // cout<<"Sizes of various vectors = "<<mass.size()<<" "<<exp.size()<<" "<< exp_1sig_up.size()<<" "<<exp_2sig_down.size()<<endl;
-  for(unsigned int j=0; j<mass.size(); j++){
-    x[j]=mass[j];
-    yexp[j]=exp[j]*xsecTheo[j];          // Something not working
-    yobs[j]=obs[j]*xsecTheo[j];
-    xUpperErr[j]=0;
-    xLowerErr[j]=0;
-    yUpperErr[j]=(exp_1sig_up[j]-exp[j])*xsecTheo[j];
-    yLowerErr[j]=(exp[j]-exp_1sig_down[j])*xsecTheo[j];
-    yUpperErr2[j]=(exp_2sig_up[j]-exp[j])*xsecTheo[j];
-    yLowerErr2[j]=(exp[j]-exp_2sig_down[j])*xsecTheo[j];
-    //cout<<exp_1sig_down[j]<<" "<<exp_2sig_down[j]<<endl;
-  }
-  for(unsigned int j=0; j<xsecTheoAll.size(); j++){
-    xAll[j]=massAll[j];
-    xsec[j]=xsecTheoAll[j];
-    xsecErr[j]=xsecTheoErrAll[j];
-  }
-  TGraph *expL= new TGraph(nBins,x,yexp);
-  TGraph *obsL= new TGraph(nBins,x,yobs);
-  TGraphErrors *xsecL= new TGraphErrors(xsecTheoAll.size(),xAll,xsec,xLowerErr,xsecErr);
-
-  TGraphAsymmErrors *exp_1sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr, yUpperErr);
-  TGraphAsymmErrors *exp_2sig = new TGraphAsymmErrors(nBins, x, yexp, xLowerErr, xUpperErr, yLowerErr2, yUpperErr2);
-  //exp_1sig->Draw("AF");
-  expL->Draw("ALP");
-  exp_2sig->Draw("same l3");
-  exp_1sig->Draw("same l3");
-
-
-  obsL->SetLineColor(kBlack);
-  obsL->SetLineWidth(2);
-  xsecL->SetLineColor(kGreen+1);
-  xsecL->SetFillColor(kGreen+1);
-  xsecL->SetLineWidth(2);
-
-  //expL->SetMarkerStyle(22);
-  expL->SetLineColor(kRed);
-  expL->SetLineWidth(2);
-  expL->GetXaxis()->SetTitle("mass_{#Chi^{#pm}} (GeV)");
-  //expL->GetYaxis()->SetTitle("r = #sigma_{expected} / #sigma_{theo}");
-  expL->GetYaxis()->SetTitle("95% CL upper limit on #sigma");
-  expL->GetXaxis()->SetRangeUser(50,650);
-  expL->GetYaxis()->SetRangeUser(0.005,10);
-  //expL->GetYaxis()->SetRangeUser(0.2,5);
-  expL->SetTitle();
-
-  exp_1sig->SetFillColor(kGreen);
-  exp_1sig->SetLineColor(kGreen);
-  exp_2sig->SetFillColor(kYellow);
-  exp_2sig->SetLineColor(kYellow);
-  expL->Draw("LP same");
-  obsL->Draw("LP same");
-  xsecL->Draw("LP same 3");
-
-  gPad->RedrawAxis();
-
-  l1->AddEntry(obsL,"Observed Limit","l");
-  l1->AddEntry(expL,"Expected Limit","l");
-  l1->AddEntry(exp_1sig,"#pm 1#sigma","f");
-  l1->AddEntry(exp_2sig,"#pm 2#sigma","f");
-  l1->AddEntry(xsecL,"Theoretical x-section","l");
-
-  l1->Draw();
-
-  TLatex Tl;
-  Tl.SetTextSize(0.04);
-  Tl.DrawLatex(500.,0.8,Form("c#tau=%icm",ctau));
-
-  TLine *line = new TLine(60,1,540,1);
-  line->SetLineColor(kBlack);
-  line->SetLineWidth(2);
-  //line->Draw("same");
-
-  c1->SetTickx();
-  c1->SetTicky();
-  c1->Update();
-  c1->SaveAs(Form("test_ctau%icm.pdf",ctau));
-  c1->SetLogy();
-  c1->SaveAs(Form("test_ctau%icm_log.pdf",ctau));
-  
-  return;
-
-}
