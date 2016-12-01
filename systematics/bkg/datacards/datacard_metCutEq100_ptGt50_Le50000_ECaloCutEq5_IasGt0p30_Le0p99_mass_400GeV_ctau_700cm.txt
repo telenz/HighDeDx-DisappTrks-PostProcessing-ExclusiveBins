@@ -11,7 +11,7 @@ observation                            4
 
 bin                                                    1                                       1                   1                   1                   1                   
 process                                                CharginoPair_mass_400GeV_ctau_700cm       Fake                Pion                Elec                Muon                
-process                                                0                                       1                   1                   1                   1                   
+process                                                0                                       1                   2                   3                   4                   
 rate                                                   14.648                                  2.5240              0.0000              0.0430              0.0000              
 
 
